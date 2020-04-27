@@ -61,7 +61,7 @@ public class Simulator_Window {
 				Controller of  = new Controller();
 				
 				try {
-					of.PickMe();
+					of.Einlesen();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
