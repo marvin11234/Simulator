@@ -1,4 +1,4 @@
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 
@@ -14,37 +14,14 @@ import javax.swing.JTextPane;
 public class Simulator_Window {
 
 	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Simulator_Window window = new Simulator_Window();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public Simulator_Window() {
-		initialize();
-	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize(Simulator_Window Simulator_WindowInst) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Simulator_WindowInst.frame.setVisible(true);
 		
 		//text Feld für Testausgabe ausgewähltes programm
 		JTextPane txtPane_Auswahl = new JTextPane();
@@ -58,10 +35,10 @@ public class Simulator_Window {
 		JButton btnLoad_File = new JButton("Load File");
 		btnLoad_File.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Controller of  = new Controller();
+				Controller controllerInst  = new Controller();
 				
 				try {
-					of.Einlesen();
+					controllerInst.Einlesen();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

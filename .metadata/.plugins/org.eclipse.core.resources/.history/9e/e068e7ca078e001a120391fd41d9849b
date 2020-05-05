@@ -1,0 +1,85 @@
+import javax.swing.JFileChooser;
+
+import java.awt.EventQueue;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.FileReader;
+
+
+
+
+public class Controller {
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {	
+					Simulator_Window test = new Simulator_Window();
+					test.initialize(test);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	JFileChooser fileChooser = new JFileChooser();
+	StringBuilder sb = new StringBuilder();
+	String sCurrentLine;
+	int iArrayStelleEinlesen = 0;
+	String[] inputStArray = new String[1024];
+	String[] ProgrammspeicherStArray = new String[1024];
+	int iZeile = 0;
+	
+	public void Einlesen() throws Exception{
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			
+			//get the file
+			java.io.File file = fileChooser.getSelectedFile();
+			
+			//Default buffer reader
+			BufferedReader br = null;
+
+			try 
+			{ 
+				
+			br = new BufferedReader(new FileReader(file));	
+			
+			while ((sCurrentLine = br.readLine()) != null){
+				inputStArray[iArrayStelleEinlesen] = sCurrentLine;
+				//ignorieren der Zeilen die nicht mit einer Zahl beginnen
+				if(sCurrentLine.startsWith(" "))
+				{	
+					iArrayStelleEinlesen++;
+
+				}
+				else
+				{	
+					try {
+						//einlesen der ersten spalte (Zeilennummern) und konvertieren in Int
+						iZeile = Integer.parseInt(sCurrentLine.substring(0,4));
+						//Zeilennummer 0= Array Zelle, schreiben des befehls an die stelle im array
+						ProgrammspeicherStArray[iZeile] = sCurrentLine.substring(5,9);
+					}
+					catch (NumberFormatException e)
+					{
+						System.out.println("Fehler: es Konnte keine Einlesezeile gefunden werden");
+					}
+				}
+
+
+			}
+			for (int b = 0; b <= iArrayStelleEinlesen; b++) {
+			System.out.println(ProgrammspeicherStArray[b]);
+				}
+			}
+			catch (IOException e){
+			e.printStackTrace();
+			}
+			
+		}
+		else {
+			sb.append("No file was choosen");
+		}
+	}
+
+}

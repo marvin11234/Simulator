@@ -1,0 +1,12 @@
+
+public class Memory extends Thread{
+	
+	//Datenspeicher: erste Bank 00-7F zweíte Bank 80-FF
+	protected int[][] dataMemoryIntArray = new int [256][8];
+	
+	//Speicher für den programmcode; 0000 = Reset 0004 = interrupt
+	protected int[] programMemoryIntArray = new int [1024];
+
+	
+	protected int programCounterInt = 
+}
