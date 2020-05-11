@@ -29,7 +29,10 @@ public class Controller {
 	String[] inputStArray = new String[1024];
 	String[] programmSpeicherStArray = new String[1024];
 	String temCurLnSt;
+	String[][] tableStArray = new String[1024][6];
 	int zeileInt = 0;
+	int i = 0;
+	int[] befehlDezimalIntArray = new int[1024];
 	
 	public void Einlesen() throws Exception{
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -44,35 +47,43 @@ public class Controller {
 				while ((currentLineSt = br.readLine()) != null)
 				{
 					inputStArray[arrayStelleEinlesenInt] = currentLineSt;
-					if(currentLineSt.startsWith(" "))
-					{	
-						arrayStelleEinlesenInt++;
-					}
-					else
-					{	
-						try 
-						{
-							temCurLnSt = currentLineSt;
-							zeileInt = Integer.parseInt(temCurLnSt.substring(0,4));
-							programmSpeicherStArray[zeileInt] = temCurLnSt.substring(5,9);
-						}
-						catch (NumberFormatException e)
-						{
-							System.out.println("Fehler: es Konnte keine Einlesezeile gefunden werden");
-						}
-					}
+					
+					arrayStelleEinlesenInt++;
 				}
-				for (int b = 0; b <= arrayStelleEinlesenInt; b++) 
-				{
-					System.out.println(programmSpeicherStArray[b]);
-				}
+
+						while((temCurLnSt = inputStArray[i]) !=  null)
+						{
+											
+							try 
+							{
+							
+								temCurLnSt = inputStArray[i];
+								if(temCurLnSt != null)
+								{							
+									tableStArray[i][1] = temCurLnSt.substring(0,4);
+									tableStArray[i][2] = temCurLnSt.substring(5,9);
+									tableStArray[i][3] = temCurLnSt.substring(20,25);
+									tableStArray[i][4] = temCurLnSt.substring(27,32);
+									tableStArray[i][5] = temCurLnSt.substring(36,inputStArray[i].length());						
+								}
+							}
+							catch (NumberFormatException e)
+							{
+								System.out.println("Fehler: es Konnte keine Einlesezeile gefunden werden");
+							}
+							i++;
+						}
+
 			}
 			catch (IOException e)
 			{
 			e.printStackTrace();
 			}
 			Memory memoryInst = new Memory();
-			memoryInst.CodeSpeichern(programmSpeicherStArray);
+			befehlDezimalIntArray = memoryInst.CodeSpeichern(tableStArray);
+			
+			Prozessor prozessorInst = new Prozessor();
+			prozessorInst.Befehlsabarbeitung(befehlDezimalIntArray);
 			
 		}
 		else 

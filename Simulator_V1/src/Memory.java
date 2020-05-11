@@ -16,10 +16,21 @@ public class Memory extends Thread{
 	
 	protected Stack <Integer>  cmdStack = new Stack <Integer>();
 	
-	public void CodeSpeichern(String[] programmSpeicherStArray)
+	int i = 0;
+	
+	public int[] CodeSpeichern(String[][] tableStArray)
 	{
-			int test = Integer.parseInt(programmSpeicherStArray[2],16);
-			System.out.println("test" + test);
-		
+
+		while(tableStArray[i][3] != null)
+		{
+			if(! tableStArray[i][1].equals("    "))
+			{
+				programMemoryIntArray[Integer.parseInt(tableStArray[i][1],16)] = Integer.parseInt(tableStArray[i][2],16);
+				System.out.println("Stelle "+ Integer.parseInt(tableStArray[i][1],16) + ":"+ programMemoryIntArray[Integer.parseInt(tableStArray[i][1],16)]);				
+			}
+
+			i++;
+		}
+		return programMemoryIntArray;
 	}
 }

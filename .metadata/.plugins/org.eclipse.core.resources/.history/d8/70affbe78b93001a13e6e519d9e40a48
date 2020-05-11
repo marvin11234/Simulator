@@ -1,0 +1,36 @@
+import java.util.Stack;
+
+public class Memory extends Thread{
+	
+	//Datenspeicher: erste Bank 00-7F zweíte Bank 80-FF
+	protected int[][] dataMemoryIntArray = new int [256][8];
+	
+	//Speicher für den programmcode; 0000 = Reset 0004 = interrupt
+	protected int[] programMemoryIntArray = new int [1024];
+
+	//enthält die Zeile des Befehl, default == 0
+	protected int programCounterInt = 0;
+	
+	//W-Register 
+	protected int[] wRegisterIntArray = new int [8]; 
+	
+	protected Stack <Integer>  cmdStack = new Stack <Integer>();
+	
+	int i = 0;
+	
+	public void CodeSpeichern(String[][] tableStArray)
+	{
+
+		while(tableStArray[i][3] != null)
+		{
+			System.out.println(tableStArray[i][1]);
+			if(tableStArray[i][1] != null)
+			{
+				
+				programMemoryIntArray[Integer.parseInt(tableStArray[i][1])] = Integer.parseInt(tableStArray[i][2],16);
+				System.out.println(programMemoryIntArray[Integer.parseInt(tableStArray[i][1])]);
+			}
+			i++;
+		}
+	}
+}
