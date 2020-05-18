@@ -12,8 +12,8 @@ public class Prozessor extends Thread{
 		{
 			int d = ((zeileInt) & 0x00FF) >> 7;
 			int f = ((zeileInt) & 0x00FF) & 0b01111111;
-			int destination = ((zeileInt) & 0b00000010000000);
-			int bofo = ((zeileInt) & 0b00000000001111);
+			int destination = ((zeileInt) & 0b000000010000000);
+			int test = ((zeileInt) & 0b000000000001111);
 			
 			switch(commandInt)
 			{
@@ -56,19 +56,19 @@ public class Prozessor extends Thread{
 				break;
 			case 0b0000:
 				if(destination == 0) {
-					if(bofo == 3)
+					if(test == 3)
 					{
 						sleep();
 					}
-					else if(bofo == 8)
+					else if(test == 8)
 					{
 						Return();
 					}
-					else if (bofo == 9)
+					else if (test == 9)
 					{
 						retfie()
 					}
-					else if(bofo == 4)
+					else if(test == 4)
 					{
 						clrwdt();
 					}
@@ -101,22 +101,18 @@ public class Prozessor extends Thread{
 		}
 		else if(precommandInt == 1)//Bit orientierte fileregister operationen
 		{
-			int b = ((zeileInt) & 0b00001110000000) >> 8;;
-			int f = (zeileInt)& 0b00000001111111;
-			int bofro = (commandInt >> 2);
-			
-			switch(bofro)
+			switch(commandInt)
 			{
-			case (0b00):
+			case 0b00bb:
 				bcf(b,f);
 				break;
-			case (0b01):
+			case 0b01bb:
 				bsf(b,f);
 				break;
-			case (0b10):
+			case 0b10bb:
 				btfsc(b,f);
 				break;
-			case (0b11):
+			case 0b11bb:
 				btfss(b,f);
 				break;
 
@@ -124,14 +120,12 @@ public class Prozessor extends Thread{
 		}
 		else if(precommandInt == 2)//Literal and Controll Operations
 		{
-			int k = (zeileInt)& 0b00000011111111;
-			int lac = (commandInt >> 3);
-			switch(lac)
+			switch(commandInt)
 			{	
-			case 0b0:
+			case 0b0kkk:
 				call(k);//???
 				break;
-			case 0b1:
+			case 0b1kkk:
 				Goto(k);//???
 				break;
 				
@@ -139,7 +133,6 @@ public class Prozessor extends Thread{
 		}
 		else if(precommandInt == 3)
 		{
-			int k = (zeileInt)& 0b00011111111111;
 			switch(commandInt)
 			{
 			case 0b1110:
@@ -148,15 +141,12 @@ public class Prozessor extends Thread{
 			case 0b1111:
 				addlw(k);
 				break;
-				
 			case 0b1001:
 				andlw(k);
 				break;
-				
 			case 0b1000:
 				iorlw(k);
 				break;
-				
 			case 0b0000:
 				movlw(k);
 				break;
@@ -169,7 +159,6 @@ public class Prozessor extends Thread{
 			case 0b0011:
 				movlw(k);
 				break;
-				
 			case 0b0100:
 				retlw(k);
 				break;
@@ -182,14 +171,15 @@ public class Prozessor extends Thread{
 			case 0b0111:
 				retlw(k);
 				break;
-				
+			case 0b110x:
+				sublw(k);
+				break;
 			case 0b1100:
 				sublw(k);
 				break;
 			case 0b1101:
 				sublw(k);
 				break;
-				
 			case 0b1010:
 				xorlw(k);
 				break;

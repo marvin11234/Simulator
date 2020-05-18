@@ -1,12 +1,13 @@
 applyBackground=false
-approved.defs.file.last.changed.time=1588891908000
+approved.defs.file.last.changed.time=1589387624000
 codemix.dont.show.upsell.until=1589389106044
 configurationInstallLocation=/C\:/Users/marvi/eclipse/eclipse/
 eclipse.preferences.version=1
+elearning.dont.show.until=1590838314296
 iconcolormode=primary
 iconreplacement=false
-last.download.attempt.time=1588593358522
-lastConfiguration=1589184988302
+last.download.attempt.time=1589801541591
+lastConfiguration=1589801460240
 newinstall=false
 showWelcomeDialog=false
 workbench.theme=Dark Gray

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="programmSpeicherStArray"/>
+		<item key="selection" value="bofo"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="test"/>
 			<item value="ProgrammspeicherStArray"/>
 			<item value="iZeile"/>
 			<item value="sTempCurLn"/>
@@ -13,9 +14,9 @@
 			<item value="cu"/>
 			<item value="currentLineString"/>
 			<item value="iArrayStelleEinlesen"/>
-			<item value="PickMe"/>
 		</list>
 		<list key="replacehistory">
+			<item value="bofo"/>
 			<item value="programmSpeicherStArray"/>
 			<item value="zeileInt"/>
 			<item value="temCurLnSt"/>
