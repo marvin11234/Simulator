@@ -94,167 +94,171 @@ public class Controller {
 	
 	public void addwf(int d, int f)throws Exception
 	{
-		System.out.println("addwf");
+		
 	}
 	
 	public void andwf(int d, int f)throws Exception
 	{
-		System.out.println("andwf");
+		
 	}
 	
 	public void clrw()throws Exception
 	{
-		System.out.println("clrw");
+		
 	}
 	
 	public void clrf(int f)throws Exception
 	{
-		System.out.println("clrf");
+		
 	}
 	
 	public void comf(int d, int f)throws Exception
 	{
-		System.out.println("comf");
+		
 	}
 	
 	public void decf(int d, int f)throws Exception
 	{
-		System.out.println("decf");
+		
 	}
 	
 	public void decfsz(int d, int f)throws Exception
 	{
-		System.out.println("decfsz");
+		
 	}
 	
 	public void incf(int d, int f)throws Exception
 	{
-		System.out.println("incf");
+		
 	}
 	
 	public void incfsz(int d, int f)throws Exception
 	{
-		System.out.println("incfsz");
+		
 	}
 	
 	public void iorwf(int d, int f)throws Exception
 	{
-		System.out.println("iorwf");
+		
 	}
 	
 	public void sleep()throws Exception
 	{
-		System.out.println("sleep");
+		
 	}
 	
 	public void Return()throws Exception
 	{
-		System.out.println("Return");
+		
 	}
 	
 	public void retfie()throws Exception
 	{
-		System.out.println("retfie");
+		
 	}
 	
 	public void clrwdt()throws Exception
 	{
-		System.out.println("addclrwdtwf");
+		
 	}
 	
 	public void nop()throws Exception
 	{
-		System.out.println("nop");
+		
 	}
 	
 	public void movwf(int f)throws Exception
 	{
-		System.out.println("movwf");
+		
 	}
 	
 	public void rlf(int d, int f)throws Exception
 	{
-		System.out.println("rlf");
+		
 	}
 	
 	public void rrf(int d, int f)throws Exception
 	{
-		System.out.println("rrf");
+		
 	}
 	
 	public void subwf(int d, int f)throws Exception
 	{
-		System.out.println("subwf");	
+		
 	}
 	
 	public void swapf(int d, int f)throws Exception
 	{
-		System.out.println("swapf");
+		
 	}
 	
 	public void movf(int d, int f)throws Exception
 	{
-		System.out.println("movf");
+		
 	}
 	
 	public void xorwf(int d, int f)throws Exception
 	{
-		System.out.println("xorwf");
+		
 	}
 	
 	
 	public void bcf(int b, int f)throws Exception
 	{
-		System.out.println("bcf");
+		
 	}
 	public void bsf(int b, int f)throws Exception
 	{
-		System.out.println("bsf");
+		
 	}
 	public void btfsc(int b, int f)throws Exception
 	{
-		System.out.println("btfsc");
+		
 	}
 	public void btfss(int b, int f)throws Exception
 	{
-		System.out.println("btfss");
+		
 	}
 	
 	public void call(int k)throws Exception
 	{
-		System.out.println("call");
+		
 	}
 	public void Goto(int k)throws Exception
 	{
-		System.out.println("Goto");
+		
 	}
 	public void addlw(int k)throws Exception
 	{
-		System.out.println("addlw");
+		
 	}
 	public void iorlw(int k)throws Exception
 	{
-		System.out.println("iorlw");
+		
 	}
 	public void movlw(int k)throws Exception
 	{
-		System.out.println("movlw");
+		
 	}
 	public void retlw(int k)throws Exception
 	{
-		System.out.println("retlw");
+		
 	}
 	public void sublw(int k)throws Exception
 	{
-		System.out.println("sublw");
+		
 	}
 	public void xorlw(int k)throws Exception
 	{
-		System.out.println("xorlw");
+		
 	}
 	
 	public void andlw(int k)throws Exception
 	{
-		System.out.println("andlw");
+		
 	}
+
+
+
+
 }

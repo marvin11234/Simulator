@@ -1,13 +1,10 @@
 
 public class Prozessor extends Thread{
 
+	
 	public void Befehlsabarbeitung(int[] befehlDezimalIntArray) throws Exception {
-		int x = 0;
-		while(x <= 100)
-		{
-			System.out.println(befehlDezimalIntArray[x] );
-			
-		int zeileInt = befehlDezimalIntArray[x];
+		System.out.println(befehlDezimalIntArray[0] );
+		int zeileInt = befehlDezimalIntArray[0];
 		int precommandInt = (zeileInt >> 12) & 0x0003;
 		int commandInt = (zeileInt >> 8) & 0x000F;
 		Controller controllerInst  = new Controller();
@@ -199,9 +196,8 @@ public class Prozessor extends Thread{
 				break;
 			}
 		}
-		x++;
-	}
 		
-}
+	}
+	
 }
 
