@@ -18,6 +18,22 @@ public class Memory extends Thread{
 	
 	int i = 0;
 	
+	Controller ctr;
+	
+	public Memory(Controller controller) {
+		ctr = controller;
+	}
+	
+	public void IncPc()
+	{
+	programCounterInt = programCounterInt +1;
+	}
+	public void SetPC()
+	{ 
+		programCounterInt = 0;
+	//programCounterInt = anyValue;
+	}
+
 	public int[] CodeSpeichern(String[][] tableStArray)
 	{
 

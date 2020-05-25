@@ -3,6 +3,8 @@
 import javax.swing.JFrame;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JButton;
 
 import javax.swing.JMenuBar;
@@ -13,7 +15,26 @@ import javax.swing.JTextPane;
 
 public class Simulator_Window {
 
+	private Controller ctr;
 	private JFrame frame;
+	
+	public Simulator_Window() {
+		ctr = new Controller(this);
+	}
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {	
+					Simulator_Window Simulator_WindowInst = new Simulator_Window();
+					Simulator_WindowInst.initialize(Simulator_WindowInst);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -35,10 +56,9 @@ public class Simulator_Window {
 		JButton btnLoad_File = new JButton("Load File");
 		btnLoad_File.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Controller controllerInst  = new Controller();
 				
 				try {
-					controllerInst.Einlesen();
+					ctr.Einlesen();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -49,5 +69,6 @@ public class Simulator_Window {
 		
 
 	}
+	
 
 }
