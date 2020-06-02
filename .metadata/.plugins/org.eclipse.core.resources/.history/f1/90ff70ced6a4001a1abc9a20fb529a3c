@@ -15,27 +15,19 @@ public class Memory extends Thread{
 	protected int[] wRegisterIntArray = new int [8]; 
 	int wRegInt = 0;
 	
-	//status Register
-	protected int[] statusRegisterIntArray = new int [8];
-	//statusRegisterIntArray[3] = 1; !!!!
-	//statusRegisterIntArray[4] = 1;
-	
 	protected Stack <Integer>  cmdStack = new Stack <Integer>();
-	
-	//Controller Instanz erzeugen
+		
 	Controller ctr;
 	
 	public Memory(Controller controller) {
 		ctr = controller;
 	}
 	
-	//Increment Programmcounter
 	public void IncPc()
 	{
 	programCounterInt = programCounterInt +1;
 	System.out.println("PC:" + programCounterInt);
 	}
-	//Set programmcounter (goto/Call)
 	public void SetPC(int k)
 	{ 
 		programCounterInt = k;
@@ -43,31 +35,10 @@ public class Memory extends Thread{
 	//programCounterInt = anyValue;
 	}
 	
-	//gibt den wert des w-registers als int zurück
 	public int GetWInt()
 	{
 		return wRegInt;
 	}
-	
-	//funktion zum setzen des DigitCarryFlag
-	public void SetDigitCarry() 
-	{
-		statusRegisterIntArray[1] = 1;
-	}
-	
-	//funktion zum setzen des ZeroFlag
-	public void SetzeroFlag() 
-	{
-		statusRegisterIntArray[2] = 1;
-	}
-	
-	//funktion zum setzen des CarryFlag
-	public void SetCarry() 
-	{
-		statusRegisterIntArray[0] = 1;
-	}
-	
-	//beschrieben des W-registers mit dem literal k
 	public void WriteW(int k) 
 	{
 		wRegInt = k;
@@ -81,7 +52,6 @@ public class Memory extends Thread{
 	     }
 	}
 	
-	//beschreiben des code Sepichers
 	public int[] CodeSpeichern(String[][] tableStArray)
 	{
 		int i = 0;

@@ -297,10 +297,6 @@ public class Controller {
 	{
 		System.out.println("sublw");
 		int temp = memo.GetWInt();
-		
-		if((k- temp) < 0) {
-			memo.SetCarry();
-		}
 		k = (k - temp);
 		if(k == 0) {
 			memo.SetzeroFlag();

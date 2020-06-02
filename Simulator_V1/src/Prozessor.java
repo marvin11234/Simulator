@@ -19,7 +19,7 @@ public class Prozessor extends Thread {
 		
 			int pcr = ctr.GetprogramCounter();
 			int befehl = ctr.GetBefehl(pcr);
-			System.out.println("test"+ befehl);
+			//System.out.println("test"+ befehl);
 			
 		int zeileInt = befehl;
 		int precommandInt = (zeileInt >> 12) & 0x0003;

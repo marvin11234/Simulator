@@ -275,9 +275,6 @@ public class Controller {
 		System.out.println("iorlw");
 		int temp = memo.GetWInt();
 		k = (temp|k);
-		if(k == 0) {
-			memo.SetzeroFlag();
-		}
 		memo.WriteW(k);
 		memo.IncPc();
 	}
@@ -296,15 +293,6 @@ public class Controller {
 	public void sublw(int k)throws Exception
 	{
 		System.out.println("sublw");
-		int temp = memo.GetWInt();
-		
-		if((k- temp) < 0) {
-			memo.SetCarry();
-		}
-		k = (k - temp);
-		if(k == 0) {
-			memo.SetzeroFlag();
-		}
 		memo.IncPc();
 	}
 	public void xorlw(int k)throws Exception
@@ -318,9 +306,6 @@ public class Controller {
 		System.out.println("andlw");
 		int temp = memo.GetWInt();
 		k = (temp&k);
-		if(k == 0) {
-			memo.SetzeroFlag();
-		}
 		memo.WriteW(k);
 		memo.IncPc();
 	}

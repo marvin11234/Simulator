@@ -6,14 +6,14 @@
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value=" goto"/>
+			<item value="sublw"/>
+			<item value="iorlw"/>
 			<item value="and"/>
+			<item value="movlw"/>
+			<item value=" goto"/>
 			<item value="0001"/>
 			<item value="test"/>
 			<item value="ProgrammspeicherStArray"/>
-			<item value="iZeile"/>
-			<item value="sTempCurLn"/>
-			<item value="sCurrentLine"/>
 		</list>
 		<list key="replacehistory">
 			<item value="bofo"/>

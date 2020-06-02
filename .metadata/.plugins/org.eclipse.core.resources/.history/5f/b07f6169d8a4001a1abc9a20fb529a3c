@@ -16,9 +16,7 @@ public class Memory extends Thread{
 	int wRegInt = 0;
 	
 	//status Register
-	protected int[] statusRegisterIntArray = new int [8];
-	//statusRegisterIntArray[3] = 1; !!!!
-	//statusRegisterIntArray[4] = 1;
+	protected int[] statusRegisterIntArray = new int [8]; 
 	
 	protected Stack <Integer>  cmdStack = new Stack <Integer>();
 	
@@ -48,25 +46,7 @@ public class Memory extends Thread{
 	{
 		return wRegInt;
 	}
-	
-	//funktion zum setzen des DigitCarryFlag
-	public void SetDigitCarry() 
-	{
-		statusRegisterIntArray[1] = 1;
-	}
-	
-	//funktion zum setzen des ZeroFlag
-	public void SetzeroFlag() 
-	{
-		statusRegisterIntArray[2] = 1;
-	}
-	
-	//funktion zum setzen des CarryFlag
-	public void SetCarry() 
-	{
-		statusRegisterIntArray[0] = 1;
-	}
-	
+
 	//beschrieben des W-registers mit dem literal k
 	public void WriteW(int k) 
 	{

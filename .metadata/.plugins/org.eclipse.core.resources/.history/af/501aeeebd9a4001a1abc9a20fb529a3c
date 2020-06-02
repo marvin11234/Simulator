@@ -17,8 +17,7 @@ public class Memory extends Thread{
 	
 	//status Register
 	protected int[] statusRegisterIntArray = new int [8];
-	//statusRegisterIntArray[3] = 1; !!!!
-	//statusRegisterIntArray[4] = 1;
+	
 	
 	protected Stack <Integer>  cmdStack = new Stack <Integer>();
 	
