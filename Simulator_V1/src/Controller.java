@@ -256,13 +256,14 @@ public class Controller {
 	
 	public void call(int k)throws Exception
 	{
+		memo.SetPC(k);
 		System.out.println("call");
-		memo.SetPC();
+
 	}
 	public void Goto(int k)throws Exception
 	{
 		System.out.println("Goto");
-		memo.SetPC();
+		memo.SetPC(k);
 	}
 	public void addlw(int k)throws Exception
 	{

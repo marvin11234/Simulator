@@ -6,6 +6,7 @@
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value=" goto"/>
 			<item value="and"/>
 			<item value="0001"/>
 			<item value="test"/>
@@ -13,7 +14,6 @@
 			<item value="iZeile"/>
 			<item value="sTempCurLn"/>
 			<item value="sCurrentLine"/>
-			<item value="cu"/>
 		</list>
 		<list key="replacehistory">
 			<item value="bofo"/>

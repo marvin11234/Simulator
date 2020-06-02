@@ -28,9 +28,9 @@ public class Memory extends Thread{
 	{
 	programCounterInt = programCounterInt +1;
 	}
-	public void SetPC()
+	public void SetPC(int k)
 	{ 
-		programCounterInt = 0;
+		programCounterInt = k;
 	//programCounterInt = anyValue;
 	}
 
