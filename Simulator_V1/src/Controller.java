@@ -100,228 +100,396 @@ public class Controller {
 		return befehl;
 	}
 	
-	public void addwf(int d, int f)throws Exception
+	public void addwf(int d, int f)throws Exception	//BEEINFLUSST C; DC; Z
 	{
-		System.out.println("addwf");
+		int temp = memo.GetWInt();
+		int erg = temp + f;
+		
+		if(erg == 0)
+		{
+			memo.SetzeroFlag();
+		}
+		if(erg < 255)
+		{
+			memo.SetCarry();
+			erg = ((temp + f) +255);
+		}
+		
+		if (d == 0 )
+		{
+			int k = erg;
+			memo.WriteW(erg);
+		}
+		else if (d == 1)	//ERGEBNIS IN F SPEICHERN ?
+		{
+//			int k = erg;	WO IST F?
+//			memo.WriteF;
+		}
 		memo.IncPc();
 	}
 	
-	public void andwf(int d, int f)throws Exception
+	public void andwf(int d, int f)throws Exception //BEEINFLUSST Z
 	{
-		System.out.println("andwf");
+		int temp = memo.GetWInt();
+		int erg = (temp & f);
+		if(erg == 0)
+		{
+			memo.SetzeroFlag();
+		}
+		
+		if(d == 0 )
+		{
+			memo.WriteW(erg);
+		}
+		else if (d == 1)
+		{
+			// TODO
+		}
 		memo.IncPc();
 	}
 	
-	public void clrw()throws Exception
+	public void clrw()throws Exception //BEEINFLUSST Z
 	{
-		System.out.println("clrw");
+		int erg = 00;
+		memo.WriteW(erg);
+		memo.SetzeroFlag();
 		memo.IncPc();
 	}
 	
-	public void clrf(int f)throws Exception
+	public void clrf(int f)throws Exception //BEEINFLUSST Z
 	{
-		System.out.println("clrf");
+		int erg = 00;
+		//memo.WriteW(erg); TODO: WRITEF()
+		memo.SetzeroFlag();
 		memo.IncPc();
 	}
 	
-	public void comf(int d, int f)throws Exception
+	public void comf(int d, int f)throws Exception //BEEINFLUSST Z
 	{
-		System.out.println("comf");
+		
+			int temp = ~ f; 
+			int erg = temp;
+			
+			if(erg == 0)
+			{
+				memo.SetzeroFlag();
+			}
+			
+			if(d == 0 )
+			{
+				memo.WriteW(erg);
+			}
+			else if (d == 1)
+			{
+				// TODO WRITEF()
+			}
 		memo.IncPc();
 	}
 	
-	public void decf(int d, int f)throws Exception
+	public void decf(int d, int f)throws Exception // BEEINFLUSST Z	
 	{
-		System.out.println("decf");
+		int temp =  f;
+		int erg = temp - 1; 
+		
+		if(erg == 0)
+		{
+			memo.SetzeroFlag();
+		}
+		
+		if(d == 0 )
+		{
+			memo.WriteW(erg);
+		}
+		else if (d == 1)
+		{
+			// TODO WRITEF()
+		}
 		memo.IncPc();
 	}
 	
-	public void decfsz(int d, int f)throws Exception
+	public void decfsz(int d, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("decfsz");
 		memo.IncPc();
 	}
 	
-	public void incf(int d, int f)throws Exception
+	public void incf(int d, int f)throws Exception // BEEINFLUSST Z	
 	{
-		System.out.println("incf");
+		int temp =  f;
+		int erg = temp + 1; 
+		
+		if(erg == 0)
+		{
+			memo.SetzeroFlag();
+		}
+		
+		if(d == 0 )
+		{
+			memo.WriteW(erg);
+		}
+		else if (d == 1)
+		{
+			// TODO WRITEF()
+		}
 		memo.IncPc();
 	}
 	
-	public void incfsz(int d, int f)throws Exception
+	public void incfsz(int d, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("incfsz");
 		memo.IncPc();
 	}
 	
-	public void iorwf(int d, int f)throws Exception
+	public void iorwf(int d, int f)throws Exception // BEEINFLUSST Z	
 	{
-		System.out.println("iorwf");
+		int temp =  memo.GetWInt();
+		int erg = temp | f ; 
+		
+		if(erg == 0)
+		{
+			memo.SetzeroFlag();
+		}
+		
+		if(d == 0 )
+		{
+			memo.WriteW(erg);
+		}
+		else if (d == 1)
+		{
+			// TODO WRITEF()
+		}
 		memo.IncPc();
 	}
 	
-	public void sleep()throws Exception
+	public void sleep()throws Exception  //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("sleep");
 		memo.IncPc();
 	}
 	
-	public void Return()throws Exception
+	public void Return()throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("Return");
 		memo.IncPc();
 	}
 	
-	public void retfie()throws Exception
+	public void retfie()throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("retfie");
 		memo.IncPc();
 	}
 	
-	public void clrwdt()throws Exception
+	public void clrwdt()throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("addclrwdtwf");
 		memo.IncPc();
 	}
 	
-	public void nop()throws Exception
+	public void nop()throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("nop");
 		memo.IncPc();
 	}
 	
-	public void movwf(int f)throws Exception
+	public void movwf(int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("movwf");
 		memo.IncPc();
 	}
 	
-	public void rlf(int d, int f)throws Exception
+	public void rlf(int d, int f)throws Exception //BEEINFLUSST C
 	{
 		System.out.println("rlf");
 		memo.IncPc();
 	}
 	
-	public void rrf(int d, int f)throws Exception
+	public void rrf(int d, int f)throws Exception //BEEINFLUSST C
 	{
 		System.out.println("rrf");
 		memo.IncPc();
 	}
 	
-	public void subwf(int d, int f)throws Exception
+	public void subwf(int d, int f)throws Exception //BEEINFLUSST C, DC, Z
 	{
-		System.out.println("subwf");
+		int temp =  memo.GetWInt();
+		int erg = f - temp ; 
+		
+		if(erg == 0)
+		{
+			memo.SetzeroFlag();
+		}
+		
+		if(d == 0 )
+		{
+			memo.WriteW(erg);
+		}
+		else if (d == 1)
+		{
+			// TODO WRITEF()
+		}
 		memo.IncPc();
 	}
 	
-	public void swapf(int d, int f)throws Exception
+	public void swapf(int d, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("swapf");
 		memo.IncPc();
 	}
 	
-	public void movf(int d, int f)throws Exception
+	public void movf(int d, int f)throws Exception  //BEEINFLUSST  Z
 	{
-		System.out.println("movf");
+		int erg = f ; 
+		
+		if(erg == 0)
+		{
+			memo.SetzeroFlag();
+		}
+		
+		if(d == 0 )
+		{
+			memo.WriteW(erg);
+		}
+		else if (d == 1)
+		{
+			// TODO WRITEF()
+		}
 		memo.IncPc();
 	}
 	
-	public void xorwf(int d, int f)throws Exception
+	public void xorwf(int d, int f)throws Exception //BEEINFLUSST  Z
 	{
-		System.out.println("xorwf");
+		int temp =  memo.GetWInt();
+		//temp = f;
+		
+		int erg = ((temp ^ f)) ; 
+		
+		if(erg == 0)
+		{
+			memo.SetzeroFlag();
+		}
+		
+		if(d == 0 )
+		{
+			memo.WriteW(erg);
+		}
+		else if (d == 1)
+		{
+			// TODO WRITEF()
+		}
 		memo.IncPc();
 	}
 	
 	
-	public void bcf(int b, int f)throws Exception
+	public void bcf(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("bcf");
 		memo.IncPc();
 	}
-	public void bsf(int b, int f)throws Exception
+	public void bsf(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("bsf");
 		memo.IncPc();
 	}
-	public void btfsc(int b, int f)throws Exception
+	public void btfsc(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("btfsc");
 		memo.IncPc();
 	}
-	public void btfss(int b, int f)throws Exception
+	public void btfss(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("btfss");
 		memo.IncPc();
 	}
 	
-	public void call(int k)throws Exception
+	public void call(int k)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		memo.SetPC(k);
 		System.out.println("call");
 
 	}
-	public void Goto(int k)throws Exception
+	public void Goto(int k)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("Goto");
 		memo.SetPC(k);
 	}
-	public void addlw(int k)throws Exception
+	public void addlw(int k)throws Exception //BEEINFLUSST  C, DC, Z
 	{
-		System.out.println("addlw");
-		memo.IncPc();
-	}
-	public void iorlw(int k)throws Exception
-	{
-		System.out.println("iorlw");
 		int temp = memo.GetWInt();
-		k = (temp|k);
-		if(k == 0) {
+		int erg = temp + k;
+		if (erg == 0)
+		{
 			memo.SetzeroFlag();
 		}
-		memo.WriteW(k);
+		
+		memo.WriteW(erg);
 		memo.IncPc();
 	}
-	public void movlw(int k)throws Exception
+	public void iorlw(int k)throws Exception  //BEEINFLUSST  C, DC, Z
 	{
 		
-		System.out.println("movlw");
-		memo.WriteW(k);
+		int temp = memo.GetWInt();
+		int erg  = (temp | k);
+		
+		
+		if(erg == 0) 
+		{
+			memo.SetzeroFlag();
+		}
+		memo.WriteW(erg);
 		memo.IncPc();
 	}
-	public void retlw(int k)throws Exception
+	public void movlw(int k)throws Exception //BEEINFLUSST  KEINE STATI	
+	{
+		int erg = k;
+		
+		memo.WriteW(erg);
+		memo.IncPc();
+	}
+	public void retlw(int k)throws Exception //BEEINFLUSST  KEINE STATI	
 	{
 		System.out.println("retlw");
 		memo.IncPc();
 	}
-	public void sublw(int k)throws Exception
+	public void sublw(int k)throws Exception //BEEINFLUSST  C, DC, Z
 	{
-		System.out.println("sublw");
 		int temp = memo.GetWInt();
-		
-		if((k- temp) < 0) {
-			memo.SetCarry();
-		}
-		k = (k - temp);
-		if(k == 0) {
+		int erg = k - temp;
+		memo.Print(temp, erg, k); //DEBUG
+		if(erg == 0)
+		{
 			memo.SetzeroFlag();
 		}
+		
+		if(erg < 0) {
+			memo.SetCarry();
+		}
+		
+		memo.WriteW(erg);
 		memo.IncPc();
 	}
-	public void xorlw(int k)throws Exception
+	public void xorlw(int k)throws Exception //BEEINFLUSST Z
 	{
-		System.out.println("xorlw");
+		int temp = memo.GetWInt();
+		int erg = temp ^ k  ;
+		
+		if(erg == 0)
+		{
+			memo.SetzeroFlag();
+		}
+		
+		memo.WriteW(erg);
 		memo.IncPc();
 	}
 	
-	public void andlw(int k)throws Exception
+	public void andlw(int k)throws Exception //BEEINFLUSST Z
 	{
-		System.out.println("andlw");
 		int temp = memo.GetWInt();
-		k = (temp&k);
-		if(k == 0) {
+		int erg = (temp & k);
+		if(k == 0) 
+		{
 			memo.SetzeroFlag();
 		}
-		memo.WriteW(k);
+		memo.WriteW(erg);
 		memo.IncPc();
 	}
 }

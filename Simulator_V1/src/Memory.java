@@ -68,19 +68,23 @@ public class Memory extends Thread{
 	}
 	
 	//beschrieben des W-registers mit dem literal k
-	public void WriteW(int k) 
+	public void WriteW(int erg) 
 	{
-		wRegInt = k;
+		System.out.println("### "+ erg + " ###" );
+		wRegInt = erg;
 	     int index = 0;
-	     while(k > 0){
-	       wRegisterIntArray[index++] = k%2;
-	       k = k/2;
+	     while(erg > 0){
+	       wRegisterIntArray[index++] = erg % 2;
+	       erg = erg/2;
 	     }
 	     for(int i = wRegisterIntArray.length -1;i >= 0;i--){
 	       System.out.println("W-Register:" + wRegisterIntArray[i]);
 	     }
 	}
-	
+	public void Print(int temp,int erg,int k) //DEBUG => CONTROLLER => SUBLW
+	{
+		System.out.println("temp: " + temp + " k: "  + k + " erg: " + erg);
+	}
 	//beschreiben des code Sepichers
 	public int[] CodeSpeichern(String[][] tableStArray)
 	{
