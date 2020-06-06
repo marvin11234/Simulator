@@ -49,10 +49,17 @@ public class Memory extends Thread{
 		return wRegInt;
 	}
 	
+	
 	//funktion zum setzen des DigitCarryFlag
 	public void SetDigitCarry() 
 	{
 		statusRegisterIntArray[1] = 1;
+	}
+	
+	//funktion zum Rücksetzen des DigitCarryFlag
+	public void ResetDigitCarry() 
+	{
+		statusRegisterIntArray[1] = 0;
 	}
 	
 	//funktion zum setzen des ZeroFlag
@@ -60,11 +67,21 @@ public class Memory extends Thread{
 	{
 		statusRegisterIntArray[2] = 1;
 	}
+	//funktion zum Rücksetzen des ZeroFlag
+	public void ResetetzeroFlag() 
+	{
+		statusRegisterIntArray[2] = 0;
+	}
 	
 	//funktion zum setzen des CarryFlag
 	public void SetCarry() 
 	{
 		statusRegisterIntArray[0] = 1;
+	}
+	//funktion zum Rücksetzen des CarryFlag
+	public void ResetCarry() 
+	{
+		statusRegisterIntArray[0] = 0;
 	}
 	
 	//beschrieben des W-registers mit dem literal k
