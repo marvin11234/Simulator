@@ -103,24 +103,20 @@ public class Controller {
 	public void addwf(int d, int f)throws Exception	//BEEINFLUSST C; DC; Z
 	{
 		int temp = memo.GetWInt();
-		int temp2 = memo.GetF(f);
-		int erg = temp + temp2;
-		int k = temp2;
-		memo.Print(temp, erg, k);
+		int erg = temp + f;
 		
 		if(erg == 0)
 		{
 			memo.SetzeroFlag();
 		}
-/*		if(erg < 255)
+		if(erg < 255)
 		{
 			memo.SetCarry();
 			erg = ((temp + f) +255);
 		}
-*/		
+		
 		if (d == 0 )
 		{
-			System.out.println("Schreibe in F:" + "erg: " + erg + "f" + f);
 			memo.WriteW(erg);
 		}
 		else if (d == 1)	//ERGEBNIS IN F SPEICHERN ?

@@ -120,7 +120,7 @@ public class Controller {
 */		
 		if (d == 0 )
 		{
-			System.out.println("Schreibe in F:" + "erg: " + erg + "f" + f);
+			System.out.println("Schreibe in F:" + "erg:" + erg + "f" + f);
 			memo.WriteW(erg);
 		}
 		else if (d == 1)	//ERGEBNIS IN F SPEICHERN ?

@@ -125,7 +125,7 @@ public class Memory extends Thread{
 	//beschrieben des W-registers mit dem literal k
 	public void WriteW(int erg) 
 	{
-		System.out.println("WriteW "+ erg + " ###" );
+		System.out.println("### "+ erg + " ###" );
 		wRegInt = erg;
 	     int index = 0;
 	     for(int i = 0; i <= (wRegisterIntArray.length)-1; i++)//ggf. über Zeroflag lösen ???

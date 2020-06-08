@@ -22,14 +22,6 @@ public class Memory extends Thread{
 	     }
 	}
 	
-	public int GetF(int f) 
-	{
-		int fDezimal;
-		fDezimal= (dataMemoryIntArray[f][7] * 128) + (dataMemoryIntArray[f][6] * 64) + (dataMemoryIntArray[f][5] * 32) + (dataMemoryIntArray[f][4] * 16) + (dataMemoryIntArray[f][3] * 8) + (dataMemoryIntArray[f][2] * 4) + (dataMemoryIntArray[f][1] * 2) + (dataMemoryIntArray[f][0] * 1);
-		System.out.println("Get FileRegsiter" + fDezimal);
-		
-		return fDezimal;
-	}
 	//Speicher für den programmcode; 0000 = Reset 0004 = interrupt
 	protected int[] programMemoryIntArray = new int [1024];
 
@@ -125,7 +117,7 @@ public class Memory extends Thread{
 	//beschrieben des W-registers mit dem literal k
 	public void WriteW(int erg) 
 	{
-		System.out.println("WriteW "+ erg + " ###" );
+		System.out.println("### "+ erg + " ###" );
 		wRegInt = erg;
 	     int index = 0;
 	     for(int i = 0; i <= (wRegisterIntArray.length)-1; i++)//ggf. über Zeroflag lösen ???
