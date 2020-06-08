@@ -90,13 +90,10 @@ public class Memory extends Thread{
 		System.out.println("### "+ erg + " ###" );
 		wRegInt = erg;
 	     int index = 0;
-	     for(int i = 0; i <= (wRegisterIntArray.length)-1; i++)//ggf. über Zeroflag lösen ???
-	     {
-	    	 wRegisterIntArray[i] = 0;
-	     }
 	     while(erg > 0){
 	       wRegisterIntArray[index++] = erg % 2;
 	       erg = erg/2;
+	       System.out.println("Ergebniss" + erg);
 	     }
 	     for(int i = wRegisterIntArray.length -1;i >= 0;i--){
 	       System.out.println("W-Register:" + wRegisterIntArray[i]);

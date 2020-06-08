@@ -416,7 +416,6 @@ public class Controller {
 	{
 		int temp = memo.GetWInt();
 		int erg = temp + k;
-		memo.Print(temp, erg, k);
 		if (erg == 0)
 		{
 			memo.SetzeroFlag();

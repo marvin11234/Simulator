@@ -157,7 +157,7 @@ public class Prozessor extends Thread {
 		}
 		else if(precommandInt == 3)
 		{
-			int k = (zeileInt)& 0b00000011111111;
+			int k = (zeileInt)& 0b00011111111111;
 			switch(commandInt)
 			{
 			case 0b1110:
