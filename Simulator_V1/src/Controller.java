@@ -500,4 +500,14 @@ public class Controller {
 		memo.WriteW(erg);
 		memo.IncPc();
 	}
+
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
 }

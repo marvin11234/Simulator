@@ -18,6 +18,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.Font;
 
 
 public class Simulator_Window {
@@ -92,6 +93,32 @@ public class Simulator_Window {
 		tblCodeAusgabe.setEnabled(false);
 		tblCodeAusgabe.setModel(tblCode);
 		spCodeAusgabe.setViewportView(tblCodeAusgabe);
+		
+		JPanel panelControl = new JPanel();
+		panelControl.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelControl.setBounds(909, 26, 168, 157);
+		frame.getContentPane().add(panelControl);
+		panelControl.setLayout(null);
+		
+		JButton btnStart = new JButton("Start");
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctr.start();
+			}
+		});
+		btnStart.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnStart.setBounds(10, 10, 144, 42);
+		panelControl.add(btnStart);
+		
+		JButton btnStop = new JButton("Stop");
+		btnStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ctr.stop();
+			}
+		});
+		btnStop.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnStop.setBounds(10, 60, 144, 42);
+		panelControl.add(btnStop);
 		for(int i = 0; i < 5; i++)
 		{
 		 TableColumn column = tblCodeAusgabe.getColumnModel().getColumn(i);
