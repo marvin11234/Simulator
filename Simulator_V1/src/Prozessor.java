@@ -1,15 +1,20 @@
 
 public class Prozessor extends Thread {
 	
-	Controller ctr;
+	private boolean exit = false;
+	private Controller ctr;
 	public Prozessor(Controller controller) {
 		ctr = controller;
 	}
 	@Override public void run(){ 
-		while(true) {
+		while(! exit) {
 			try {
-				this.befehlsAbarabeitung(ctr.memo.programMemoryIntArray[ctr.memo.programCounterInt]);
-				Thread.sleep(5000);
+				this.befehlsAbarabeitung(ctr.getMemo().programMemoryIntArray[ctr.getMemo().programCounterInt]);
+				if(exit)
+				{
+					break;
+				}
+				Thread.sleep(2000);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -211,5 +216,9 @@ public class Prozessor extends Thread {
 			}
 		}		
 }
+	public void stopThread()
+	{
+		exit = true;
+	}
 }
 
