@@ -145,20 +145,13 @@ public class Memory extends Thread{
 		System.out.println("temp: " + temp + " k: "  + k + " erg: " + erg);
 	}
 	//beschreiben des code Sepichers
-	public int[] CodeSpeichern(String[][] tableStArray)
+	public void CodeSpeichern(String pcSt, String codeSt)
 	{
-		int i = 0;
-
-		while(tableStArray[i][3] != null)
-		{
-			if(! tableStArray[i][1].equals("    "))
-			{
-				programMemoryIntArray[Integer.parseInt(tableStArray[i][1],16)] = Integer.parseInt(tableStArray[i][2],16);
-				//System.out.println("Stelle "+ Integer.parseInt(tableStArray[i][1],16) + ":"+ programMemoryIntArray[Integer.parseInt(tableStArray[i][1],16)]);				
-			}
-
-			i++;
-		}
-		return programMemoryIntArray;
+		
+		System.out.println("pcST" + pcSt + " codeSt" + codeSt);
+		int pcInt = Integer.parseInt(pcSt, 16);
+		programMemoryIntArray[pcInt] = Integer.parseInt(codeSt, 16);
+		System.out.println("CODESpeicherARRAY" + programMemoryIntArray[pcInt]);
+		//return programMemoryIntArray;
 	}
 }

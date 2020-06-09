@@ -8,20 +8,17 @@ public class Prozessor extends Thread {
 	@Override public void run(){ 
 		while(true) {
 			try {
-				this.befehlsAbarabeitung();
+				this.befehlsAbarabeitung(ctr.memo.programMemoryIntArray[ctr.memo.programCounterInt]);
+				Thread.sleep(5000);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	public void befehlsAbarabeitung() throws Exception {
+	public void befehlsAbarabeitung(int codeLine) throws Exception {
 		
-			int pcr = ctr.GetprogramCounter();
-			int befehl = ctr.GetBefehl(pcr);
-			//System.out.println("test"+ befehl);
-			
-		int zeileInt = befehl;
+		int zeileInt = codeLine;
 		int precommandInt = (zeileInt >> 12) & 0x0003;
 		int commandInt = (zeileInt >> 8) & 0x000F;
 	

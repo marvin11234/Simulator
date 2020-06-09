@@ -16,7 +16,6 @@ public class Controller {
 	
 	JFileChooser fileChooser = new JFileChooser();
 	StringBuilder sb = new StringBuilder();
-	String currentLineSt;
 	int arrayStelleEinlesenInt = 0;
 	String[] inputStArray = new String[1024];
 	String[] programmSpeicherStArray = new String[1024];
@@ -42,63 +41,57 @@ public class Controller {
 			BufferedReader br = null;
 			try 
 			{ 
-				br = new BufferedReader(new FileReader(file));	
+				br = new BufferedReader(new FileReader(file));
+				
+				String currentLineSt;
 				while ((currentLineSt = br.readLine()) != null)
 				{
-					inputStArray[arrayStelleEinlesenInt] = currentLineSt;
-					
-					arrayStelleEinlesenInt++;
+					String pcSt = currentLineSt.substring(0,4);
+					String codeSt = currentLineSt.substring(5,9);
+					String linecountSt = currentLineSt.substring(20,25);
+					String label = "";
+					if(currentLineSt.charAt(27) != ' ')
+					{
+						int index = 27;
+						while(currentLineSt.charAt(index) != ' ')
+						{
+							label = label + currentLineSt.charAt(index);
+							index ++;
+						}
+					}
+					if(label.isEmpty())
+					{
+						gui.tblCode.addRow(new Object[] {"",pcSt, codeSt, linecountSt, label,currentLineSt.substring(36)});
+					}
+					else
+					{
+						gui.tblCode.addRow(new Object[] {"",pcSt, codeSt, linecountSt, label,""});
+					}
+					if(! currentLineSt.substring(0,4).equals("    "))
+					{
+						int pc =Integer.parseInt(pcSt ,16);
+						int code = Integer.parseInt(codeSt ,16);
+						this.memo.programMemoryIntArray[pc] = code;
+					}
 				}
 
-						while((temCurLnSt = inputStArray[i]) !=  null)
-						{
-											
-							try 
-							{
-							
-								temCurLnSt = inputStArray[i];
-								if(temCurLnSt != null)
-								{							
-									tableStArray[i][1] = temCurLnSt.substring(0,4);
-									tableStArray[i][2] = temCurLnSt.substring(5,9);
-									tableStArray[i][3] = temCurLnSt.substring(20,25);
-									tableStArray[i][4] = temCurLnSt.substring(27,32);
-									tableStArray[i][5] = temCurLnSt.substring(36,inputStArray[i].length());						
-								}
-							}
-							catch (NumberFormatException e)
-							{
-								System.out.println("Fehler: es Konnte keine Einlesezeile gefunden werden");
-							}
-							i++;
-						}
-
+						
 			}
 			catch (IOException e)
 			{
-			e.printStackTrace();
+				e.printStackTrace();
 			}
-			
-			befehlDezimalIntArray = memo.CodeSpeichern(tableStArray);
-
-			Thread BefehlsThreat = new Thread(proc);
-			BefehlsThreat.start();
-
-			
 		}
 		else 
 		{
 			sb.append("No file was choosen");
 		}
 	}
-	public int GetprogramCounter(){
-		int aktuellerBefehlInt = memo.programCounterInt;
-		return aktuellerBefehlInt;
-	}
-	public int GetBefehl(int pcr){
-		int befehl = memo.programMemoryIntArray[pcr];
-		return befehl;
-	}
+
+	
+	
+	
+	
 	
 	public void addwf(int d, int f)throws Exception	//BEEINFLUSST C; DC; Z
 	{
