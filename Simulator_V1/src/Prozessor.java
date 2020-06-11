@@ -22,20 +22,24 @@ public class Prozessor extends Thread {
 		}
 	}
 	public void befehlsAbarabeitung(int codeLine) throws Exception {
-		
-		int zeileInt = codeLine;
-		int precommandInt = (zeileInt >> 12) & 0x0003;
-		int commandInt = (zeileInt >> 8) & 0x000F;
-		
+
+		int precommandInt = (codeLine >> 12) & 0x0003;
+		int commandInt = (codeLine >> 8) & 0x000F;
+		int payload = (codeLine & 0x00FF);
 		System.out.println("Precommand: " + precommandInt);
 	
 
 		if(precommandInt == 0) //Byte orientierte Fileregister Operationen
 		{
-			int d = ((zeileInt) & 0x00FF) >> 7;
-			int f = ((zeileInt) & 0x00FF) & 0b01111111;
-			int destination = ((zeileInt) & 0b00000010000000);
-			int bofo = ((zeileInt) & 0b00000000001111);
+			int d = ((payload >> 7) & 0x01); //destination
+			int f = ((payload) & 0x007F);
+	
+			/*	(commandInt >> 1) == 7
+					if (f == 0x00 || f == 0x80) {
+					                f = ctr.getMemory().get_MemoryDIRECT(0x04);
+					            }
+			*/
+			
 			System.out.println("Command INT: " + commandInt);
 			switch(commandInt)
 			{
@@ -46,7 +50,7 @@ public class Prozessor extends Thread {
 				ctr.andwf(d,f);
 				break;
 			case 0b0001:
-				if(destination == 0) {
+				if(d == 0) {
 					ctr.clrw();
 				}
 				else
@@ -56,7 +60,7 @@ public class Prozessor extends Thread {
 					
 				break;
 			case 0b1001:
-			ctr.comf(d,f);
+				ctr.comf(d,f);
 				break;
 			case 0b0011:
 				ctr.decf(d,f);
@@ -77,31 +81,29 @@ public class Prozessor extends Thread {
 				ctr.movf(d,f);
 				break;
 			case 0b0000:
-				if(destination == 0) {
-					if(bofo == 3)
-					{
-						ctr.sleep();
-					}
-					else if(bofo == 8)
-					{
-						ctr.Return();
-					}
-					else if (bofo == 9)
-					{
-						ctr.retfie();
-					}
-					else if(bofo == 4)
-					{
-						ctr.clrwdt();
-					}
-					else
-					{
-						ctr.nop();	
-					}
+				if(d == 1)
+				{
+					ctr.movwf(f);
+				}
+				else if(payload == 0b01100100)
+				{
+					ctr.clrwdt();
+				}
+				else if(payload == 0b00001001)
+				{
+					ctr.retfie();
+				}
+				else if(payload == 0b00001000)
+				{
+					ctr.Return();	
+				}
+				else if (payload == 0b01100011)
+				{
+					ctr.sleep();
 				}
 				else
 				{
-					ctr.movwf(f);						
+					ctr.nop();
 				}
 				break;
 			case 0b1101:
@@ -123,11 +125,10 @@ public class Prozessor extends Thread {
 		}
 		else if(precommandInt == 1)//Bit orientierte fileregister operationen
 		{
-			int b = ((zeileInt) & 0b00001110000000) >> 8;;
-			int f = (zeileInt)& 0b00000001111111;
-			int bofro = (commandInt >> 2);
+			int b = ((codeLine) >> 7) & 0x0007;
+			int f = (codeLine)& 0x007F;
 			
-			switch(bofro)
+			switch(commandInt >> 2)
 			{
 			case (0b00):
 				ctr.bcf(b,f);
@@ -146,9 +147,8 @@ public class Prozessor extends Thread {
 		}
 		else if(precommandInt == 2)//Literal and Controll Operations
 		{
-			int k = (zeileInt)& 0b00000011111111;
-			int lac = (commandInt >> 3);
-			switch(lac)
+			int k = (codeLine) & 0x07FF;
+			switch(commandInt >> 3)
 			{	
 			case 0b0:
 				ctr.call(k);//???
@@ -161,60 +161,35 @@ public class Prozessor extends Thread {
 		}
 		else if(precommandInt == 3)
 		{
-			int k = (zeileInt)& 0b00000011111111;
-			switch(commandInt)
+			int k = (codeLine) & 0x00FF;
+			
+			if((commandInt >> 1) == 7)
 			{
-			case 0b1110:
 				ctr.addlw(k);
-				break;
-			case 0b1111:
-				ctr.addlw(k);
-				break;
-				
-			case 0b1001:
+			}
+			else if(commandInt == 0b1001)
+			{
 				ctr.andlw(k);
-				break;
-				
-			case 0b1000:
+			}
+			else if(commandInt == 0b1000)
+			{
 				ctr.iorlw(k);
-				break;
-				
-			case 0b0000:
+			}
+			else if((commandInt >>2) == 0 )
+			{
 				ctr.movlw(k);
-				break;
-			case 0b0001:
-				ctr.movlw(k);
-				break;
-			case 0b0010:
-				ctr.movlw(k);
-				break;
-			case 0b0011:
-				ctr.movlw(k);
-				break;
-				
-			case 0b0100:
+			}
+			else if((commandInt >>2) == 1)
+			{
 				ctr.retlw(k);
-				break;
-			case 0b0101:
-				ctr.retlw(k);
-				break;
-			case 0b0110:
-				ctr.retlw(k);
-				break;
-			case 0b0111:
-				ctr.retlw(k);
-				break;
-				
-			case 0b1100:
+			}
+			else if((commandInt >> 1) == 6)
+			{
 				ctr.sublw(k);
-				break;
-			case 0b1101:
-				ctr.sublw(k);
-				break;
-				
-			case 0b1010:
+			}
+			else if(commandInt == 0b1010)
+			{
 				ctr.xorlw(k);
-				break;
 			}
 		}		
 }

@@ -390,7 +390,6 @@ public class Controller {
 			getMemo().WriteF(erg, f);
 		}
 		getMemo().IncPc();
-		getMemo().IncPc();
 	}
 	
 	public void movf(int d, int f)throws Exception  //BEEINFLUSST  Z
