@@ -26,6 +26,8 @@ public class Prozessor extends Thread {
 		int zeileInt = codeLine;
 		int precommandInt = (zeileInt >> 12) & 0x0003;
 		int commandInt = (zeileInt >> 8) & 0x000F;
+		
+		System.out.println("Precommand: " + precommandInt);
 	
 
 		if(precommandInt == 0) //Byte orientierte Fileregister Operationen
@@ -34,7 +36,7 @@ public class Prozessor extends Thread {
 			int f = ((zeileInt) & 0x00FF) & 0b01111111;
 			int destination = ((zeileInt) & 0b00000010000000);
 			int bofo = ((zeileInt) & 0b00000000001111);
-			
+			System.out.println("Command INT: " + commandInt);
 			switch(commandInt)
 			{
 			case 0b0111:

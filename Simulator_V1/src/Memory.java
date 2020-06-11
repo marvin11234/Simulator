@@ -1,13 +1,14 @@
+import java.util.Arrays;
 import java.util.Stack;
 
 public class Memory extends Thread{
 	
 	//Datenspeicher: erste Bank 00-7F zweíte Bank 80-FF
 	protected int[][] dataMemoryIntArray = new int [256][8];
-	
+
 	public void WriteF(int erg, int f)
 	{
-		System.out.println("### "+ erg + " ###" );
+		System.out.println("### "+ "WriteF " + erg + " ###" );
 		 int index = 0;
 	     for(int i = 0; i <= (dataMemoryIntArray[f].length)-1; i++)//ggf. über Zeroflag lösen ???
 	     {
@@ -18,10 +19,10 @@ public class Memory extends Thread{
 	       erg = erg/2;
 	     }
 	     for(int i = dataMemoryIntArray[f].length -1;i >= 0;i--){
-	       System.out.println("F-Register:" + dataMemoryIntArray[f][i]);
+	       System.out.println("F-Register"+  f +": " + dataMemoryIntArray[f][i]);
 	     }
 	}
-	
+	//funktion liefert den wert einer stelle f des Filoeregisters als int zurück
 	public int GetF(int f) 
 	{
 		int fDezimal;
@@ -29,6 +30,33 @@ public class Memory extends Thread{
 		System.out.println("Get FileRegsiter" + fDezimal);
 		
 		return fDezimal;
+	}
+	//Funktion liefert den Wert einer bestimmten Stelle des File Registers als 8 bit int Array zurück
+	public int[] GetFBin(int f)
+	{
+		int[] testArray = new int [8];
+		int i = 0;
+		while(i <= 7)
+		{
+			testArray [i] = dataMemoryIntArray[f][i];
+
+			i++;
+		}
+		return testArray;
+	}
+	
+	//Funktion liefert das W-Register als 8bit int Array zurück
+	public int[] GetFWin()
+	{
+		int[] testArray = new int [8];
+		int i = 0;
+		while(i <= 7)
+		{
+			testArray [i] = wRegisterIntArray[i];
+
+			i++;
+		}
+		return testArray;
 	}
 	//Speicher für den programmcode; 0000 = Reset 0004 = interrupt
 	protected int[] programMemoryIntArray = new int [1024];
@@ -125,17 +153,18 @@ public class Memory extends Thread{
 	//beschrieben des W-registers mit dem literal k
 	public void WriteW(int erg) 
 	{
-		System.out.println("WriteW "+ erg + " ###" );
+		System.out.println("###" + "WriteW "+ erg + " ###" );
 		wRegInt = erg;
 	     int index = 0;
 	     for(int i = 0; i <= (wRegisterIntArray.length)-1; i++)//ggf. über Zeroflag lösen ???
 	     {
 	    	 wRegisterIntArray[i] = 0;
 	     }
-	     while(erg > 0){
-	       wRegisterIntArray[index++] = erg % 2;
-	       erg = erg/2;
-	     }
+	    	 while(erg > 0)
+	   	     {
+	    		 wRegisterIntArray[index++] = erg % 2;
+	    		 erg = erg/2;
+	   	     }
 	     for(int i = wRegisterIntArray.length -1;i >= 0;i--){
 	       System.out.println("W-Register:" + wRegisterIntArray[i]);
 	     }

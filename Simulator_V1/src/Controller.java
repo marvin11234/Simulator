@@ -128,7 +128,12 @@ public class Controller {
 	public void andwf(int d, int f)throws Exception //BEEINFLUSST Z
 	{
 		int temp = getMemo().GetWInt();
-		int erg = (temp & f);
+		int temp2 = getMemo().GetF(f);
+		int erg = (temp & temp2);
+
+		System.out.println("Ergebnis andwf: " + erg);
+		System.out.println("temp andwf: " + temp);
+		System.out.println("f andwf: " + temp2);
 		if(erg == 0)
 		{
 			getMemo().SetzeroFlag();
@@ -156,17 +161,32 @@ public class Controller {
 	public void clrf(int f)throws Exception //BEEINFLUSST Z
 	{
 		int erg = 00;
-		//memo.WriteW(erg); TODO: WRITEF()
+		memo.WriteF(erg, f);
 		getMemo().SetzeroFlag();
 		getMemo().IncPc();
 	}
 	
 	public void comf(int d, int f)throws Exception //BEEINFLUSST Z
 	{
-		
-			int temp = ~ f; 
-			int erg = temp;
-			
+			int temp = getMemo().GetF(f);
+			int[] ergInt = getMemo().GetFBin(f);
+			int i = 0;
+			while( i <= 7)
+			{
+				if(ergInt[i] == 0)
+				{
+					ergInt[i] = 1;
+				}
+				else if (ergInt[i] == 1)
+				{
+					ergInt[i] = 0;
+				}
+				System.out.println("Test array: " + ergInt[i]);
+				i++;
+			}
+			//rückumwandlung zu int !!!ggf.funktion zum schreiben als array
+			int erg = (ergInt[7] * 128) + (ergInt[6] * 64) + (ergInt[5] * 32) + (ergInt[4] * 16) + (ergInt[3] * 8) + (ergInt[2] * 4) + (ergInt[1] * 2) + (ergInt[0] * 1);
+
 			if(erg == 0)
 			{
 				getMemo().SetzeroFlag();
@@ -178,15 +198,24 @@ public class Controller {
 			}
 			else if (d == 1)
 			{
-				// TODO WRITEF()
+				memo.WriteF(erg, f);
 			}
 		getMemo().IncPc();
 	}
 	
 	public void decf(int d, int f)throws Exception // BEEINFLUSST Z	
 	{
-		int temp =  f;
-		int erg = temp - 1; 
+		int temp = getMemo().GetF(f);
+		int erg = 0; 
+		
+		if(temp != 0)
+		{
+			erg = temp -1; //TODO Testen ob funkton für temp != 0 funktioniert!!!
+		}
+		else if( temp == 0)
+		{
+			erg = 255;
+		}
 		
 		if(erg == 0)
 		{
@@ -199,7 +228,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			// TODO WRITEF()
+			getMemo().WriteF(erg, f);
 		}
 		getMemo().IncPc();
 	}
@@ -212,8 +241,8 @@ public class Controller {
 	
 	public void incf(int d, int f)throws Exception // BEEINFLUSST Z	
 	{
-		int temp =  f;
-		int erg = temp + 1; 
+		int temp = getMemo().GetF(f);
+		int erg = temp +1; 
 		
 		if(erg == 0)
 		{
@@ -226,7 +255,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			// TODO WRITEF()
+			getMemo().WriteF(erg, f);
 		}
 		getMemo().IncPc();
 	}
@@ -240,7 +269,9 @@ public class Controller {
 	public void iorwf(int d, int f)throws Exception // BEEINFLUSST Z	
 	{
 		int temp =  getMemo().GetWInt();
-		int erg = temp | f ; 
+		int temp2 = getMemo().GetWInt();
+		System.out.println("GetWInt: " + temp2);
+		int erg = temp | temp2 ; 
 		
 		if(erg == 0)
 		{
@@ -253,7 +284,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			// TODO WRITEF()
+			getMemo().WriteF(erg, f);
 		}
 		getMemo().IncPc();
 	}
@@ -313,7 +344,15 @@ public class Controller {
 	public void subwf(int d, int f)throws Exception //BEEINFLUSST C, DC, Z
 	{
 		int temp =  getMemo().GetWInt();
-		int erg = f - temp ; 
+		int temp2 = getMemo().GetF(f);
+		int erg = 0;
+		
+		if(temp > temp2) 
+		{
+			erg = 256 - (temp-temp2);
+		}else {
+			erg = temp2 - temp;
+		}
 		
 		if(erg == 0)
 		{
@@ -326,7 +365,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			// TODO WRITEF()
+			getMemo().WriteF(erg, f);
 		}
 		getMemo().IncPc();
 	}
@@ -334,12 +373,8 @@ public class Controller {
 	public void swapf(int d, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("swapf");
-		getMemo().IncPc();
-	}
-	
-	public void movf(int d, int f)throws Exception  //BEEINFLUSST  Z
-	{
-		int erg = f ; 
+		int temp = getMemo().GetF(f);
+		int erg = ((temp & 0x0F) << 4) | ((temp & 0xF0) >> 4);
 		
 		if(erg == 0)
 		{
@@ -352,7 +387,28 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			// TODO WRITEF()
+			getMemo().WriteF(erg, f);
+		}
+		getMemo().IncPc();
+		getMemo().IncPc();
+	}
+	
+	public void movf(int d, int f)throws Exception  //BEEINFLUSST  Z
+	{
+		int erg = getMemo().GetF(f); 
+		
+		if(erg == 0)
+		{
+			getMemo().SetzeroFlag();
+		}
+		
+		if(d == 0 )
+		{
+			getMemo().WriteW(erg);
+		}
+		else if (d == 1)
+		{
+			getMemo().WriteF(erg, f);
 		}
 		getMemo().IncPc();
 	}
@@ -360,9 +416,9 @@ public class Controller {
 	public void xorwf(int d, int f)throws Exception //BEEINFLUSST  Z
 	{
 		int temp =  getMemo().GetWInt();
-		//temp = f;
+		int temp2 = getMemo().GetF(f);
 		
-		int erg = ((temp ^ f)) ; 
+		int erg = (temp ^ temp2); 
 		
 		if(erg == 0)
 		{
@@ -375,7 +431,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			// TODO WRITEF()
+			getMemo().WriteF(erg, f);
 		}
 		getMemo().IncPc();
 	}
