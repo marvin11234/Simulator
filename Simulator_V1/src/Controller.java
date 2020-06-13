@@ -106,12 +106,12 @@ public class Controller {
 		{
 			getMemo().SetzeroFlag();
 		}
-/*		if(erg < 255)
+		if(erg > 255)
 		{
 			memo.SetCarry();
-			erg = ((temp + f) +255);
+			erg = erg -256;
 		}
-*/		
+		
 		if (d == 0 )
 		{
 			System.out.println("Schreibe in F:" + "erg: " + erg + "f" + f);
@@ -236,6 +236,34 @@ public class Controller {
 	public void decfsz(int d, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("decfsz");
+		int temp = getMemo().GetF(f);
+		int erg = 0; 
+		
+		if(temp != 0)
+		{
+			erg = temp -1; //TODO Testen ob funkton für temp != 0 funktioniert!!!
+		}
+		else if( temp == 0)
+		{
+			erg = 255;
+
+		}
+		
+		if(erg == 0)
+		{
+			getMemo().SetzeroFlag();
+			getMemo().IncPc();
+			
+		}
+		
+		if(d == 0 )
+		{
+			getMemo().WriteW(erg);
+		}
+		else if (d == 1)
+		{
+			getMemo().WriteF(erg, f);
+		}
 		getMemo().IncPc();
 	}
 	
@@ -263,6 +291,34 @@ public class Controller {
 	public void incfsz(int d, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("incfsz");
+		int temp = getMemo().GetF(f);
+		int erg = 0; 
+		
+		if(temp != 255)
+		{
+			erg = temp +1; //TODO Testen ob funkton für temp != 0 funktioniert!!!
+		}
+		else if( temp == 255)
+		{
+			erg = 0;
+
+		}
+		
+		if(erg == 0)
+		{
+			getMemo().SetzeroFlag();
+			getMemo().IncPc();
+			
+		}
+		
+		if(d == 0 )
+		{
+			getMemo().WriteW(erg);
+		}
+		else if (d == 1)
+		{
+			getMemo().WriteF(erg, f);
+		}
 		getMemo().IncPc();
 	}
 	
@@ -332,12 +388,49 @@ public class Controller {
 	public void rlf(int d, int f)throws Exception //BEEINFLUSST C
 	{
 		System.out.println("rlf");
+		int temp = getMemo().GetF(f);
+		int carry = getMemo().GetCarry();
+	
+		if ((temp & 128) == 128) {
+			getMemo().SetCarry();
+		}
+		else {
+			getMemo().ResetCarry();
+		}
+		int erg = ((temp << 1) & 0xFF) | (carry&1);
+			if(d == 0 )
+			{
+				getMemo().WriteW(erg);
+			}
+			else if (d == 1)
+			{
+				getMemo().WriteF(erg, f);
+			}
 		getMemo().IncPc();
 	}
 	
 	public void rrf(int d, int f)throws Exception //BEEINFLUSST C
 	{
 		System.out.println("rrf");
+		int temp = getMemo().GetF(f);
+		int carry = getMemo().GetCarry();
+	
+		if ((temp & 1) == 1) {
+			getMemo().SetCarry();
+		}
+		else {
+			getMemo().ResetCarry();
+		}
+		int erg = (temp >> 1) | (carry << 7);
+			
+		if(d == 0 )
+			{
+				getMemo().WriteW(erg);
+			}
+			else if (d == 1)
+			{
+				getMemo().WriteF(erg, f);
+			}
 		getMemo().IncPc();
 	}
 	

@@ -150,6 +150,11 @@ public class Memory extends Thread{
 		statusRegisterIntArray[0] = 0;
 	}
 	
+	public int GetCarry()
+	{
+		return statusRegisterIntArray[0];
+	}
+	
 	//beschrieben des W-registers mit dem literal k
 	public void WriteW(int erg) 
 	{
