@@ -532,21 +532,39 @@ public class Controller {
 	public void bcf(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("bcf");
+		int[] tempF = getMemo().GetFBin(f);
+		tempF[b] = 0;
+		int erg= (tempF[7] * 128) + (tempF[6] * 64) + (tempF[5] * 32) + (tempF[4] * 16) + (tempF[3] * 8) + (tempF[2] * 4) + (tempF[1] * 2) + (tempF[0] * 1);
+		getMemo().WriteF(erg, f);
 		getMemo().IncPc();
 	}
 	public void bsf(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("bsf");
+		int[] tempF = getMemo().GetFBin(f);
+		tempF[b] = 1;
+		int erg= (tempF[7] * 128) + (tempF[6] * 64) + (tempF[5] * 32) + (tempF[4] * 16) + (tempF[3] * 8) + (tempF[2] * 4) + (tempF[1] * 2) + (tempF[0] * 1);
+		getMemo().WriteF(erg, f);
 		getMemo().IncPc();
 	}
 	public void btfsc(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("btfsc");
+		int[] tempF = getMemo().GetFBin(f);
+		if(tempF[b] == 0)
+		{
+			getMemo().IncPc();
+		}
 		getMemo().IncPc();
 	}
 	public void btfss(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("btfss");
+		int[] tempF = getMemo().GetFBin(f);
+		if(tempF[b] == 1)
+		{
+			getMemo().IncPc();
+		}
 		getMemo().IncPc();
 	}
 	
