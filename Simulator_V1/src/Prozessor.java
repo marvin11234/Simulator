@@ -26,7 +26,6 @@ public class Prozessor extends Thread {
 		int precommandInt = (codeLine >> 12) & 0x0003;
 		int commandInt = (codeLine >> 8) & 0x000F;
 		int payload = (codeLine & 0x00FF);
-		System.out.println("Precommand: " + precommandInt);
 	
 
 		if(precommandInt == 0) //Byte orientierte Fileregister Operationen
@@ -34,13 +33,11 @@ public class Prozessor extends Thread {
 			int d = ((payload >> 7) & 0x01); //destination
 			int f = ((payload) & 0x007F);
 	
-			/*	(commandInt >> 1) == 7
-					if (f == 0x00 || f == 0x80) {
-					                f = ctr.getMemory().get_MemoryDIRECT(0x04);
-					            }
-			*/
+			if (f == 0x00 || f == 0x80)
+			{
+				f = ctr.getMemo().get_MemoryDIRECT(0x04);
+			}
 			
-			System.out.println("Command INT: " + commandInt);
 			switch(commandInt)
 			{
 			case 0b0111:
@@ -127,6 +124,11 @@ public class Prozessor extends Thread {
 		{
 			int b = ((codeLine) >> 7) & 0x0007;
 			int f = (codeLine)& 0x007F;
+			
+			if (f == 0x00 || f == 0x80)
+			{
+				f = ctr.getMemo().get_MemoryDIRECT(0x04);
+			}
 			
 			switch(commandInt >> 2)
 			{

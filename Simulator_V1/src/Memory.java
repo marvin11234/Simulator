@@ -19,7 +19,7 @@ public class Memory extends Thread{
 	       erg = erg/2;
 	     }
 	     for(int i = dataMemoryIntArray[f].length -1;i >= 0;i--){
-	       System.out.println("F-Register"+  f +": " + dataMemoryIntArray[f][i]);
+	       System.out.println("F-Register: " +  Integer.toHexString(f) + ": " + dataMemoryIntArray[f][i]);
 	     }
 	}
 	//funktion liefert den wert einer stelle f des Filoeregisters als int zurück
@@ -27,8 +27,6 @@ public class Memory extends Thread{
 	{
 		int fDezimal;
 		fDezimal= (dataMemoryIntArray[f][7] * 128) + (dataMemoryIntArray[f][6] * 64) + (dataMemoryIntArray[f][5] * 32) + (dataMemoryIntArray[f][4] * 16) + (dataMemoryIntArray[f][3] * 8) + (dataMemoryIntArray[f][2] * 4) + (dataMemoryIntArray[f][1] * 2) + (dataMemoryIntArray[f][0] * 1);
-		System.out.println("Get FileRegsiter" + fDezimal);
-		
 		return fDezimal;
 	}
 	//Funktion liefert den Wert einer bestimmten Stelle des File Registers als 8 bit int Array zurück
@@ -99,14 +97,13 @@ public class Memory extends Thread{
 	public void IncPc()
 	{
 	programCounterInt = programCounterInt +1;
-	System.out.println("PC:" + programCounterInt);
+	System.out.println("PC: " + Integer.toHexString(programCounterInt));
 	}
 	//Set programmcounter (goto/Call)
 	public void SetPC(int k)
 	{ 
 		programCounterInt = k;
 		System.out.println("PC:" + programCounterInt);
-	//programCounterInt = anyValue;
 	}
 	
 	//gibt den wert des w-registers als int zurück
@@ -119,40 +116,46 @@ public class Memory extends Thread{
 	//funktion zum setzen des DigitCarryFlag
 	public void SetDigitCarry() 
 	{
-		statusRegisterIntArray[1] = 1;
+		dataMemoryIntArray[3][1] = 1;
+		//statusRegisterIntArray[1] = 1;
 	}
 	
 	//funktion zum Rücksetzen des DigitCarryFlag
 	public void ResetDigitCarry() 
 	{
-		statusRegisterIntArray[1] = 0;
+		dataMemoryIntArray[3][1] = 0;
+		//statusRegisterIntArray[1] = 0;
 	}
 	
 	//funktion zum setzen des ZeroFlag
 	public void SetzeroFlag() 
 	{
-		statusRegisterIntArray[2] = 1;
+		dataMemoryIntArray[3][2] = 1;
+		//statusRegisterIntArray[2] = 1;
 	}
 	//funktion zum Rücksetzen des ZeroFlag
 	public void ResetetzeroFlag() 
 	{
-		statusRegisterIntArray[2] = 0;
+		dataMemoryIntArray[3][2] = 0;
+	//	statusRegisterIntArray[2] = 0;
 	}
 	
 	//funktion zum setzen des CarryFlag
 	public void SetCarry() 
 	{
-		statusRegisterIntArray[0] = 1;
+		dataMemoryIntArray[3][0] = 1;
+		//statusRegisterIntArray[0] = 1;
 	}
 	//funktion zum Rücksetzen des CarryFlag
 	public void ResetCarry() 
 	{
-		statusRegisterIntArray[0] = 0;
+		dataMemoryIntArray[3][0] = 0;
+		//statusRegisterIntArray[0] = 0;
 	}
 	
 	public int GetCarry()
 	{
-		return statusRegisterIntArray[0];
+		return 		dataMemoryIntArray[3][0];
 	}
 	
 	//beschrieben des W-registers mit dem literal k
@@ -174,10 +177,7 @@ public class Memory extends Thread{
 	       System.out.println("W-Register:" + wRegisterIntArray[i]);
 	     }
 	}
-	public void Print(int temp,int erg,int k) //DEBUG => CONTROLLER => SUBLW
-	{
-		System.out.println("temp: " + temp + " k: "  + k + " erg: " + erg);
-	}
+
 	//beschreiben des code Sepichers
 	public void CodeSpeichern(String pcSt, String codeSt)
 	{
@@ -187,5 +187,16 @@ public class Memory extends Thread{
 		programMemoryIntArray[pcInt] = Integer.parseInt(codeSt, 16);
 		System.out.println("CODESpeicherARRAY" + programMemoryIntArray[pcInt]);
 		//return programMemoryIntArray;
+	}
+	
+	protected int get_MemoryDIRECT(int f) 
+	{
+		String c = "";
+		for(int i = 0; i < 8; i++) 
+		{
+				c = c + dataMemoryIntArray[f][7-i];
+		}
+		System.out.print("Direct Memory Access: " + f);
+		return Integer.parseInt(c,2);
 	}
 }
