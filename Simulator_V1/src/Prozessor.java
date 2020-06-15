@@ -35,7 +35,7 @@ public class Prozessor extends Thread {
 	
 			if (f == 0x00 || f == 0x80)
 			{
-				f = ctr.getMemo().get_MemoryDIRECT(0x04);
+				f = ctr.getMemo().WriteDirect(0x04);
 			}
 			
 			switch(commandInt)
@@ -127,7 +127,7 @@ public class Prozessor extends Thread {
 			
 			if (f == 0x00 || f == 0x80)
 			{
-				f = ctr.getMemo().get_MemoryDIRECT(0x04);
+				f = ctr.getMemo().WriteDirect(0x04);
 			}
 			
 			switch(commandInt >> 2)

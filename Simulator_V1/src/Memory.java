@@ -66,10 +66,6 @@ public class Memory extends Thread{
 	protected int[] wRegisterIntArray = new int [8]; 
 	int wRegInt = 0;
 	
-	//status Register
-	protected int[] statusRegisterIntArray = new int [8];
-	//statusRegisterIntArray[3] = 1; !!!!
-	//statusRegisterIntArray[4] = 1;
 	
 	protected Stack <Integer>  cmdStack = new Stack <Integer>();
 	
@@ -117,40 +113,38 @@ public class Memory extends Thread{
 	public void SetDigitCarry() 
 	{
 		dataMemoryIntArray[3][1] = 1;
-		//statusRegisterIntArray[1] = 1;
+
 	}
 	
 	//funktion zum Rücksetzen des DigitCarryFlag
 	public void ResetDigitCarry() 
 	{
 		dataMemoryIntArray[3][1] = 0;
-		//statusRegisterIntArray[1] = 0;
+
 	}
 	
 	//funktion zum setzen des ZeroFlag
 	public void SetzeroFlag() 
 	{
 		dataMemoryIntArray[3][2] = 1;
-		//statusRegisterIntArray[2] = 1;
+
 	}
 	//funktion zum Rücksetzen des ZeroFlag
 	public void ResetetzeroFlag() 
 	{
 		dataMemoryIntArray[3][2] = 0;
-	//	statusRegisterIntArray[2] = 0;
 	}
 	
 	//funktion zum setzen des CarryFlag
 	public void SetCarry() 
 	{
 		dataMemoryIntArray[3][0] = 1;
-		//statusRegisterIntArray[0] = 1;
+
 	}
 	//funktion zum Rücksetzen des CarryFlag
 	public void ResetCarry() 
 	{
 		dataMemoryIntArray[3][0] = 0;
-		//statusRegisterIntArray[0] = 0;
 	}
 	
 	public int GetCarry()
@@ -186,10 +180,10 @@ public class Memory extends Thread{
 		int pcInt = Integer.parseInt(pcSt, 16);
 		programMemoryIntArray[pcInt] = Integer.parseInt(codeSt, 16);
 		System.out.println("CODESpeicherARRAY" + programMemoryIntArray[pcInt]);
-		//return programMemoryIntArray;
+
 	}
 	
-	protected int get_MemoryDIRECT(int f) 
+	protected int WriteDirect(int f) 
 	{
 		String c = "";
 		for(int i = 0; i < 8; i++) 
