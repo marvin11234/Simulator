@@ -75,7 +75,8 @@ public class Controller {
 						this.getMemo().programMemoryIntArray[pc] = code;
 					}
 				}
-
+				//initialisierung Speicher anzeige
+				InitGprView();
 						
 			}
 			catch (IOException e)
@@ -123,6 +124,7 @@ public class Controller {
 		else if (d == 1)	//ERGEBNIS IN F SPEICHERN ?
 		{
 			getMemo().WriteF(erg,f);
+			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -146,6 +148,7 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().WriteF(erg, f);
+			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -164,6 +167,7 @@ public class Controller {
 		System.out.println("clrf");
 		int erg = 00;
 		memo.WriteF(erg, f);
+		PrintGPR();
 		getMemo().SetzeroFlag();
 		getMemo().IncPc();
 	}
@@ -200,6 +204,7 @@ public class Controller {
 			else if (d == 1)
 			{
 				memo.WriteF(erg, f);
+				PrintGPR();
 			}
 		getMemo().IncPc();
 	}
@@ -231,6 +236,7 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().WriteF(erg, f);
+			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -265,6 +271,7 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().WriteF(erg, f);
+			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -287,6 +294,7 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().WriteF(erg, f);
+			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -321,6 +329,7 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().WriteF(erg, f);
+			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -344,6 +353,7 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().WriteF(erg, f);
+			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -385,6 +395,7 @@ public class Controller {
 		System.out.println("movwf");
 		int erg = getMemo().GetWInt();
 		getMemo().WriteF(erg,f);
+		PrintGPR();
 		getMemo().IncPc();
 	}
 	
@@ -408,6 +419,7 @@ public class Controller {
 			else if (d == 1)
 			{
 				getMemo().WriteF(erg, f);
+				PrintGPR();
 			}
 		getMemo().IncPc();
 	}
@@ -437,6 +449,7 @@ public class Controller {
 			else if (d == 1)
 			{
 				getMemo().WriteF(erg, f);
+				PrintGPR();
 			}
 		getMemo().IncPc();
 	}
@@ -475,6 +488,7 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().WriteF(erg, f);
+			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -497,6 +511,7 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().WriteF(erg, f);
+			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -518,6 +533,7 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().WriteF(erg, f);
+			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -542,6 +558,7 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().WriteF(erg, f);
+			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -554,6 +571,7 @@ public class Controller {
 		tempF[b] = 0;
 		int erg= (tempF[7] * 128) + (tempF[6] * 64) + (tempF[5] * 32) + (tempF[4] * 16) + (tempF[3] * 8) + (tempF[2] * 4) + (tempF[1] * 2) + (tempF[0] * 1);
 		getMemo().WriteF(erg, f);
+		PrintGPR();
 		getMemo().IncPc();
 	}
 	public void bsf(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
@@ -563,6 +581,7 @@ public class Controller {
 		tempF[b] = 1;
 		int erg= (tempF[7] * 128) + (tempF[6] * 64) + (tempF[5] * 32) + (tempF[4] * 16) + (tempF[3] * 8) + (tempF[2] * 4) + (tempF[1] * 2) + (tempF[0] * 1);
 		getMemo().WriteF(erg, f);
+		PrintGPR();
 		getMemo().IncPc();
 	}
 	public void btfsc(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
@@ -703,6 +722,34 @@ public class Controller {
 		}
 		getMemo().WriteW(erg);
 		getMemo().IncPc();
+	}
+	
+	public void InitGprView()
+	{
+
+		for (int i = 12; (i < 48); i++)
+		{
+			int f = i;
+			String hex = Integer.toHexString(i);
+			int[] fRegIntArray = getMemo().GetFBin(f);
+			gui.tblGprMdl.addRow(new Object[] {hex, fRegIntArray[7], fRegIntArray[6], fRegIntArray[5], fRegIntArray[4],fRegIntArray[3], fRegIntArray[2], fRegIntArray[1], fRegIntArray[0]} ); 
+		}
+	}
+	
+	public void PrintGPR()
+	{
+		for (int i = gui.tblGprMdl.getRowCount() - 1; i >= 0; i--)
+		{
+			gui.tblGprMdl.removeRow(i);
+		}
+
+		for (int i = 12; (i < 48); i++)
+		{
+			int f = i;
+			String hex = Integer.toHexString(i);
+			int[] fRegIntArray = getMemo().GetFBin(f);
+			gui.tblGprMdl.addRow(new Object[] {hex, fRegIntArray[7], fRegIntArray[6], fRegIntArray[5], fRegIntArray[4],fRegIntArray[3], fRegIntArray[2], fRegIntArray[1], fRegIntArray[0]} ); 
+		}
 	}
 
 	public void start() 

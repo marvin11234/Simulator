@@ -27,6 +27,8 @@ public class Simulator_Window {
 	private JFrame frame;
 	private JTable tblCodeAusgabe;
 	protected DefaultTableModel tblCode;
+	private JTable tblGPR;
+	protected DefaultTableModel tblGprMdl;
 	
 	public Simulator_Window() {
 		ctr = new Controller(this);
@@ -48,9 +50,10 @@ public class Simulator_Window {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initialize(Simulator_Window Simulator_WindowInst) {
+	public void initialize(Simulator_Window Simulator_WindowInst) 
+	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1130, 677);
+		frame.setBounds(100, 100, 1644, 1006);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Simulator_WindowInst.frame.setVisible(true);
 
@@ -73,19 +76,21 @@ public class Simulator_Window {
 			
 		});
 		menuBar.add(btnLoad_File);
+		
+		//Code Anzeige
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panelCodeAusgabe = new JPanel();
 		panelCodeAusgabe.setBorder(new LineBorder(new Color(0,0,0),2));
-		panelCodeAusgabe.setBounds(263, 199, 837, 372);
+		panelCodeAusgabe.setBounds(696, 274, 837, 372);
 		panelCodeAusgabe.setLayout(null);
 		frame.getContentPane().add(panelCodeAusgabe);
-		
+
 		JScrollPane spCodeAusgabe = new JScrollPane();
 		spCodeAusgabe.setBounds(0, 0, 837, 372);
-		panelCodeAusgabe.add(spCodeAusgabe);		
-		
-		
+		panelCodeAusgabe.add(spCodeAusgabe); 
+
+
 		tblCode = new DefaultTableModel();
 		tblCode.setColumnIdentifiers(new Object[] {"", "PC", "Code", "Linecount","Label", "Mnem Code" });
 		tblCodeAusgabe = new JTable();
@@ -93,32 +98,33 @@ public class Simulator_Window {
 		tblCodeAusgabe.setEnabled(false);
 		tblCodeAusgabe.setModel(tblCode);
 		spCodeAusgabe.setViewportView(tblCodeAusgabe);
-		
+
 		JPanel panelControl = new JPanel();
 		panelControl.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelControl.setBounds(909, 26, 168, 157);
+		panelControl.setBounds(1365, 11, 168, 157);
 		frame.getContentPane().add(panelControl);
 		panelControl.setLayout(null);
-		
+
 		JButton btnStart = new JButton("Start");
 		btnStart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctr.start();
-			}
+		public void actionPerformed(ActionEvent arg0) {
+		ctr.start();
+		}
 		});
 		btnStart.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnStart.setBounds(10, 10, 144, 42);
 		panelControl.add(btnStart);
-		
+
 		JButton btnStop = new JButton("Stop");
 		btnStop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ctr.stop();
-			}
+		public void actionPerformed(ActionEvent e) {
+		ctr.stop();
+		}
 		});
 		btnStop.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnStop.setBounds(10, 60, 144, 42);
 		panelControl.add(btnStop);
+		
 		for(int i = 0; i < 5; i++)
 		{
 		 TableColumn column = tblCodeAusgabe.getColumnModel().getColumn(i);
@@ -143,6 +149,27 @@ public class Simulator_Window {
 			 column.setResizable(false);
 		 }
 		 }
+		
+		//GPR Anzeige
+		JPanel panelGPR = new JPanel();
+		panelGPR.setBorder(new LineBorder(new Color(0,0,0),2));
+		panelGPR.setBounds(10, 274, 557, 372);
+		frame.getContentPane().add(panelGPR);
+		panelGPR.setLayout(null);
+		frame.getContentPane().add(panelGPR);
+
+		JScrollPane spGPR = new JScrollPane();
+		spGPR.setBounds(0, 0, 557, 372);
+		panelGPR.add(spGPR);
+
+		tblGprMdl = new DefaultTableModel();
+		tblGprMdl.setColumnIdentifiers(new Object[] {"", "07", "06", "05", "04", "03", "02", "01", "00" });
+		tblGPR = new JTable();
+		tblGPR.setBounds(0, 0, 837, 372);
+		tblGPR.setEnabled(false);
+		tblGPR.setModel(tblGprMdl);
+		spGPR.setViewportView(tblGPR);
+		
 		
 
 	}

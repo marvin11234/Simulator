@@ -33,6 +33,7 @@ public class Prozessor extends Thread {
 			int d = ((payload >> 7) & 0x01); //destination
 			int f = ((payload) & 0x007F);
 	
+			//FSR
 			if (f == 0x00 || f == 0x80)
 			{
 				f = ctr.getMemo().WriteDirect(0x04);
