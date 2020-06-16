@@ -21,6 +21,15 @@ public class Prozessor extends Thread {
 			}
 		}
 	}
+	
+	/*############################################################################
+	 * 
+	 *
+	 * 
+	 * Switch Case für das erkennen des Befehls und den Aufruf der
+	 * entsprechenden Funktion
+	 * 
+	 * #########################################################################*/
 	public void befehlsAbarabeitung(int codeLine) throws Exception {
 
 		int precommandInt = (codeLine >> 12) & 0x0003;
@@ -33,7 +42,7 @@ public class Prozessor extends Thread {
 			int d = ((payload >> 7) & 0x01); //destination
 			int f = ((payload) & 0x007F);
 	
-			//FSR
+			//erkennung der  Adressierung über FSR
 			if (f == 0x00 || f == 0x80)
 			{
 				f = ctr.getMemo().WriteDirect(0x04);
@@ -150,7 +159,7 @@ public class Prozessor extends Thread {
 		}
 		else if(precommandInt == 2)//Literal and Controll Operations
 		{
-			int k = (codeLine) & 0x07FF;
+			int k = codeLine & 0x07FF;
 			switch(commandInt >> 3)
 			{	
 			case 0b0:

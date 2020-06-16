@@ -27,12 +27,20 @@ public class Controller {
 	int i = 0;
 	int[] befehlDezimalIntArray = new int[1024];
 	
-	
+	//gui und memo Instanz erzeugen
 	public Controller(Simulator_Window simulator_Window) {
 		gui = simulator_Window;
 		memo = new Memory(this);
 	}
 
+	/*############################################################################
+	 * 
+	 *
+	 * 
+	 * Einlesen des File und beschrieben des Speichers mit dem Programmcode
+	 * 
+	 * 
+	 * #########################################################################*/
 	public void Einlesen() throws Exception{
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			
@@ -403,7 +411,9 @@ public class Controller {
 	{
 		System.out.println("rlf");
 		int temp = getMemo().GetF(f);
-		int carry = getMemo().GetCarry();
+		int Adresse = 3;
+		int Stelle = 0;
+		int carry = getMemo().GetBitValue(Adresse, Stelle);
 	
 		if ((temp & 128) == 128) {
 			getMemo().SetCarry();
@@ -428,7 +438,9 @@ public class Controller {
 	{
 		System.out.println("rrf");
 		int temp = getMemo().GetF(f);
-		int carry = getMemo().GetCarry();
+		int Adresse = 3;
+		int Stelle = 0; 
+		int carry = getMemo().GetBitValue(Adresse, Stelle);
 		
 		System.out.println("rrf carry: " + carry + " temp f: " + temp);
 	
@@ -724,6 +736,14 @@ public class Controller {
 		getMemo().IncPc();
 	}
 	
+	/*############################################################################
+	 * 
+	 *
+	 * 
+	 * Initialisieren der GPR Ausgabe
+	 * 
+	 * 
+	 * #########################################################################*/
 	public void InitGprView()
 	{
 
@@ -736,6 +756,14 @@ public class Controller {
 		}
 	}
 	
+	/*############################################################################
+	 * 
+	 *
+	 * 
+	 * Beschrieben der GPR Ausgabe
+	 * 
+	 * 
+	 * #########################################################################*/
 	public void PrintGPR()
 	{
 		for (int i = gui.tblGprMdl.getRowCount() - 1; i >= 0; i--)
@@ -752,6 +780,14 @@ public class Controller {
 		}
 	}
 
+	/*############################################################################
+	 * 
+	 *
+	 * 
+	 * Start Threat
+	 * 
+	 * 
+	 * #########################################################################*/
 	public void start() 
 	{
 		if(! this.processorRunning)
@@ -763,6 +799,14 @@ public class Controller {
 		
 	}
 
+	/*############################################################################
+	 * 
+	 *
+	 * 
+	 * Stop Thread
+	 * 
+	 * 
+	 * #########################################################################*/
 	public void stop()
 	{
 		if( this.processorRunning)
@@ -772,6 +816,14 @@ public class Controller {
 		}
 		
 	}
+	
+	protected int getVorzähler() 
+	{
+		int Adresse = 0x81;
+		int Stelle = 7;
+		return getMemo().GetBitValue(Adresse, Stelle);
+	}
+	
 
 	public Memory getMemo() {
 		return memo;
