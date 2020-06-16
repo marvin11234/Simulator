@@ -173,7 +173,7 @@ public class Memory extends Thread{
 	public void SetStack()
 	{
 		cmdStack.push(programCounterInt +1 );
-		System.out.println("Stack" + cmdStack.peek());
+		System.out.println("Stack: " + cmdStack.peek());
 	}
 	
 	/*############################################################################
@@ -228,8 +228,22 @@ public class Memory extends Thread{
 	{
 		int stackInt = cmdStack.peek();
 		cmdStack.pop();
-		return stackInt;
+		return stackInt;	
+	}
+	
+	public int ShowStack()
+	{
+		int stackInt = 0;
+		if(cmdStack.isEmpty() == true )
+		{
+			stackInt = 0;
+		}
+		else
+		{
+			stackInt = cmdStack.peek();
+		}
 		
+		return stackInt;
 	}
 	
 	/*############################################################################

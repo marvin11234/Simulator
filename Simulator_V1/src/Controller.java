@@ -85,6 +85,8 @@ public class Controller {
 				}
 				//initialisierung Speicher anzeige
 				InitGprView();
+				
+				InitStackView();
 						
 			}
 			catch (IOException e)
@@ -197,7 +199,7 @@ public class Controller {
 			}
 			i++;
 		}
-			//rückumwandlung zu int !!!ggf.funktion zum schreiben als array
+			//rï¿½ckumwandlung zu int !!!ggf.funktion zum schreiben als array
 			int erg = (ergInt[7] * 128) + (ergInt[6] * 64) + (ergInt[5] * 32) + (ergInt[4] * 16) + (ergInt[3] * 8) + (ergInt[2] * 4) + (ergInt[1] * 2) + (ergInt[0] * 1);
 
 			if(erg == 0)
@@ -225,7 +227,7 @@ public class Controller {
 		
 		if(temp != 0)
 		{
-			erg = temp -1; //TODO Testen ob funkton für temp != 0 funktioniert!!!
+			erg = temp -1; //TODO Testen ob funkton fï¿½r temp != 0 funktioniert!!!
 		}
 		else if( temp == 0)
 		{
@@ -257,7 +259,7 @@ public class Controller {
 		
 		if(temp != 0)
 		{
-			erg = temp -1; //TODO Testen ob funkton für temp != 0 funktioniert!!!
+			erg = temp -1; //TODO Testen ob funkton fï¿½r temp != 0 funktioniert!!!
 		}
 		else if( temp == 0)
 		{
@@ -315,7 +317,7 @@ public class Controller {
 		
 		if(temp != 255)
 		{
-			erg = temp +1; //TODO Testen ob funkton für temp != 0 funktioniert!!!
+			erg = temp +1; //TODO Testen ob funkton fï¿½r temp != 0 funktioniert!!!
 		}
 		else if( temp == 255)
 		{
@@ -375,8 +377,13 @@ public class Controller {
 	public void Return()throws Exception //BEEINFLUSST KEINE STATI
 	{
 		int k  = getMemo().GetStack();
+		System.out.println("Return " + k + "1");
+		PrintAfterPop();
+		
+		System.out.println("Return " + k + "2");
+		
 		getMemo().SetPC(k);
-		System.out.println("Return");
+		System.out.println("Return " + k + "3" );
 		getMemo().IncPc();
 	}
 	
@@ -620,8 +627,9 @@ public class Controller {
 	public void call(int k)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		getMemo().SetStack();
+		PrintStack();
 		getMemo().SetPC(k);
-		System.out.println("call");
+		System.out.println("call" + k );
 
 	}
 	public void Goto(int k)throws Exception //BEEINFLUSST KEINE STATI
@@ -678,8 +686,11 @@ public class Controller {
 	{	
 		System.out.println("retlw");
 		int erg = k;
+		System.out.println("RetLW 1 " + erg );
 		getMemo().WriteW(erg);
 		k  = getMemo().GetStack();
+		System.out.println("RetLW 2" + k);
+		PrintAfterPop();
 		getMemo().SetPC(k);
 
 		getMemo().IncPc();
@@ -780,14 +791,61 @@ public class Controller {
 		}
 	}
 
-	/*############################################################################
-	 * 
-	 *
-	 * 
-	 * Start Threat
-	 * 
-	 * 
-	 * #########################################################################*/
+
+	public void InitStackView()
+	{
+		System.out.println("Init Stack");
+		for(int i = 0; i <= 7; i++)
+		{
+			gui.tblStackMdl.addRow(new Object[] {i, 0});
+			
+		}
+	}
+	int stackAr[]; 
+	public void PrintStack()
+	{ 
+		
+		for(int i = 6; i >= 0; i--)
+		{
+			 Object test = gui.tblStackMdl.getValueAt(i, 1);
+			 int stack = (int) test;
+			 gui.tblStackMdl.setValueAt(stack, i+1, 1);
+		}
+		gui.tblStackMdl.setValueAt(getMemo().ShowStack(), 0, 1);
+	}
+	
+	public void PrintAfterPop()
+	{
+		if(getMemo().cmdStack.isEmpty() == true)
+		{
+			for(int i = 0; i <= 7; i++)
+			{
+				gui.tblStackMdl.setValueAt(0, i, 1);
+				
+			}
+		}
+		else 
+		{
+			for(int i = 0; i <= 6; i++)
+			{
+				if(i == 0) 
+				{
+					gui.tblStackMdl.setValueAt(0, i, 1);
+				}
+				else
+				{
+					 Object test = gui.tblStackMdl.getValueAt(i, 1);
+					 int stack = (int) test;
+					 gui.tblStackMdl.setValueAt(stack, i-1, 1);
+				}
+			}
+			 gui.tblStackMdl.setValueAt(0, 7, 1);
+			
+		}
+
+	}
+	
+
 	public void start() 
 	{
 		if(! this.processorRunning)
@@ -817,7 +875,7 @@ public class Controller {
 		
 	}
 	
-	protected int getVorzähler() 
+	protected int getVorzï¿½hler() 
 	{
 		int Adresse = 0x81;
 		int Stelle = 7;

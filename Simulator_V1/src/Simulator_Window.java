@@ -29,6 +29,9 @@ public class Simulator_Window {
 	protected DefaultTableModel tblCode;
 	private JTable tblGPR;
 	protected DefaultTableModel tblGprMdl;
+	private JTable tblStack_1;
+	protected DefaultTableModel tblStackMdl;
+	private JTable tblStack;
 	
 	public Simulator_Window() {
 		ctr = new Controller(this);
@@ -170,6 +173,25 @@ public class Simulator_Window {
 		tblGPR.setModel(tblGprMdl);
 		spGPR.setViewportView(tblGPR);
 		
+		//Anzeige Stack
+		JPanel panelStack = new JPanel();
+		panelStack.setBorder(new LineBorder(new Color(0, 0, 0),2));
+		panelStack.setBounds(1230, 11, 107, 157);
+		frame.getContentPane().add(panelStack);
+		panelStack.setLayout(null);
+		frame.getContentPane().add(panelStack);
+		
+		JScrollPane spStack = new JScrollPane();
+		spStack.setBounds(0, 0, 107, 157);
+		panelStack.add(spStack);
+				
+		tblStackMdl = new DefaultTableModel();
+		tblStackMdl.setColumnIdentifiers(new Object[] {"", "Inhalt" });
+		tblStack = new JTable();
+		tblStack.setBounds(0, 0, 107, 157);
+		tblStack.setEnabled(false);
+		tblStack.setModel(tblStackMdl);
+		spStack.setViewportView(tblStack);	
 		
 
 	}
