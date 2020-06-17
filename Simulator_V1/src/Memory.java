@@ -388,4 +388,44 @@ public class Memory extends Thread{
 		System.out.print("Direct Memory Access: " + f);
 		return Integer.parseInt(c,2);
 	}
+	
+	public void SetCarryBit(int value)
+	{
+		dataMemoryIntArray[3][0] = value;
+	}
+	
+	public void SetDigitCarryBit(int value)
+	{
+		dataMemoryIntArray[3][1] = value;
+	}
+	
+	public void SetZeroBit(int value)
+	{
+		dataMemoryIntArray[3][2] = value;
+	}
+	
+	public void SetPowerDownBit(int value)
+	{
+		dataMemoryIntArray[3][3] = value;
+	}
+	
+	public void SetToBit(int value)
+	{
+		dataMemoryIntArray[3][4] = value;
+	}
+	
+	public void SetReg1Bit(int value)
+	{
+		dataMemoryIntArray[3][5] = value;
+	}
+	
+	public void SetReg2Bit(int value)
+	{
+		dataMemoryIntArray[3][6] = value;
+	}
+	
+	public void SetIPRBit(int value)
+	{
+		dataMemoryIntArray[3][7] = value;
+	}
 }

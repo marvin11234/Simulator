@@ -9,6 +9,40 @@ public class Prozessor extends Thread {
 	@Override public void run(){ 
 		while(! exit) {
 			try {
+				if(((ctr.getMemo().dataMemoryIntArray[3][0] == 0) & (ctr.getGui().cfStatus == false)) | (ctr.getMemo().dataMemoryIntArray[3][0] == 1) & (ctr.getGui().cfStatus == true) )
+				{
+				}
+				else if(((ctr.getMemo().dataMemoryIntArray[3][0] == 0) & (ctr.getGui().cfStatus == true)) | (ctr.getMemo().dataMemoryIntArray[3][0] == 1) & (ctr.getGui().cfStatus == false))
+				{
+					ctr.getGui().SetCFGui((ctr.getMemo().dataMemoryIntArray[3][0]));
+				}
+				
+				if(((ctr.getMemo().dataMemoryIntArray[3][1] == 0) & (ctr.getGui().dcStatus == false)) | (ctr.getMemo().dataMemoryIntArray[3][1] == 1) & (ctr.getGui().dcStatus == true) )
+				{
+				}
+				else if(((ctr.getMemo().dataMemoryIntArray[3][1] == 0) & (ctr.getGui().dcStatus == true)) | (ctr.getMemo().dataMemoryIntArray[3][1] == 1) & (ctr.getGui().dcStatus == false))
+				{
+					ctr.getGui().SetDCGui((ctr.getMemo().dataMemoryIntArray[3][1]));
+				}
+				
+				if(((ctr.getMemo().dataMemoryIntArray[3][2] == 0) & (ctr.getGui().zfStatus == false)) | (ctr.getMemo().dataMemoryIntArray[3][2] == 1) & (ctr.getGui().zfStatus == true) )
+				{
+				}
+				else if(((ctr.getMemo().dataMemoryIntArray[3][2] == 0) & (ctr.getGui().zfStatus == true)) | (ctr.getMemo().dataMemoryIntArray[3][2] == 1) & (ctr.getGui().zfStatus == false))
+				{
+					ctr.getGui().SetZFGui((ctr.getMemo().dataMemoryIntArray[3][2]));
+				}
+
+				
+				
+				if(ctr.getMemo().dataMemoryIntArray[3][2] == 0)
+				{
+					if(ctr.getGui().zfStatus == false)
+					{
+						
+					}
+				}
+								
 				this.befehlsAbarabeitung(ctr.getMemo().programMemoryIntArray[ctr.getMemo().programCounterInt]);
 				if(exit)
 				{

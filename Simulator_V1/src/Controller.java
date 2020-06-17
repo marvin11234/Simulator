@@ -845,7 +845,47 @@ public class Controller {
 
 	}
 	
+	public void SetCarry(int value)
+	{
+		getMemo().SetCarryBit(value);
+	}
+	
+	public void SetDigitCarry(int value)
+	{
+		getMemo().SetDigitCarryBit(value);
+	}
+	
+	public void SetZero(int value)
+	{
+		getMemo().SetZeroBit(value);
+	}
+	
+	public void SetPowerDown(int value)
+	{
+		getMemo().SetPowerDownBit(value);
+	}
+	
+	public void SetTo(int value)
+	{
+		getMemo().SetToBit(value);
+	}
+	
+	public void SetReg1(int value)
+	{
+		getMemo().SetReg1Bit(value);
+	}
 
+	public void SetReg2(int value)
+	{
+		getMemo().SetReg2Bit(value);
+	}
+	
+	public void SetIPR(int value)
+	{
+		getMemo().SetIPRBit(value);
+	}
+	
+	
 	public void start() 
 	{
 		if(! this.processorRunning)
@@ -875,15 +915,21 @@ public class Controller {
 		
 	}
 	
-	protected int getVorz�hler() 
+//	protected int getVorzaehler() 
+//	{
+//		int Adresse = 0x81;
+//		int Stelle = 7;
+//		return getMemo().GetBitValue(Adresse, Stelle);
+//	}
+//	
+
+	public Memory getMemo() 
 	{
-		int Adresse = 0x81;
-		int Stelle = 7;
-		return getMemo().GetBitValue(Adresse, Stelle);
+		return memo;
 	}
 	
-
-	public Memory getMemo() {
-		return memo;
+	public Simulator_Window getGui()
+	{
+		return gui;
 	}
 }

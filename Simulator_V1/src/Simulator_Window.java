@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Font;
+import javax.swing.JRadioButton;
 
 
 public class Simulator_Window {
@@ -32,6 +33,12 @@ public class Simulator_Window {
 	private JTable tblStack_1;
 	protected DefaultTableModel tblStackMdl;
 	private JTable tblStack;
+	boolean cfStatus;
+	boolean dcStatus;
+	boolean zfStatus;
+	JRadioButton rdbtnCF = new JRadioButton("Carry Flag");
+	JRadioButton rdbtnDC = new JRadioButton("Digit Carry");
+	JRadioButton rdbtnZ = new JRadioButton("Zero Flag");
 	
 	public Simulator_Window() {
 		ctr = new Controller(this);
@@ -193,6 +200,244 @@ public class Simulator_Window {
 		tblStack.setModel(tblStackMdl);
 		spStack.setViewportView(tblStack);	
 		
+		JPanel panelSFR = new JPanel();
+		panelSFR.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelSFR.setBounds(1051, 11, 133, 252);
+		frame.getContentPane().add(panelSFR);
+		panelSFR.setLayout(null);
+		
+		
+		
+		rdbtnCF.setBounds(6, 7, 109, 23);
+		panelSFR.add(rdbtnCF);
+				
 
+		rdbtnDC.setBounds(6, 33, 109, 23);
+		panelSFR.add(rdbtnDC);
+
+		rdbtnZ.setBounds(6, 59, 109, 23);
+		panelSFR.add(rdbtnZ);
+		
+		JRadioButton rdbtnPD = new JRadioButton("Power-Down");
+		rdbtnPD.setBounds(6, 85, 109, 23);
+		panelSFR.add(rdbtnPD);
+		
+		JRadioButton rdbtnTO = new JRadioButton("Time-Out");
+		rdbtnTO.setBounds(6, 111, 109, 23);
+		panelSFR.add(rdbtnTO);
+		
+		JRadioButton rdbtnReg1 = new JRadioButton("RP0RP1");
+		rdbtnReg1.setBounds(6, 137, 109, 23);
+		panelSFR.add(rdbtnReg1);
+		
+		JRadioButton rdbtnReg2 = new JRadioButton("RP0RP2");
+		rdbtnReg2.setBounds(6, 163, 109, 23);
+		panelSFR.add(rdbtnReg2);
+		
+		JRadioButton rdbtnIPR = new JRadioButton("IPR");
+		rdbtnIPR.setBounds(6, 189, 109, 23);
+		panelSFR.add(rdbtnIPR);
+		
+		ActionListener alRdbtnC = new ActionListener() 
+		{
+		      public void actionPerformed(ActionEvent actionEvent) 
+		      {
+		    	  int value = 0;
+			    	if(rdbtnCF.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("Carry = 1");
+			    		ctr.SetCarry(value);
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("Carry = 0");
+			    		ctr.SetCarry(value);
+			    	}
+		      }
+		};
+		
+		ActionListener alRdbtnDC = new ActionListener() 
+		{
+		      public void actionPerformed(ActionEvent actionEvent) 
+		      {
+		    	  int value = 0;
+		    	if(rdbtnDC.isSelected())
+		    	{
+		    		value = 1;
+		    		System.out.println("DC = 1");
+		    	}
+		    	else
+		    	{
+		    		value = 0;
+		    		System.out.println("DC = 0");
+		    	}
+		      }
+		 };
+		
+		ActionListener alRdbtnZ = new ActionListener() 
+		{
+		      public void actionPerformed(ActionEvent actionEvent) 
+		     {
+		    	  int value = 0;
+			    	if(rdbtnZ.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("Zero = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("Zero = 0");
+			    	}
+		     }
+		};
+					
+		ActionListener alRdbtnPD = new ActionListener() 
+		{
+		      public void actionPerformed(ActionEvent actionEvent) 
+		      {
+		    	  int value = 0;
+			    	if(rdbtnPD.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("Power Down = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("Power Down= 0");
+			    	}
+		      }
+		};
+		
+		ActionListener alRdbtnTO = new ActionListener() 
+		{
+		      public void actionPerformed(ActionEvent actionEvent) 
+		      {
+		    	  int value = 0;
+			    	if(rdbtnTO.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TO = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TO = 0");
+			    	}
+		      }
+		};
+							
+		ActionListener alRdbtnReg1 = new ActionListener() 
+		{
+			int value = 0;
+			public void actionPerformed(ActionEvent actionEvent) 
+			{
+		    	if(rdbtnReg1.isSelected())
+		    	{
+		    		value = 1;
+		    		System.out.println("reg1 = 1");
+		    	}
+		    	else
+		    	{
+		    		value = 0;
+		    		System.out.println("reg1 = 0");
+		    	}
+			}
+		 };
+		
+		 ActionListener alRdbtnReg2 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnReg2.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("reg2= 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("reg2 = 0");
+			    	}
+		    }
+		};
+		
+		 ActionListener alRdbtnIPR = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnIPR.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("IPR = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("IPR = 0");
+			    	}
+		    }
+		};
+		 
+		 
+		rdbtnCF.addActionListener(alRdbtnC); 
+		rdbtnDC.addActionListener(alRdbtnDC);
+		rdbtnZ.addActionListener(alRdbtnZ);
+		rdbtnPD.addActionListener(alRdbtnPD);
+		rdbtnTO.addActionListener(alRdbtnTO);
+		rdbtnReg1.addActionListener(alRdbtnReg1);
+		rdbtnReg2.addActionListener(alRdbtnReg2);
+		rdbtnIPR.addActionListener(alRdbtnIPR);
+		
+		cfStatus = rdbtnCF.isSelected();
+		dcStatus = rdbtnDC.isSelected();
+		zfStatus = rdbtnZ.isSelected();
+		
 	}
+	
+	public void SetCFGui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnCF.setSelected(true);
+		}
+		else
+		{
+			rdbtnCF.setSelected(false);
+		}
+		
+	}
+
+	public void SetDCGui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnDC.setSelected(true);
+		}
+		else
+		{
+			rdbtnDC.setSelected(false);
+		}
+		
+	}
+
+	public void SetZFGui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnZ.setSelected(true);
+		}
+		else
+		{
+			rdbtnZ.setSelected(false);
+		}
+		
+	}
+
+	
 }

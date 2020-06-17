@@ -45,7 +45,7 @@ public class Timer {
 		int Adresse = 0x81; 
 		int Stelle = 3;
 		//Math.pow == hoch -> 2^(getVorzähler*2)
-		if(ctr.getMemo().GetBitValue(Adresse, Stelle) == 0) && Vorteiler == (Math.pow(2,ctr.getVorzähler())*2))
+		//if(ctr.getMemo().GetBitValue(Adresse, Stelle) == 0) && Vorteiler == (Math.pow(2,ctr.getVorzähler())*2))
 		{
 			
 		}
