@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Font;
 import javax.swing.JRadioButton;
+import java.awt.FlowLayout;
 
 
 public class Simulator_Window {
@@ -33,13 +34,60 @@ public class Simulator_Window {
 	private JTable tblStack_1;
 	protected DefaultTableModel tblStackMdl;
 	private JTable tblStack;
-	boolean cfStatus;
-	boolean dcStatus;
-	boolean zfStatus;
+
+	
+	//SFR Pins die von aussen angesteuert werden
 	JRadioButton rdbtnCF = new JRadioButton("Carry Flag");
 	JRadioButton rdbtnDC = new JRadioButton("Digit Carry");
 	JRadioButton rdbtnZ = new JRadioButton("Zero Flag");
+	boolean cfStatus;
+	boolean dcStatus;
+	boolean zfStatus;
 	
+	boolean trisA0Status;
+	boolean trisA1Status;
+	boolean trisA2Status;
+	boolean trisA3Status;
+	boolean trisA4Status;
+	
+	boolean trisB0Status;
+	boolean trisB1Status;
+	boolean trisB2Status;
+	boolean trisB3Status;
+	boolean trisB4Status;
+	boolean trisB5Status;
+	boolean trisB6Status;
+	boolean trisB7Status;
+	
+	
+	//IO-Pins + Switch fuer In/Output RA
+	JRadioButton rdbtnTRISA0 = new JRadioButton("TRIS A0");
+	JRadioButton rdbtnTRISA4 = new JRadioButton("TRIS A1");
+	JRadioButton rdbtnTRISA3 = new JRadioButton("TRIS A2");
+	JRadioButton rdbtnTRISA2 = new JRadioButton("TRIS A3");
+	JRadioButton rdbtnTRISA1 = new JRadioButton("TRIS A4");
+	JRadioButton rdbtnRA4 = new JRadioButton("RA4");
+	JRadioButton rdbtnRA3 = new JRadioButton("RA3");
+	JRadioButton rdbtnRA2 = new JRadioButton("RA2");
+	JRadioButton rdbtnRA1 = new JRadioButton("RA1");
+	JRadioButton rdbtnRA0 = new JRadioButton("RA0");
+	//IO-Pins + Switch fuer In/Output RB
+	JRadioButton rdbtnTRISB0 = new JRadioButton("TRISB0");
+	JRadioButton rdbtnTRISB1 = new JRadioButton("TRISB1");
+	JRadioButton rdbtnTRISB2 = new JRadioButton("TRISB2");
+	JRadioButton rdbtnTRISB3 = new JRadioButton("TRISB3");
+	JRadioButton rdbtnTRISB4 = new JRadioButton("TRISB4");
+	JRadioButton rdbtnTRISB5 = new JRadioButton("TRISB5");
+	JRadioButton rdbtnTRISB6 = new JRadioButton("TRISB6");
+	JRadioButton rdbtnTRISB7 = new JRadioButton("TRISB7");
+	JRadioButton rdbtnRB0 = new JRadioButton("RB0");
+	JRadioButton rdbtnRB1 = new JRadioButton("RB1");
+	JRadioButton rdbtnRB2 = new JRadioButton("RB2");
+	JRadioButton rdbtnRB3 = new JRadioButton("RB3");
+	JRadioButton rdbtnRB4 = new JRadioButton("RB4");
+	JRadioButton rdbtnRB5 = new JRadioButton("RB5");
+	JRadioButton rdbtnRB6 = new JRadioButton("RB6");
+	JRadioButton rdbtnRB7 = new JRadioButton("RB7");
 	public Simulator_Window() {
 		ctr = new Controller(this);
 	}
@@ -200,13 +248,12 @@ public class Simulator_Window {
 		tblStack.setModel(tblStackMdl);
 		spStack.setViewportView(tblStack);	
 		
+		//Anzeige SpecialFunctionRegister SFR
 		JPanel panelSFR = new JPanel();
 		panelSFR.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelSFR.setBounds(1051, 11, 133, 252);
+		panelSFR.setBounds(1051, 11, 133, 217);
 		frame.getContentPane().add(panelSFR);
 		panelSFR.setLayout(null);
-		
-		
 		
 		rdbtnCF.setBounds(6, 7, 109, 23);
 		panelSFR.add(rdbtnCF);
@@ -398,6 +445,599 @@ public class Simulator_Window {
 		dcStatus = rdbtnDC.isSelected();
 		zfStatus = rdbtnZ.isSelected();
 		
+		//Anzeige IO-Ports TRIS A
+		JPanel panelTRISAIO = new JPanel();
+		panelTRISAIO.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelTRISAIO.setBounds(10, 11, 253, 134);
+		frame.getContentPane().add(panelTRISAIO);
+		panelTRISAIO.setLayout(null);
+
+		rdbtnRA0.setBounds(6, 7, 109, 23);
+		panelTRISAIO.add(rdbtnRA0);
+
+		rdbtnRA1.setBounds(6, 29, 109, 23);
+		panelTRISAIO.add(rdbtnRA1);
+
+		rdbtnRA2.setBounds(6, 53, 109, 23);
+		panelTRISAIO.add(rdbtnRA2);
+
+		rdbtnRA3.setBounds(6, 78, 109, 23);
+		panelTRISAIO.add(rdbtnRA3);
+		
+		rdbtnRA4.setBounds(6, 104, 109, 23);
+		panelTRISAIO.add(rdbtnRA4);
+		
+		rdbtnTRISA0.setBounds(136, 7, 109, 23);
+		panelTRISAIO.add(rdbtnTRISA0);
+
+		rdbtnTRISA1.setBounds(136, 104, 109, 23);
+		panelTRISAIO.add(rdbtnTRISA1);
+
+		rdbtnTRISA2.setBounds(136, 53, 109, 23);
+		panelTRISAIO.add(rdbtnTRISA2);
+		
+		rdbtnTRISA3.setBounds(136, 78, 109, 23);
+		panelTRISAIO.add(rdbtnTRISA3);
+		
+		rdbtnTRISA4.setBounds(136, 29, 109, 23);
+		panelTRISAIO.add(rdbtnTRISA4);
+		
+
+		
+		 ActionListener alRdbtnTRISA0 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISA0.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISA0 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISA0 = 0");
+			    	}
+		    }
+		};
+		
+		 ActionListener alRdbtnTRISA1 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISA1.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISA1 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISA1 = 0");
+			    	}
+		    }
+		};
+		
+		 ActionListener alRdbtnTRISA2 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISA2.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISA2 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISA2 = 0");
+			    	}
+		    }
+		};
+		
+		 ActionListener alRdbtnTRISA3 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISA3.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISA3 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISA3 = 0");
+			    	}
+		    }
+		};
+		
+		 ActionListener alRdbtnTRISA4 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISA4.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISA4 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISA4 = 0");
+			    	}
+		    }
+		};
+		
+		 
+		 ActionListener alRdbtnRA0 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRA0.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RA0 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RA0 = 0");
+			    	}
+		    }
+		};
+		
+		 ActionListener alRdbtnRA1 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRA1.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RA1 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RA1 = 0");
+			    	}
+		    }
+		};
+		 
+		 ActionListener alRdbtnRA2 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRA2.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RA2 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RA2 = 0");
+			    	}
+		    }
+		};
+		 
+		 ActionListener alRdbtnRA3 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRA3.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RA3 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RA3 = 0");
+			    	}
+		    }
+		};
+		 
+		 ActionListener alRdbtnRA4 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRA4.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RA4 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RA4 = 0");
+			    	}
+		    }
+		};
+		 
+		rdbtnTRISA0.addActionListener(alRdbtnTRISA0);
+		rdbtnTRISA1.addActionListener(alRdbtnTRISA1); 
+		rdbtnTRISA2.addActionListener(alRdbtnTRISA2); 
+		rdbtnTRISA3.addActionListener(alRdbtnTRISA3); 
+		rdbtnTRISA4.addActionListener(alRdbtnTRISA4); 
+		rdbtnRA0.addActionListener(alRdbtnRA0); 
+		rdbtnRA1.addActionListener(alRdbtnRA1); 
+		rdbtnRA2.addActionListener(alRdbtnRA2); 
+		rdbtnRA3.addActionListener(alRdbtnRA3); 
+		rdbtnRA4.addActionListener(alRdbtnRA4); 
+		
+		//Anzeige I/O-Ports TRIS B
+		JPanel panelTRISBIO = new JPanel();
+		panelTRISBIO.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelTRISBIO.setBounds(295, 11, 272, 252);
+		frame.getContentPane().add(panelTRISBIO);
+		panelTRISBIO.setLayout(null);
+		
+		
+		rdbtnRB0.setBounds(6, 7, 109, 23);
+		panelTRISBIO.add(rdbtnRB0);
+
+		rdbtnRB1.setBounds(6, 33, 109, 23);
+		panelTRISBIO.add(rdbtnRB1);
+
+		rdbtnRB2.setBounds(6, 59, 109, 23);
+		panelTRISBIO.add(rdbtnRB2);
+
+		rdbtnRB3.setBounds(6, 85, 109, 23);
+		panelTRISBIO.add(rdbtnRB3);
+
+		rdbtnRB4.setBounds(6, 111, 109, 23);
+		panelTRISBIO.add(rdbtnRB4);
+
+		rdbtnRB5.setBounds(6, 137, 109, 23);
+		panelTRISBIO.add(rdbtnRB5);
+
+		rdbtnRB6.setBounds(6, 163, 109, 23);
+		panelTRISBIO.add(rdbtnRB6);
+
+		rdbtnRB7.setBounds(6, 189, 109, 23);
+		panelTRISBIO.add(rdbtnRB7);
+		
+		
+		rdbtnTRISB0.setBounds(157, 7, 109, 23);
+		panelTRISBIO.add(rdbtnTRISB0);
+
+		rdbtnTRISB1.setBounds(157, 33, 109, 23);
+		panelTRISBIO.add(rdbtnTRISB1);
+
+		rdbtnTRISB2.setBounds(157, 59, 109, 23);
+		panelTRISBIO.add(rdbtnTRISB2);
+
+		rdbtnTRISB3.setBounds(157, 85, 109, 23);
+		panelTRISBIO.add(rdbtnTRISB3);
+
+		rdbtnTRISB4.setBounds(157, 111, 109, 23);
+		panelTRISBIO.add(rdbtnTRISB4);
+
+		rdbtnTRISB5.setBounds(157, 137, 109, 23);
+		panelTRISBIO.add(rdbtnTRISB5);
+
+		rdbtnTRISB6.setBounds(157, 163, 109, 23);
+		panelTRISBIO.add(rdbtnTRISB6);
+
+		rdbtnTRISB7.setBounds(157, 196, 109, 23);
+		panelTRISBIO.add(rdbtnTRISB7);
+		
+		 ActionListener alrdbtnRB0 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRB0.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RB0 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RB0 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnRB1 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRB1.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RB1 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RB1 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnRB2 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRB2.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RB2 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RB2 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnRB3 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRB3.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RB3 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RB3 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnRB4 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRB4.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RB4 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RB4 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnRB5 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRB0.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RB5 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RB5 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnRB6 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRB0.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RB6 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RB6 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnRB7 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnRB7.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("RB7 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("RB7 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnTRISB0 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISB0.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISB0 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISB0 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnTRISB1 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISB1.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISB1 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISB1 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnTRISB2 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISB2.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISB2 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISB2 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnTRISB3 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISB3.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISB3 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISB3 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnTRISB4 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISB4.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISB4 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISB4 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnTRISB5 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISB5.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISB5 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISB5 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnTRISB6 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISB6.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISB6 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISB6 = 0");
+			    	}
+		    }
+		};
+		 ActionListener alrdbtnTRISB7 = new ActionListener() 
+		 {
+			 int value = 0;
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+			    	if(rdbtnTRISB7.isSelected())
+			    	{
+			    		value = 1;
+			    		System.out.println("TRISB7 = 1");
+			    	}
+			    	else
+			    	{
+			    		value = 0;
+			    		System.out.println("TRISB7 = 0");
+			    	}
+		    }
+		};
+		
+		rdbtnTRISB0.addActionListener(alrdbtnTRISB0); 
+		rdbtnTRISB1.addActionListener(alrdbtnTRISB1); 
+		rdbtnTRISB2.addActionListener(alrdbtnTRISB2); 
+		rdbtnTRISB3.addActionListener(alrdbtnTRISB3); 
+		rdbtnTRISB4.addActionListener(alrdbtnTRISB4); 
+		rdbtnTRISB5.addActionListener(alrdbtnTRISB5); 
+		rdbtnTRISB6.addActionListener(alrdbtnTRISB6); 
+		rdbtnTRISB7.addActionListener(alrdbtnTRISB7); 
+		rdbtnRB0.addActionListener(alrdbtnRB0);
+		rdbtnRB1.addActionListener(alrdbtnRB1);
+		rdbtnRB2.addActionListener(alrdbtnRB2);
+		rdbtnRB3.addActionListener(alrdbtnRB3);
+		rdbtnRB4.addActionListener(alrdbtnRB4);
+		rdbtnRB5.addActionListener(alrdbtnRB5);
+		rdbtnRB6.addActionListener(alrdbtnRB6);
+		rdbtnRB7.addActionListener(alrdbtnRB7);
+
+		trisA0Status = rdbtnRA0.isSelected();
+		trisA1Status = rdbtnRA1.isSelected();
+		trisA2Status = rdbtnRA2.isSelected();
+		trisA3Status = rdbtnRA3.isSelected();
+		trisA4Status = rdbtnRA4.isSelected();
+		
+		trisB0Status = rdbtnRB0.isSelected();
+		trisB1Status = rdbtnRB1.isSelected();
+		trisB2Status = rdbtnRB2.isSelected();
+		trisB3Status = rdbtnRB3.isSelected();
+		trisB4Status = rdbtnRB4.isSelected();
+		trisB5Status = rdbtnRB5.isSelected();
+		trisB6Status = rdbtnRB6.isSelected();
+		trisB7Status = rdbtnRB7.isSelected();
+		
 	}
 	
 	public void SetCFGui(int flagValue)
@@ -438,6 +1078,165 @@ public class Simulator_Window {
 		}
 		
 	}
-
 	
+	//TRIS A
+	public void SetTRISABit0Gui(int flagValue)
+	{
+		if( flagValue == 1)
+		{
+			rdbtnTRISA0.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISA0.setSelected(false);
+		}
+		
+	}
+	public void SetTRISABit1Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISA1.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISA1.setSelected(false);
+		}
+		
+	}
+	public void SetTRISABit2Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISA2.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISA2.setSelected(false);
+		}
+		
+	}
+	
+	public void SetTRISABit3Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISA3.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISA3.setSelected(false);
+		}
+		
+	}
+	public void SetTRISABit4Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISA4.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISA4.setSelected(false);
+		}
+		
+	}
+	
+	//TRIS B
+	public void SetTRISBBit0Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISB0.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISB0.setSelected(false);
+		}
+		
+	}
+	public void SetTRISBBit1Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISB1.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISB1.setSelected(false);
+		}
+		
+	}
+	public void SetTRISBBit2Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISB2.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISB2.setSelected(false);
+		}
+		
+	}
+	public void SetTRISBBit3Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISB3.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISB3.setSelected(false);
+		}
+		
+	}
+	public void SetTRISBBit4Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISB4.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISB4.setSelected(false);
+		}
+		
+	}
+	public void SetTRISBBit5Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISB5.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISB5.setSelected(false);
+		}
+		
+	}
+	public void SetTRISBBit6Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISB6.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISB6.setSelected(false);
+		}
+		
+	}
+	public void SetTRISBBit7Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnTRISB7.setSelected(true);
+		}
+		else
+		{
+			rdbtnTRISB7.setSelected(false);
+		}
+		
+	}
 }

@@ -389,6 +389,7 @@ public class Memory extends Thread{
 		return Integer.parseInt(c,2);
 	}
 	
+	//SET SFR AUS GUI
 	public void SetCarryBit(int value)
 	{
 		dataMemoryIntArray[3][0] = value;
@@ -427,5 +428,256 @@ public class Memory extends Thread{
 	public void SetIPRBit(int value)
 	{
 		dataMemoryIntArray[3][7] = value;
+	}
+	
+	//SET IO PORTS
+	//TRIS A => 85hex
+	public void SetTRISA0Bit(int value)
+	{
+		dataMemoryIntArray[133][0] = value;
+	}
+	public void SetTRISA1Bit(int value)
+	{
+		dataMemoryIntArray[133][1] = value;
+	}
+	public void SetTRISA2Bit(int value)
+	{
+		dataMemoryIntArray[133][2] = value;
+	}
+	public void SetTRISA3Bit(int value)
+	{
+		dataMemoryIntArray[133][3] = value;
+	}
+	public void SetTRISA4Bit(int value)
+	{
+		dataMemoryIntArray[133][4] = value;
+	}
+	//TRIS A IO-Pins => 5hex
+	public void SetTRISAIO0Bit(int value)
+	{
+		dataMemoryIntArray[5][0] = value;
+	}
+	public void SetTRISAIO1Bit(int value)
+	{
+		dataMemoryIntArray[5][1] = value;
+	}
+	public void SetTRISAIO2Bit(int value)
+	{
+		dataMemoryIntArray[5][2] = value;
+	}
+	public void SetTRISAIO3Bit(int value)
+	{
+		dataMemoryIntArray[5][3] = value;
+	}
+	public void SetTRISAIO4Bit(int value)
+	{
+		dataMemoryIntArray[5][4] = value;
+	}
+	//Datenblatt 22
+	
+	//TRIS B =86hex
+	public void SetTRISB0Bit(int value)
+	{
+		dataMemoryIntArray[134][0] = value;
+	}
+	public void SetTRISB1Bit(int value)
+	{
+		dataMemoryIntArray[134][1] = value;
+	}
+	public void SetTRISB2Bit(int value)
+	{
+		dataMemoryIntArray[134][2] = value;
+	}
+	public void SetTRISB3Bit(int value)
+	{
+		dataMemoryIntArray[134][3] = value;
+	}
+	public void SetTRISB4Bit(int value)
+	{
+		dataMemoryIntArray[134][4] = value;
+	}
+	public void SetTRISB5Bit(int value)
+	{
+		dataMemoryIntArray[134][5] = value;
+	}
+	public void SetTRISB6Bit(int value)
+	{
+		dataMemoryIntArray[134][6] = value;
+	}
+	public void SetTRISB7Bit(int value)
+	{
+		dataMemoryIntArray[134][7] = value;
+	}
+	//TRIS B IO-Pins => 6hex
+	public void SetTRISBIO0Bit(int value)
+	{
+		dataMemoryIntArray[6][0] = value;
+	}
+	public void SetTRISBIO1Bit(int value)
+	{
+		dataMemoryIntArray[6][1] = value;
+	}
+	public void SetTRISBIO2Bit(int value)
+	{
+		dataMemoryIntArray[6][2] = value;
+	}
+	public void SetTRISBIO3Bit(int value)
+	{
+		dataMemoryIntArray[6][3] = value;
+	}
+	public void SetTRISBIO4Bit(int value)
+	{
+		dataMemoryIntArray[6][4] = value;
+	}
+	public void SetTRISBIO5Bit(int value)
+	{
+		dataMemoryIntArray[6][5] = value;
+	}
+	public void SetTRISBIO6Bit(int value)
+	{
+		dataMemoryIntArray[6][6] = value;
+	}
+	public void SetTRISBIO7Bit(int value)
+	{
+		dataMemoryIntArray[6][7] = value;
+	}
+	//Datenblatt Seite 24
+	
+	public void CheckSFR()
+	{
+		if(((dataMemoryIntArray[3][0] == 0) & (ctr.getGui().cfStatus == false)) | (dataMemoryIntArray[3][0] == 1) & (ctr.getGui().cfStatus == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[3][0] == 0) & (ctr.getGui().cfStatus == true)) | (dataMemoryIntArray[3][0] == 1) & (ctr.getGui().cfStatus == false))
+		{
+			ctr.getGui().SetCFGui((dataMemoryIntArray[3][0]));
+		}
+		
+		if(((dataMemoryIntArray[3][1] == 0) & (ctr.getGui().dcStatus == false)) | (dataMemoryIntArray[3][1] == 1) & (ctr.getGui().dcStatus == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[3][1] == 0) & (ctr.getGui().dcStatus == true)) | (dataMemoryIntArray[3][1] == 1) & (ctr.getGui().dcStatus == false))
+		{
+			ctr.getGui().SetDCGui((dataMemoryIntArray[3][1]));
+		}
+		
+		if(((dataMemoryIntArray[3][2] == 0) & (ctr.getGui().zfStatus == false)) | (dataMemoryIntArray[3][2] == 1) & (ctr.getGui().zfStatus == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[3][2] == 0) & (ctr.getGui().zfStatus == true)) | (dataMemoryIntArray[3][2] == 1) & (ctr.getGui().zfStatus == false))
+		{
+			ctr.getGui().SetZFGui((dataMemoryIntArray[3][2]));
+		}
+	}
+	
+	public void CheckIO()
+	{		
+		//Tris A ports
+		if(((dataMemoryIntArray[5][0] == 0) & (ctr.getGui().trisA0Status == false)) | (dataMemoryIntArray[5][0] == 1) & (ctr.getGui().trisA0Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[5][0] == 0) & (ctr.getGui().trisA0Status == true)) | (dataMemoryIntArray[5][0] == 1) & (ctr.getGui().trisA0Status == false))
+		{
+			ctr.getGui().SetTRISABit0Gui((dataMemoryIntArray[5][0]));
+		}
+		
+		if(((dataMemoryIntArray[5][1] == 0) & (ctr.getGui().trisA1Status == false)) | (dataMemoryIntArray[5][1] == 1) & (ctr.getGui().trisA1Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[5][1] == 0) & (ctr.getGui().trisA1Status == true)) | (dataMemoryIntArray[5][1] == 1) & (ctr.getGui().trisA1Status == false))
+		{
+			ctr.getGui().SetTRISABit1Gui((dataMemoryIntArray[5][1]));
+		}
+		
+		if(((dataMemoryIntArray[5][2] == 0) & (ctr.getGui().trisA2Status == false)) | (dataMemoryIntArray[5][2] == 1) & (ctr.getGui().trisA2Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[5][2] == 0) & (ctr.getGui().trisA2Status == true)) | (dataMemoryIntArray[5][2] == 1) & (ctr.getGui().trisA2Status == false))
+		{
+			ctr.getGui().SetTRISABit2Gui((dataMemoryIntArray[5][2]));
+		}
+		
+		if(((dataMemoryIntArray[5][3] == 0) & (ctr.getGui().trisA3Status == false)) | (dataMemoryIntArray[5][3] == 1) & (ctr.getGui().trisA3Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[5][3] == 0) & (ctr.getGui().trisA3Status == true)) | (dataMemoryIntArray[5][3] == 1) & (ctr.getGui().trisA3Status == false))
+		{
+			ctr.getGui().SetTRISABit3Gui((dataMemoryIntArray[5][3]));
+		}
+		
+		if(((dataMemoryIntArray[5][4] == 0) & (ctr.getGui().trisA4Status == false)) | (dataMemoryIntArray[5][4] == 1) & (ctr.getGui().trisA4Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[5][4] == 0) & (ctr.getGui().trisA4Status == true)) | (dataMemoryIntArray[5][4] == 1) & (ctr.getGui().trisA4Status == false))
+		{
+			ctr.getGui().SetTRISABit4Gui((dataMemoryIntArray[5][4]));
+		}
+		//Tris B Ports
+		if(((dataMemoryIntArray[6][0] == 0) & (ctr.getGui().trisB0Status == false)) | (dataMemoryIntArray[6][0] == 1) & (ctr.getGui().trisB0Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[6][0] == 0) & (ctr.getGui().trisB0Status == true)) | (dataMemoryIntArray[6][0] == 1) & (ctr.getGui().trisB0Status == false))
+		{
+			ctr.getGui().SetTRISBBit0Gui(dataMemoryIntArray[6][0]);
+		}
+		
+		if(((dataMemoryIntArray[6][1] == 0) & (ctr.getGui().trisB1Status == false)) | (dataMemoryIntArray[6][1] == 1) & (ctr.getGui().trisB1Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[6][1] == 0) & (ctr.getGui().trisB1Status == true)) | (dataMemoryIntArray[6][1] == 1) & (ctr.getGui().trisB1Status == false))
+		{
+			ctr.getGui().SetTRISBBit1Gui((dataMemoryIntArray[6][1]));
+		}
+		
+		if(((dataMemoryIntArray[6][2] == 0) & (ctr.getGui().trisB2Status == false)) | (dataMemoryIntArray[6][2] == 1) & (ctr.getGui().trisB2Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[6][2] == 0) & (ctr.getGui().trisB2Status == true)) | (dataMemoryIntArray[6][2] == 1) & (ctr.getGui().trisB2Status == false))
+		{
+			ctr.getGui().SetTRISBBit2Gui((dataMemoryIntArray[6][2]));
+		}
+		
+		if(((dataMemoryIntArray[6][3] == 0) & (ctr.getGui().trisB3Status == false)) | (dataMemoryIntArray[6][3] == 1) & (ctr.getGui().trisB3Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[6][3] == 0) & (ctr.getGui().trisB3Status == true)) | (dataMemoryIntArray[6][3] == 1) & (ctr.getGui().trisB3Status == false))
+		{
+			ctr.getGui().SetTRISBBit3Gui((dataMemoryIntArray[6][3]));
+		}
+		
+		if(((dataMemoryIntArray[6][4] == 0) & (ctr.getGui().trisB4Status == false)) | (dataMemoryIntArray[6][4] == 1) & (ctr.getGui().trisB4Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[6][4] == 0) & (ctr.getGui().trisB4Status == true)) | (dataMemoryIntArray[6][4] == 1) & (ctr.getGui().trisB4Status == false))
+		{
+			ctr.getGui().SetTRISBBit4Gui((dataMemoryIntArray[6][4]));
+		}
+		if(((dataMemoryIntArray[6][5] == 0) & (ctr.getGui().trisB5Status == false)) | (dataMemoryIntArray[6][5] == 1) & (ctr.getGui().trisB5Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[6][5] == 0) & (ctr.getGui().trisB5Status == true)) | (dataMemoryIntArray[6][5] == 1) & (ctr.getGui().trisB5Status == false))
+		{
+			ctr.getGui().SetTRISBBit5Gui((dataMemoryIntArray[6][5]));
+		}
+		
+		if(((dataMemoryIntArray[6][6] == 0) & (ctr.getGui().trisB6Status == false)) | (dataMemoryIntArray[6][6] == 1) & (ctr.getGui().trisB6Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[6][6] == 0) & (ctr.getGui().trisB6Status == true)) | (dataMemoryIntArray[6][6] == 1) & (ctr.getGui().trisB6Status == false))
+		{
+			ctr.getGui().SetTRISBBit6Gui((dataMemoryIntArray[6][6]));
+		}
+		
+		if(((dataMemoryIntArray[6][7] == 0) & (ctr.getGui().trisB7Status == false)) | (dataMemoryIntArray[6][7] == 1) & (ctr.getGui().trisB7Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[6][7] == 0) & (ctr.getGui().trisB7Status == true)) | (dataMemoryIntArray[6][7] == 1) & (ctr.getGui().trisB7Status == false))
+		{
+			ctr.getGui().SetTRISBBit7Gui((dataMemoryIntArray[6][7]));
+		}
+		
+		
+	
+		
 	}
 }

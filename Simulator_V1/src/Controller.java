@@ -880,11 +880,117 @@ public class Controller {
 		getMemo().SetReg2Bit(value);
 	}
 	
-	public void SetIPR(int value)
+	// TRIS A
+	public void SetTRISA0(int value)
 	{
-		getMemo().SetIPRBit(value);
+		getMemo().SetTRISA0Bit(value);
 	}
 	
+	public void SetTRISA1(int value)
+	{
+		getMemo().SetTRISA1Bit(value);
+	}
+	public void SetTRISA2(int value)
+	{
+		getMemo().SetTRISA2Bit(value);
+	}
+	public void SetTRISA3(int value)
+	{
+		getMemo().SetTRISA3Bit(value);
+	}
+	public void SetTRISA4(int value)
+	{
+		getMemo().SetTRISA4Bit(value);
+	}
+	//Anzeige IO-Ports TRIS A
+	public void SetTRISAIO0(int value)
+	{
+		getMemo().SetTRISAIO0Bit(value);
+	}
+	public void SetTRISAIO1(int value)
+	{
+		getMemo().SetTRISAIO1Bit(value);
+	}
+	public void SetTRISAIO2(int value)
+	{
+		getMemo().SetTRISAIO2Bit(value);
+	}
+	public void SetTRISAIO3(int value)
+	{
+		getMemo().SetTRISAIO3Bit(value);
+	}
+	public void SetTRISAIO4(int value)
+	{
+		getMemo().SetTRISAIO4Bit(value);
+	}
+	
+	// TRIS B
+	public void SetTRISB0(int value)
+	{
+		getMemo().SetTRISB0Bit(value);
+	}
+	public void SetTRISB1(int value)
+	{
+		getMemo().SetTRISB1Bit(value);
+	}
+	public void SetTRISB2(int value)
+	{
+		getMemo().SetTRISB2Bit(value);
+	}
+	public void SetTRISB03(int value)
+	{
+		getMemo().SetTRISB3Bit(value);
+	}
+	public void SetTRISB4(int value)
+	{
+		getMemo().SetTRISB4Bit(value);
+	}
+	public void SetTRISB5(int value)
+	{
+		getMemo().SetTRISB5Bit(value);
+	}
+	public void SetTRISB6(int value)
+	{
+		getMemo().SetTRISB6Bit(value);
+	}
+	public void SetTRISB7(int value)
+	{
+		getMemo().SetTRISB7Bit(value);
+	}
+	//TRISB IO
+	public void SetTRISBIO0(int value)
+	{
+		getMemo().SetTRISBIO0Bit(value);
+	}
+	public void SetTRISBIO1(int value)
+	{
+		getMemo().SetTRISBIO1Bit(value);
+	}
+	public void SetTRISBIO2(int value)
+	{
+		getMemo().SetTRISBIO2Bit(value);
+	}
+	public void SetTRISBIO3(int value)
+	{
+		getMemo().SetTRISBIO3Bit(value);
+	}
+	public void SetTRISBIO4(int value)
+	{
+	
+		getMemo().SetTRISBIO4Bit(value);
+	}
+	public void SetTRISBIO5(int value)
+	{
+		getMemo().SetTRISBIO5Bit(value);
+	}
+	public void SetTRISBIO6(int value)
+	{
+		getMemo().SetTRISBIO6Bit(value);
+	}
+	public void SetTRISBIO7(int value)
+	{
+		getMemo().SetTRISBIO7Bit(value);
+	}
 	
 	public void start() 
 	{
