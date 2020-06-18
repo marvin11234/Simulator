@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -1239,4 +1240,29 @@ public class Simulator_Window {
 		}
 		
 	}
+	
+	
+	public void Befehlsmarkierung(int programmCounterInt)
+	{
+		int cellValue;
+	
+		for(int i = 0 ; i <= tblCodeAusgabe.getRowCount() -1; i++ )
+		{
+			if(tblCodeAusgabe.getValueAt(i, 1).equals("    "))
+			{
+				System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
+			}
+			else 
+			{
+				System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
+				cellValue = Integer.valueOf((String) tblCodeAusgabe.getValueAt(i, 1));
+				if( cellValue == programmCounterInt)
+				{	
+					tblCodeAusgabe.setRowSelectionInterval(i, i);
+					tblCodeAusgabe.setSelectionBackground(Color.GREEN);
+				}
+			}
+		}
+	}
 }
+
