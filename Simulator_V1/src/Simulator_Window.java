@@ -157,7 +157,23 @@ public class Simulator_Window {
 		tblCodeAusgabe.setEnabled(false);
 		tblCodeAusgabe.setModel(tblCode);
 		spCodeAusgabe.setViewportView(tblCodeAusgabe);
+		tblCodeAusgabe.addMouseListener(new java.awt.event.MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent event)
+			{
+				int row = tblCodeAusgabe.rowAtPoint(event.getPoint());
+				int col = tblCodeAusgabe.columnAtPoint(event.getPoint());
+				
+				if(col == 0)
+				{
+					ctr.SetBreakPoint(row);
+				}
+			}
+		});
+				
 
+		//Start & Stopp Button
 		JPanel panelControl = new JPanel();
 		panelControl.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelControl.setBounds(1365, 11, 168, 157);
@@ -1250,11 +1266,9 @@ public class Simulator_Window {
 		{
 			if(tblCodeAusgabe.getValueAt(i, 1).equals("    "))
 			{
-				System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
 			}
 			else 
 			{
-				System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
 				cellValue = Integer.valueOf((String) tblCodeAusgabe.getValueAt(i, 1));
 				if( cellValue == programmCounterInt)
 				{	

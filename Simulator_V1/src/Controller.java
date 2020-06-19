@@ -26,6 +26,9 @@ public class Controller {
 	int zeileInt = 0;
 	int i = 0;
 	int[] befehlDezimalIntArray = new int[1024];
+	//Array für PC an denen ein BreakPoint liegt
+	int bP[] = new int[20];
+	int helper = 0;
 	
 	//gui und memo Instanz erzeugen
 	public Controller(Simulator_Window simulator_Window) {
@@ -87,6 +90,12 @@ public class Controller {
 				InitGprView();
 				
 				InitStackView();
+				
+				//Init BreakPointArray
+				for(int i = 0; i <= bP.length -1; i++)
+				{
+					bP[i] = 400;
+				}
 						
 			}
 			catch (IOException e)
@@ -990,6 +999,46 @@ public class Controller {
 	public void SetTRISBIO7(int value)
 	{
 		getMemo().SetTRISBIO7Bit(value);
+	}
+
+	public void CheckBreakPoint()
+	{
+		for (int i = 0; i<= bP.length -1 ;i ++)
+		{
+			if(bP[i] - 1 == getMemo().programCounterInt)
+			{
+				System.out.println("BP TEST AUSGABE " + bP[i] +" "+ getMemo().programCounterInt);
+				stop();
+			}
+		}
+	}
+
+	public void SetBreakPoint(int row)
+	{
+		String breakPoint = "BP";
+		int bPpc;
+		
+		if( ! gui.tblCode.getValueAt(row, 1).equals("    ")) //BREAKPOINT IN ZEILE MIT CODE ?
+		{
+			if( gui.tblCode.getValueAt(row, 0).equals(breakPoint)) //BREAKPOINT ENTFERNEN
+			{
+				gui.tblCode.setValueAt(" ", row, 0);
+				for(int i = 0; i <= bP.length-1; i++)
+				{
+					if(bP[i] == Integer.parseInt(gui.tblCode.getValueAt(row, 1).toString()))
+					{
+						bP[i]=400;
+					}
+				}
+			}
+			else //BREAKPOINT SETZEN
+			{
+				bPpc = Integer.parseInt(gui.tblCode.getValueAt(row, 1).toString());
+				bP[helper]= (bPpc);
+				gui.tblCode.setValueAt(breakPoint, row, 0);
+				helper++;
+			}
+		}
 	}
 	
 	public void start() 

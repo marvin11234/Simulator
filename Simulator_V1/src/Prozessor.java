@@ -9,9 +9,12 @@ public class Prozessor extends Thread {
 	@Override public void run(){ 
 		while(! exit) {
 			try {
+				ctr.CheckBreakPoint();
 				ctr.getMemo().CheckSFR();
 				ctr.getMemo().CheckIO();
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
+
+				
 				this.befehlsAbarabeitung(ctr.getMemo().programMemoryIntArray[ctr.getMemo().programCounterInt]);
 				if(exit)
 				{
