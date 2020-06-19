@@ -2,19 +2,45 @@
 public class Prozessor extends Thread {
 	
 	private boolean exit = false;
+	private boolean isNop = false;
+	protected void setNop(boolean isNop) {
+		this.isNop = isNop;
+	}
 	private Controller ctr;
+	private boolean clockout = false;
 	public Prozessor(Controller controller) {
 		ctr = controller;
 	}
 	@Override public void run(){ 
+		ctr.getMemo().InitMemoryPWROn();
+		ctr.getMemo().SetPC(0);
 		while(! exit) {
 			try {
-				this.befehlsAbarabeitung(ctr.getMemo().programMemoryIntArray[ctr.getMemo().programCounterInt]);
+
+
+				if(isNop)
+				{
+					this.befehlsAbarabeitung(0x00);
+					ctr.getMemo().programCounterInt--;
+					isNop = false;
+				}
+				else
+				{
+					this.befehlsAbarabeitung(ctr.getMemo().programMemoryIntArray[ctr.getMemo().programCounterInt]);
+				}
+				
+				
+				clockout = true;
+				ctr.getTimer().updateTimer((ctr.getMemo().getBitValue(0x05, 4)), clockout);
+				ctr.getTimer().checkIncrement();
+				
+				clockout = false;
+
 				if(exit)
 				{
 					break;
 				}
-				Thread.sleep(2000);
+				//Thread.sleep(2000);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
