@@ -18,6 +18,7 @@ public class Prozessor extends Thread {
 			try {
 
 
+
 				if(isNop)
 				{
 					this.befehlsAbarabeitung(0x00);
@@ -26,6 +27,7 @@ public class Prozessor extends Thread {
 				}
 				else
 				{
+					
 					this.befehlsAbarabeitung(ctr.getMemo().programMemoryIntArray[ctr.getMemo().programCounterInt]);
 				}
 				
@@ -35,6 +37,11 @@ public class Prozessor extends Thread {
 				ctr.getTimer().checkIncrement();
 				
 				clockout = false;
+
+
+				ctr.getMemo().CheckSFR();
+				ctr.getMemo().CheckIO();
+				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
 
 				if(exit)
 				{
@@ -52,7 +59,7 @@ public class Prozessor extends Thread {
 	 * 
 	 *
 	 * 
-	 * Switch Case für das erkennen des Befehls und den Aufruf der
+	 * Switch Case fï¿½r das erkennen des Befehls und den Aufruf der
 	 * entsprechenden Funktion
 	 * 
 	 * #########################################################################*/
@@ -68,7 +75,7 @@ public class Prozessor extends Thread {
 			int d = ((payload >> 7) & 0x01); //destination
 			int f = ((payload) & 0x007F);
 	
-			//erkennung der  Adressierung über FSR
+			//erkennung der  Adressierung ï¿½ber FSR
 			if (f == 0x00 || f == 0x80)
 			{
 				f = ctr.getMemo().WriteDirect(0x04);
