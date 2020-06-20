@@ -1020,13 +1020,6 @@ public class Controller {
 	protected Memory getMemo() {
 		return memo;
 	}
-//	protected int getVorzaehler() 
-//	{
-//		int Adresse = 0x81;
-//		int Stelle = 7;
-//		return getMemo().GetBitValue(Adresse, Stelle);
-//	}
-//	
 
 	public Simulator_Window getGui()
 	{

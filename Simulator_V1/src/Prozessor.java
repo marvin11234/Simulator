@@ -14,6 +14,8 @@ public class Prozessor extends Thread {
 	@Override public void run(){ 
 		ctr.getMemo().InitMemoryPWROn();
 		ctr.getMemo().SetPC(0);
+		ctr.getMemo().CheckSFR();
+		ctr.getMemo().CheckIO();
 		while(! exit) {
 			try {
 

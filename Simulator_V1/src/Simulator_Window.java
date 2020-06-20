@@ -41,9 +41,12 @@ public class Simulator_Window {
 	JRadioButton rdbtnCF = new JRadioButton("Carry Flag");
 	JRadioButton rdbtnDC = new JRadioButton("Digit Carry");
 	JRadioButton rdbtnZ = new JRadioButton("Zero Flag");
+	JRadioButton rdbtnReg1 = new JRadioButton("RP0/1");
+	JRadioButton rdbtnPD = new JRadioButton("Power-Down");
 	boolean cfStatus;
 	boolean dcStatus;
 	boolean zfStatus;
+	boolean Reg1Status;
 	
 	boolean trisA0Status;
 	boolean trisA1Status;
@@ -266,15 +269,15 @@ public class Simulator_Window {
 		rdbtnZ.setBounds(6, 59, 109, 23);
 		panelSFR.add(rdbtnZ);
 		
-		JRadioButton rdbtnPD = new JRadioButton("Power-Down");
+		
 		rdbtnPD.setBounds(6, 85, 109, 23);
 		panelSFR.add(rdbtnPD);
 		
 		JRadioButton rdbtnTO = new JRadioButton("Time-Out");
 		rdbtnTO.setBounds(6, 111, 109, 23);
 		panelSFR.add(rdbtnTO);
+	
 		
-		JRadioButton rdbtnReg1 = new JRadioButton("RP0RP1");
 		rdbtnReg1.setBounds(6, 137, 109, 23);
 		panelSFR.add(rdbtnReg1);
 		
@@ -445,6 +448,8 @@ public class Simulator_Window {
 		cfStatus = rdbtnCF.isSelected();
 		dcStatus = rdbtnDC.isSelected();
 		zfStatus = rdbtnZ.isSelected();
+		Reg1Status = rdbtnReg1.isSelected();
+		
 		
 		//Anzeige IO-Ports TRIS A
 		JPanel panelTRISAIO = new JPanel();
@@ -1080,6 +1085,20 @@ public class Simulator_Window {
 		
 	}
 	
+	public void SetRP0Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnReg1.setSelected(true);
+		}
+		else
+		{
+			rdbtnReg1.setSelected(false);
+		}
+		
+	}
+	
+	
 	//TRIS A
 	public void SetTRISABit0Gui(int flagValue)
 	{
@@ -1250,18 +1269,18 @@ public class Simulator_Window {
 		{
 			if(tblCodeAusgabe.getValueAt(i, 1).equals("    "))
 			{
-				System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
+				//System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
 			}
-			else 
+			/*else 
 			{
-				System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
+				//System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
 				cellValue = Integer.valueOf((String) tblCodeAusgabe.getValueAt(i, 1));
 				if( cellValue == programmCounterInt)
 				{	
 					tblCodeAusgabe.setRowSelectionInterval(i, i);
 					tblCodeAusgabe.setSelectionBackground(Color.GREEN);
 				}
-			}
+			}*/
 		}
 	}
 }

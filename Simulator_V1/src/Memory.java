@@ -524,6 +524,7 @@ public class Memory extends Thread {
 
 		// PD
 		dataMemoryIntArray[3][3] = 1;
+
 		dataMemoryIntArray[131][3] = 1;
 
 		// TO
@@ -536,6 +537,11 @@ public class Memory extends Thread {
 		dataMemoryIntArray[133][2] = 1;
 		dataMemoryIntArray[133][3] = 1;
 		dataMemoryIntArray[133][4] = 1;
+		ctr.getGui().rdbtnTRISA0.setSelected(true);
+		ctr.getGui().rdbtnTRISA1.setSelected(true);
+		ctr.getGui().rdbtnTRISA2.setSelected(true);
+		ctr.getGui().rdbtnTRISA3.setSelected(true);
+		ctr.getGui().rdbtnTRISA4.setSelected(true);
 
 		// TrisB auf Eingang
 		dataMemoryIntArray[134][0] = 1;
@@ -546,6 +552,15 @@ public class Memory extends Thread {
 		dataMemoryIntArray[134][5] = 1;
 		dataMemoryIntArray[134][6] = 1;
 		dataMemoryIntArray[134][7] = 1;
+		ctr.getGui().rdbtnTRISB0.setSelected(true);
+		ctr.getGui().rdbtnTRISB1.setSelected(true);
+		ctr.getGui().rdbtnTRISB2.setSelected(true);
+		ctr.getGui().rdbtnTRISB3.setSelected(true);
+		ctr.getGui().rdbtnTRISB4.setSelected(true);
+		ctr.getGui().rdbtnTRISB5.setSelected(true);
+		ctr.getGui().rdbtnTRISB6.setSelected(true);
+		ctr.getGui().rdbtnTRISB7.setSelected(true);
+
 
 		// Option Register
 		// PS0
@@ -564,6 +579,8 @@ public class Memory extends Thread {
 		dataMemoryIntArray[129][6] = 1;
 		// RBPU
 		dataMemoryIntArray[129][7] = 1;
+		
+		System.out.println("Option Register: " + dataMemoryIntArray[129][4]);
 	}
 
 	protected int get_Memory(int fileaddress) {
@@ -759,6 +776,14 @@ public class Memory extends Thread {
 		{
 			ctr.getGui().SetZFGui((dataMemoryIntArray[3][2]));
 		}
+		if(((dataMemoryIntArray[3][5] == 0) & (ctr.getGui().Reg1Status == false)) | (dataMemoryIntArray[3][5] == 1) & (ctr.getGui().Reg1Status == true) )
+		{
+		}
+		else if(((dataMemoryIntArray[3][5] == 0) & (ctr.getGui().Reg1Status == true)) | (dataMemoryIntArray[3][5] == 1) & (ctr.getGui().Reg1Status == false))
+		{
+			ctr.getGui().SetRP0Gui((dataMemoryIntArray[3][5]));
+		}
+		
 	}
 	
 	public void CheckIO()
