@@ -48,11 +48,17 @@ public class Simulator_Window {
 	JRadioButton rdbtnCF = new JRadioButton("Carry Flag");
 	JRadioButton rdbtnDC = new JRadioButton("Digit Carry");
 	JRadioButton rdbtnZ = new JRadioButton("Zero Flag");
+<<<<<<< HEAD
 	
 	
+=======
+	JRadioButton rdbtnReg1 = new JRadioButton("RP0/1");
+	JRadioButton rdbtnPD = new JRadioButton("Power-Down");
+>>>>>>> 8e16d18b8ad1bd25855dbd5383a40819e8f61e57
 	boolean cfStatus;
 	boolean dcStatus;
 	boolean zfStatus;
+	boolean Reg1Status;
 	
 	boolean trisA0Status;
 	boolean trisA1Status;
@@ -133,7 +139,7 @@ public class Simulator_Window {
 	public void initialize(Simulator_Window Simulator_WindowInst) 
 	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1644, 1006);
+		frame.setBounds(100, 100, 1544, 861);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Simulator_WindowInst.frame.setVisible(true);
 
@@ -197,7 +203,7 @@ public class Simulator_Window {
 		//Start & Stopp Button
 		JPanel panelControl = new JPanel();
 		panelControl.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelControl.setBounds(1365, 11, 168, 157);
+		panelControl.setBounds(810, 29, 168, 157);
 		frame.getContentPane().add(panelControl);
 		panelControl.setLayout(null);
 
@@ -289,7 +295,7 @@ public class Simulator_Window {
 		//Anzeige SpecialFunctionRegister SFR
 		JPanel panelSFR = new JPanel();
 		panelSFR.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelSFR.setBounds(1051, 11, 133, 217);
+		panelSFR.setBounds(985, 13, 133, 217);
 		frame.getContentPane().add(panelSFR);
 		panelSFR.setLayout(null);
 		
@@ -303,15 +309,15 @@ public class Simulator_Window {
 		rdbtnZ.setBounds(6, 59, 109, 23);
 		panelSFR.add(rdbtnZ);
 		
-		JRadioButton rdbtnPD = new JRadioButton("Power-Down");
+		
 		rdbtnPD.setBounds(6, 85, 109, 23);
 		panelSFR.add(rdbtnPD);
 		
 		JRadioButton rdbtnTO = new JRadioButton("Time-Out");
 		rdbtnTO.setBounds(6, 111, 109, 23);
 		panelSFR.add(rdbtnTO);
+	
 		
-		JRadioButton rdbtnReg1 = new JRadioButton("RP0RP1");
 		rdbtnReg1.setBounds(6, 137, 109, 23);
 		panelSFR.add(rdbtnReg1);
 		
@@ -482,6 +488,8 @@ public class Simulator_Window {
 		cfStatus = rdbtnCF.isSelected();
 		dcStatus = rdbtnDC.isSelected();
 		zfStatus = rdbtnZ.isSelected();
+		Reg1Status = rdbtnReg1.isSelected();
+		
 		
 		//Anzeige IO-Ports TRIS A
 		JPanel panelTRISAIO = new JPanel();
@@ -621,11 +629,12 @@ public class Simulator_Window {
 			    	if(rdbtnRA0.isSelected())
 			    	{
 			    		value = 1;
+			    		ctr.getMemo().dataMemoryIntArray[5][0] = value;
 			    		System.out.println("RA0 = 1");
 			    	}
 			    	else
 			    	{
-			    		value = 0;
+			    		value = 0;ctr.getMemo().dataMemoryIntArray[5][0] = value;
 			    		System.out.println("RA0 = 0");
 			    	}
 		    }
@@ -639,11 +648,13 @@ public class Simulator_Window {
 			    	if(rdbtnRA1.isSelected())
 			    	{
 			    		value = 1;
+			    		ctr.getMemo().dataMemoryIntArray[5][1] = value;
 			    		System.out.println("RA1 = 1");
 			    	}
 			    	else
 			    	{
 			    		value = 0;
+			    		ctr.getMemo().dataMemoryIntArray[5][1] = value;
 			    		System.out.println("RA1 = 0");
 			    	}
 		    }
@@ -657,11 +668,13 @@ public class Simulator_Window {
 			    	if(rdbtnRA2.isSelected())
 			    	{
 			    		value = 1;
+			    		ctr.getMemo().dataMemoryIntArray[5][2] = value;
 			    		System.out.println("RA2 = 1");
 			    	}
 			    	else
 			    	{
 			    		value = 0;
+			    		ctr.getMemo().dataMemoryIntArray[5][2] = value;
 			    		System.out.println("RA2 = 0");
 			    	}
 		    }
@@ -675,11 +688,13 @@ public class Simulator_Window {
 			    	if(rdbtnRA3.isSelected())
 			    	{
 			    		value = 1;
+			    		ctr.getMemo().dataMemoryIntArray[5][3] = value;
 			    		System.out.println("RA3 = 1");
 			    	}
 			    	else
 			    	{
 			    		value = 0;
+			    		ctr.getMemo().dataMemoryIntArray[5][3] = value;
 			    		System.out.println("RA3 = 0");
 			    	}
 		    }
@@ -693,11 +708,13 @@ public class Simulator_Window {
 			    	if(rdbtnRA4.isSelected())
 			    	{
 			    		value = 1;
+			    		ctr.getMemo().dataMemoryIntArray[5][4] = value;
 			    		System.out.println("RA4 = 1");
 			    	}
 			    	else
 			    	{
 			    		value = 0;
+			    		ctr.getMemo().dataMemoryIntArray[5][4] = value;
 			    		System.out.println("RA4 = 0");
 			    	}
 		    }
@@ -1207,6 +1224,20 @@ public class Simulator_Window {
 		
 	}
 	
+	public void SetRP0Gui(int flagValue)
+	{
+		if(flagValue == 1)
+		{
+			rdbtnReg1.setSelected(true);
+		}
+		else
+		{
+			rdbtnReg1.setSelected(false);
+		}
+		
+	}
+	
+	
 	//TRIS A
 	public void SetTRISABit0Gui(int flagValue)
 	{
@@ -1378,18 +1409,32 @@ public class Simulator_Window {
 		{
 			if(tblCodeAusgabe.getValueAt(i, 1).equals("    "))
 			{
+<<<<<<< HEAD
+=======
+				//System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
+>>>>>>> 8e16d18b8ad1bd25855dbd5383a40819e8f61e57
 			}
-			else 
+			/*else 
 			{
+<<<<<<< HEAD
 				cellValue = String.valueOf((String) tblCodeAusgabe.getValueAt(i, 1));
 				cellValueInt = Integer.parseInt(cellValue, 16);
 				if( cellValueInt == programmCounterInt)
+=======
+				//System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
+				cellValue = Integer.valueOf((String) tblCodeAusgabe.getValueAt(i, 1));
+				if( cellValue == programmCounterInt)
+>>>>>>> 8e16d18b8ad1bd25855dbd5383a40819e8f61e57
 				{	
 					tblCodeAusgabe.setRowSelectionInterval(i, i);
 					tblCodeAusgabe.setSelectionBackground(Color.GREEN);
 				}
+<<<<<<< HEAD
 				System.out.println("cellValueInt: " + cellValueInt);
 			}
+=======
+			}*/
+>>>>>>> 8e16d18b8ad1bd25855dbd5383a40819e8f61e57
 		}
 	}
 	

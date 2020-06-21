@@ -2,13 +2,23 @@
 public class Prozessor extends Thread {
 	
 	private boolean exit = false;
+	private boolean isNop = false;
+	protected void setNop(boolean isNop) {
+		this.isNop = isNop;
+	}
 	private Controller ctr;
+	private boolean clockout = false;
 	public Prozessor(Controller controller) {
 		ctr = controller;
 	}
 	@Override public void run(){ 
+		ctr.getMemo().InitMemoryPWROn();
+		ctr.getMemo().SetPC(0);
+		ctr.getMemo().CheckSFR();
+		ctr.getMemo().CheckIO();
 		while(! exit) {
 			try {
+<<<<<<< HEAD
 				ctr.CheckBreakPoint();
 				ctr.getMemo().CheckSFR();
 				ctr.getMemo().CheckIO();
@@ -17,11 +27,43 @@ public class Prozessor extends Thread {
 
 				
 				this.befehlsAbarabeitung(ctr.getMemo().programMemoryIntArray[ctr.getMemo().programCounterInt]);
+=======
+
+
+				ctr.getMemo().CheckSFR();
+				ctr.getMemo().CheckIO();
+				
+
+				if(isNop)
+				{
+					this.befehlsAbarabeitung(0x00);
+					ctr.getMemo().programCounterInt--;
+					isNop = false;
+				}
+				else
+				{
+					
+					this.befehlsAbarabeitung(ctr.getMemo().programMemoryIntArray[ctr.getMemo().programCounterInt]);
+				}
+				
+				
+				clockout = true;
+				ctr.getTimer().updateTimer((ctr.getMemo().getBitValue(0x05, 4)), clockout);
+				ctr.getTimer().checkIncrement();
+				
+				clockout = false;
+
+
+				ctr.getMemo().CheckSFR();
+				ctr.getMemo().CheckIO();
+				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
+
+>>>>>>> 8e16d18b8ad1bd25855dbd5383a40819e8f61e57
 				if(exit)
 				{
 					break;
 				}
-				Thread.sleep(2000);
+				//Thread.sleep(2000);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -33,7 +75,7 @@ public class Prozessor extends Thread {
 	 * 
 	 *
 	 * 
-	 * Switch Case für das erkennen des Befehls und den Aufruf der
+	 * Switch Case fï¿½r das erkennen des Befehls und den Aufruf der
 	 * entsprechenden Funktion
 	 * 
 	 * #########################################################################*/
@@ -49,7 +91,7 @@ public class Prozessor extends Thread {
 			int d = ((payload >> 7) & 0x01); //destination
 			int f = ((payload) & 0x007F);
 	
-			//erkennung der  Adressierung über FSR
+			//erkennung der  Adressierung ï¿½ber FSR
 			if (f == 0x00 || f == 0x80)
 			{
 				f = ctr.getMemo().WriteDirect(0x04);

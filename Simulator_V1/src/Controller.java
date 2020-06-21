@@ -13,6 +13,7 @@ public class Controller {
 	private Simulator_Window gui; 
 	private Prozessor proc; 
 	private Memory memo;
+	private Timer tmr;
 	
 	private boolean processorRunning = false; 
 	
@@ -35,7 +36,12 @@ public class Controller {
 	public Controller(Simulator_Window simulator_Window) {
 		gui = simulator_Window;
 		memo = new Memory(this);
+		tmr = new Timer(this);
 	}
+	
+
+
+
 
 	/*############################################################################
 	 * 
@@ -121,12 +127,8 @@ public class Controller {
 		int temp = getMemo().GetWInt();
 		int temp2 = getMemo().GetF(f);
 		int erg = temp + temp2;
-		int k = temp2;
 
-		if(erg == 0)
-		{
-			getMemo().SetzeroFlag();
-		}
+
 		if(erg > 255)
 		{
 			memo.SetCarry();
@@ -137,13 +139,15 @@ public class Controller {
 			getMemo().ResetCarry();
 		}
 		
+		Zeroflag(erg);
+		
 		if (d == 0 )
 		{
 			getMemo().WriteW(erg);
 		}
 		else if (d == 1)	//ERGEBNIS IN F SPEICHERN ?
 		{
-			getMemo().WriteF(erg,f);
+			getMemo().set_SRAM(erg,f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -156,10 +160,7 @@ public class Controller {
 		int temp2 = getMemo().GetF(f);
 		int erg = (temp & temp2);
 
-		if(erg == 0)
-		{
-			getMemo().SetzeroFlag();
-		}
+		Zeroflag(erg);
 		
 		if(d == 0 )
 		{
@@ -167,7 +168,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			getMemo().WriteF(erg, f);
+			getMemo().set_SRAM(erg, f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -178,17 +179,17 @@ public class Controller {
 		System.out.println("clrw");
 		int erg = 00;
 		getMemo().WriteW(erg);
-		getMemo().SetzeroFlag();
+		Zeroflag(erg);
 		getMemo().IncPc();
 	}
 	
 	public void clrf(int f)throws Exception //BEEINFLUSST Z
 	{
 		System.out.println("clrf");
-		int erg = 00;
-		memo.WriteF(erg, f);
+		int erg = 0;
+		memo.set_SRAM(erg, f);
 		PrintGPR();
-		getMemo().SetzeroFlag();
+		Zeroflag(erg);
 		getMemo().IncPc();
 	}
 	
@@ -211,11 +212,9 @@ public class Controller {
 		}
 			//r�ckumwandlung zu int !!!ggf.funktion zum schreiben als array
 			int erg = (ergInt[7] * 128) + (ergInt[6] * 64) + (ergInt[5] * 32) + (ergInt[4] * 16) + (ergInt[3] * 8) + (ergInt[2] * 4) + (ergInt[1] * 2) + (ergInt[0] * 1);
+			
+			Zeroflag(erg);
 
-			if(erg == 0)
-			{
-				getMemo().SetzeroFlag();
-			}
 			
 			if(d == 0 )
 			{
@@ -223,7 +222,7 @@ public class Controller {
 			}
 			else if (d == 1)
 			{
-				memo.WriteF(erg, f);
+				memo.set_SRAM(erg, f);
 				PrintGPR();
 			}
 		getMemo().IncPc();
@@ -244,18 +243,15 @@ public class Controller {
 			erg = 255;
 		}
 		
-		if(erg == 0)
-		{
-			getMemo().SetzeroFlag();
-		}
-		
+		Zeroflag(erg);
+	
 		if(d == 0 )
 		{
 			getMemo().WriteW(erg);
 		}
 		else if (d == 1)
 		{
-			getMemo().WriteF(erg, f);
+			getMemo().set_SRAM(erg, f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -264,33 +260,28 @@ public class Controller {
 	public void decfsz(int d, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("decfsz");
-		int temp = getMemo().GetF(f);
-		int erg = 0; 
-		
-		if(temp != 0)
-		{
-			erg = temp -1; //TODO Testen ob funkton f�r temp != 0 funktioniert!!!
-		}
-		else if( temp == 0)
-		{
-			erg = 255;
-
-		}
-		
+		int erg = getMemo().GetF(f);
+	
 		if(erg == 0)
 		{
-			getMemo().SetzeroFlag();
-			getMemo().IncPc();
-			
+			erg = 255;
 		}
-		
+		else
+		{
+			erg--;
+			if(erg == 0)
+			{
+				getMemo().IncPc();
+				this.proc.setNop(true);
+			}
+		}
 		if(d == 0 )
 		{
 			getMemo().WriteW(erg);
 		}
 		else if (d == 1)
 		{
-			getMemo().WriteF(erg, f);
+			getMemo().set_SRAM(erg, f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -300,20 +291,22 @@ public class Controller {
 	{
 		System.out.println("incf");
 		int temp = getMemo().GetF(f);
-		int erg = temp +1; 
 		
-		if(erg == 0)
+		if(temp == 255) 
 		{
+			temp = 0;
 			getMemo().SetzeroFlag();
+		}else {
+			temp++;
 		}
 		
 		if(d == 0 )
 		{
-			getMemo().WriteW(erg);
+			getMemo().WriteW(temp);
 		}
 		else if (d == 1)
 		{
-			getMemo().WriteF(erg, f);
+			getMemo().set_SRAM(temp, f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -325,21 +318,16 @@ public class Controller {
 		int temp = getMemo().GetF(f);
 		int erg = 0; 
 		
-		if(temp != 255)
-		{
-			erg = temp +1; //TODO Testen ob funkton f�r temp != 0 funktioniert!!!
-		}
-		else if( temp == 255)
+		if(erg == 255) 
 		{
 			erg = 0;
+			getMemo().IncPc();
+			this.proc.setNop(true);
 
 		}
-		
-		if(erg == 0)
+		else 
 		{
-			getMemo().SetzeroFlag();
-			getMemo().IncPc();
-			
+			erg++;
 		}
 		
 		if(d == 0 )
@@ -348,7 +336,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			getMemo().WriteF(erg, f);
+			getMemo().set_SRAM(erg, f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -361,10 +349,7 @@ public class Controller {
 		int temp2 = getMemo().GetWInt();
 		int erg = temp | temp2 ; 
 		
-		if(erg == 0)
-		{
-			getMemo().SetzeroFlag();
-		}
+		Zeroflag(erg);
 		
 		if(d == 0 )
 		{
@@ -372,7 +357,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			getMemo().WriteF(erg, f);
+			getMemo().set_SRAM(erg, f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -395,12 +380,14 @@ public class Controller {
 		getMemo().SetPC(k);
 		System.out.println("Return " + k + "3" );
 		getMemo().IncPc();
+		this.proc.setNop(true);
 	}
 	
 	public void retfie()throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("retfie");
 		getMemo().IncPc();
+		this.proc.setNop(true);
 	}
 	
 	public void clrwdt()throws Exception //BEEINFLUSST KEINE STATI
@@ -419,7 +406,7 @@ public class Controller {
 	{
 		System.out.println("movwf");
 		int erg = getMemo().GetWInt();
-		getMemo().WriteF(erg,f);
+		getMemo().set_SRAM(erg,f);
 		PrintGPR();
 		getMemo().IncPc();
 	}
@@ -428,9 +415,7 @@ public class Controller {
 	{
 		System.out.println("rlf");
 		int temp = getMemo().GetF(f);
-		int Adresse = 3;
-		int Stelle = 0;
-		int carry = getMemo().GetBitValue(Adresse, Stelle);
+		int carry = getMemo().getBitValue(3, 0);
 	
 		if ((temp & 128) == 128) {
 			getMemo().SetCarry();
@@ -445,7 +430,7 @@ public class Controller {
 			}
 			else if (d == 1)
 			{
-				getMemo().WriteF(erg, f);
+				getMemo().set_SRAM(erg, f);
 				PrintGPR();
 			}
 		getMemo().IncPc();
@@ -454,10 +439,8 @@ public class Controller {
 	public void rrf(int d, int f)throws Exception //BEEINFLUSST C
 	{
 		System.out.println("rrf");
-		int temp = getMemo().GetF(f);
-		int Adresse = 3;
-		int Stelle = 0; 
-		int carry = getMemo().GetBitValue(Adresse, Stelle);
+		int temp = getMemo().GetF(f); 
+		int carry = getMemo().getBitValue(3, 0);
 		
 		System.out.println("rrf carry: " + carry + " temp f: " + temp);
 	
@@ -477,7 +460,7 @@ public class Controller {
 			}
 			else if (d == 1)
 			{
-				getMemo().WriteF(erg, f);
+				getMemo().set_SRAM(erg, f);
 				PrintGPR();
 			}
 		getMemo().IncPc();
@@ -505,10 +488,7 @@ public class Controller {
 			getMemo().SetCarry();
 		}
 		
-		if(erg == 0)
-		{
-			getMemo().SetzeroFlag();
-		}
+		Zeroflag(erg);
 		
 		if(d == 0 )
 		{
@@ -516,7 +496,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			getMemo().WriteF(erg, f);
+			getMemo().set_SRAM(erg, f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -539,7 +519,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			getMemo().WriteF(erg, f);
+			getMemo().set_SRAM(erg, f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -550,10 +530,7 @@ public class Controller {
 		System.out.println("movf");
 		int erg = getMemo().GetF(f); 
 		
-		if(erg == 0)
-		{
-			getMemo().SetzeroFlag();
-		}
+		Zeroflag(erg);
 		
 		if(d == 0 )
 		{
@@ -561,7 +538,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			getMemo().WriteF(erg, f);
+			getMemo().set_SRAM(erg, f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -575,10 +552,7 @@ public class Controller {
 		
 		int erg = (temp ^ temp2); 
 		
-		if(erg == 0)
-		{
-			getMemo().SetzeroFlag();
-		}
+		Zeroflag(erg);
 		
 		if(d == 0 )
 		{
@@ -586,7 +560,7 @@ public class Controller {
 		}
 		else if (d == 1)
 		{
-			getMemo().WriteF(erg, f);
+			getMemo().set_SRAM(erg, f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -596,20 +570,14 @@ public class Controller {
 	public void bcf(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("bcf");
-		int[] tempF = getMemo().GetFBin(f);
-		tempF[b] = 0;
-		int erg= (tempF[7] * 128) + (tempF[6] * 64) + (tempF[5] * 32) + (tempF[4] * 16) + (tempF[3] * 8) + (tempF[2] * 4) + (tempF[1] * 2) + (tempF[0] * 1);
-		getMemo().WriteF(erg, f);
+		getMemo().set_SRAM_Bit(f, b,0);
 		PrintGPR();
 		getMemo().IncPc();
 	}
 	public void bsf(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("bsf");
-		int[] tempF = getMemo().GetFBin(f);
-		tempF[b] = 1;
-		int erg= (tempF[7] * 128) + (tempF[6] * 64) + (tempF[5] * 32) + (tempF[4] * 16) + (tempF[3] * 8) + (tempF[2] * 4) + (tempF[1] * 2) + (tempF[0] * 1);
-		getMemo().WriteF(erg, f);
+		getMemo().set_SRAM_Bit(f, b,1);
 		PrintGPR();
 		getMemo().IncPc();
 	}
@@ -620,6 +588,7 @@ public class Controller {
 		if(tempF[b] == 0)
 		{
 			getMemo().IncPc();
+			this.proc.setNop(true);
 		}
 		getMemo().IncPc();
 	}
@@ -630,21 +599,25 @@ public class Controller {
 		if(tempF[b] == 1)
 		{
 			getMemo().IncPc();
+			this.proc.setNop(true);
 		}
 		getMemo().IncPc();
 	}
 	
 	public void call(int k)throws Exception //BEEINFLUSST KEINE STATI
-	{
+	{	
+		System.out.println("call" + k );
 		getMemo().SetStack();
 		PrintStack();
 		getMemo().SetPC(k);
-		System.out.println("call" + k );
+		this.proc.setNop(true);
+
 
 	}
 	public void Goto(int k)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("Goto");
+		this.proc.setNop(true);
 		getMemo().SetPC(k);
 	}
 	public void addlw(int k)throws Exception //BEEINFLUSST  C, DC, Z
@@ -662,10 +635,8 @@ public class Controller {
 		{
 			getMemo().ResetCarry();
 		}
-		if (erg == 0)
-		{
-			getMemo().SetzeroFlag();
-		}
+		
+		Zeroflag(erg);
 		
 		getMemo().WriteW(erg);
 		getMemo().IncPc();
@@ -677,10 +648,8 @@ public class Controller {
 		int erg  = (temp | k);
 		
 		
-		if(erg == 0) 
-		{
-			getMemo().SetzeroFlag();
-		}
+		Zeroflag(erg);
+		
 		getMemo().WriteW(erg);
 		getMemo().IncPc();
 	}
@@ -704,6 +673,7 @@ public class Controller {
 		getMemo().SetPC(k);
 
 		getMemo().IncPc();
+		this.proc.setNop(true);
 	}
 	public void sublw(int k)throws Exception //BEEINFLUSST  C, DC, Z
 	{
@@ -721,10 +691,8 @@ public class Controller {
 			erg = k-temp;
 			getMemo().SetCarry();
 		}
-		if(erg == 0)
-		{
-			getMemo().SetzeroFlag();
-		}
+		
+		Zeroflag(erg);
 		
 		getMemo().WriteW(erg);
 		getMemo().IncPc();
@@ -734,11 +702,8 @@ public class Controller {
 		System.out.println("xorlw");
 		int temp = getMemo().GetWInt();
 		int erg = temp ^ k  ;
-
-		if(erg == 0)
-		{
-			getMemo().SetzeroFlag();
-		}
+		
+		Zeroflag(erg);
 		
 		getMemo().WriteW(erg);
 		getMemo().IncPc();
@@ -749,10 +714,9 @@ public class Controller {
 		System.out.println("andlw");
 		int temp = getMemo().GetWInt();
 		int erg = (temp & k);
-		if(k == 0) 
-		{
-			getMemo().SetzeroFlag();
-		}
+		
+		Zeroflag(erg);
+		
 		getMemo().WriteW(erg);
 		getMemo().IncPc();
 	}
@@ -855,6 +819,13 @@ public class Controller {
 
 	}
 	
+
+	protected int getVorteiler() 
+	{	
+		return (getMemo().get_Memory(0x81) & 0x07);
+	}
+	
+
 	public void SetCarry(int value)
 	{
 		getMemo().SetCarryBit(value);
@@ -884,6 +855,7 @@ public class Controller {
 	{
 		getMemo().SetReg1Bit(value);
 	}
+
 
 	public void SetReg2(int value)
 	{
@@ -1099,19 +1071,34 @@ public class Controller {
 		
 	}
 	
-//	protected int getVorzaehler() 
-//	{
-//		int Adresse = 0x81;
-//		int Stelle = 7;
-//		return getMemo().GetBitValue(Adresse, Stelle);
-//	}
-//	
 
-	public Memory getMemo() 
+	protected void Zeroflag(int zeroflag)
 	{
-		return memo;
+		if(zeroflag == 0)
+		{
+			getMemo().SetzeroFlag();
+		}
+		else
+		{
+			getMemo().ResetetzeroFlag();
+		}
 	}
 	
+	protected Timer getTimer()
+	{
+		return tmr;
+	}
+	
+	protected int getVorzaehler() 
+	{
+
+		return getMemo().getBitValue(0x81, 7);
+	}
+
+	protected Memory getMemo() {
+		return memo;
+	}
+
 	public Simulator_Window getGui()
 	{
 		return gui;
