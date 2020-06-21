@@ -18,20 +18,12 @@ public class Prozessor extends Thread {
 		ctr.getMemo().CheckIO();
 		while(! exit) {
 			try {
-<<<<<<< HEAD
+				
 				ctr.CheckBreakPoint();
 				ctr.getMemo().CheckSFR();
 				ctr.getMemo().CheckIO();
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
 				ctr.laufZeitBerechnung();
-
-				
-				this.befehlsAbarabeitung(ctr.getMemo().programMemoryIntArray[ctr.getMemo().programCounterInt]);
-=======
-
-
-				ctr.getMemo().CheckSFR();
-				ctr.getMemo().CheckIO();
 				
 
 				if(isNop)
@@ -58,7 +50,6 @@ public class Prozessor extends Thread {
 				ctr.getMemo().CheckIO();
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
 
->>>>>>> 8e16d18b8ad1bd25855dbd5383a40819e8f61e57
 				if(exit)
 				{
 					break;
@@ -75,9 +66,8 @@ public class Prozessor extends Thread {
 	 * 
 	 *
 	 * 
-	 * Switch Case f�r das erkennen des Befehls und den Aufruf der
-	 * entsprechenden Funktion
-	 * 
+	 * switch case fuer das Erkennen des Befehls und das 
+	 * Aufrufen der enstprechnenden Funktion
 	 * #########################################################################*/
 	public void befehlsAbarabeitung(int codeLine) throws Exception {
 

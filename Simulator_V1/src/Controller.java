@@ -27,7 +27,8 @@ public class Controller {
 	int zeileInt = 0;
 	int i = 0;
 	int[] befehlDezimalIntArray = new int[1024];
-	//Array für PC an denen ein BreakPoint liegt
+	
+	//Array fÃ¼r PC an denen ein BreakPoint liegt
 	int bP[] = new int[20];
 	int helper = 0;
 	double laufzeit = 0;
@@ -97,12 +98,6 @@ public class Controller {
 				InitGprView();
 				
 				InitStackView();
-				
-				//Init BreakPointArray
-				for(int i = 0; i <= bP.length -1; i++)
-				{
-					bP[i] = 400;
-				}
 						
 			}
 			catch (IOException e)
@@ -973,14 +968,14 @@ public class Controller {
 	{
 		getMemo().SetTRISBIO7Bit(value);
 	}
-
+	
 	public void CheckBreakPoint()
 	{
 		for (int i = 0; i<= bP.length -1 ;i ++)
 		{
 			if(bP[i] - 1 == getMemo().programCounterInt)
 			{
-				System.out.println("BP TEST AUSGABE " + bP[i] +" "+ getMemo().programCounterInt);
+				//System.out.println("BP TEST AUSGABE " + bP[i] +" "+ getMemo().programCounterInt);
 				stop();
 			}
 		}
@@ -1039,7 +1034,7 @@ public class Controller {
 		}
 		gui.printLaufzeit(laufzeit);
 		
-		System.out.println("LaufZeit:" + laufzeit);
+		//System.out.println("LaufZeit:" + laufzeit);
 	}
 	
 	public void start() 
