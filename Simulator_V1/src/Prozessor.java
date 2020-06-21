@@ -20,6 +20,9 @@ public class Prozessor extends Thread {
 			try {
 
 
+				ctr.getMemo().CheckSFR();
+				ctr.getMemo().CheckIO();
+				
 
 				if(isNop)
 				{

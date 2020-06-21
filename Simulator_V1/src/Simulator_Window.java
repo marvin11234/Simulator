@@ -115,7 +115,7 @@ public class Simulator_Window {
 	public void initialize(Simulator_Window Simulator_WindowInst) 
 	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1644, 1006);
+		frame.setBounds(100, 100, 1544, 861);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Simulator_WindowInst.frame.setVisible(true);
 
@@ -163,7 +163,7 @@ public class Simulator_Window {
 
 		JPanel panelControl = new JPanel();
 		panelControl.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelControl.setBounds(1365, 11, 168, 157);
+		panelControl.setBounds(810, 29, 168, 157);
 		frame.getContentPane().add(panelControl);
 		panelControl.setLayout(null);
 
@@ -255,7 +255,7 @@ public class Simulator_Window {
 		//Anzeige SpecialFunctionRegister SFR
 		JPanel panelSFR = new JPanel();
 		panelSFR.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelSFR.setBounds(1051, 11, 133, 217);
+		panelSFR.setBounds(985, 13, 133, 217);
 		frame.getContentPane().add(panelSFR);
 		panelSFR.setLayout(null);
 		
@@ -589,11 +589,12 @@ public class Simulator_Window {
 			    	if(rdbtnRA0.isSelected())
 			    	{
 			    		value = 1;
+			    		ctr.getMemo().dataMemoryIntArray[5][0] = value;
 			    		System.out.println("RA0 = 1");
 			    	}
 			    	else
 			    	{
-			    		value = 0;
+			    		value = 0;ctr.getMemo().dataMemoryIntArray[5][0] = value;
 			    		System.out.println("RA0 = 0");
 			    	}
 		    }
@@ -607,11 +608,13 @@ public class Simulator_Window {
 			    	if(rdbtnRA1.isSelected())
 			    	{
 			    		value = 1;
+			    		ctr.getMemo().dataMemoryIntArray[5][1] = value;
 			    		System.out.println("RA1 = 1");
 			    	}
 			    	else
 			    	{
 			    		value = 0;
+			    		ctr.getMemo().dataMemoryIntArray[5][1] = value;
 			    		System.out.println("RA1 = 0");
 			    	}
 		    }
@@ -625,11 +628,13 @@ public class Simulator_Window {
 			    	if(rdbtnRA2.isSelected())
 			    	{
 			    		value = 1;
+			    		ctr.getMemo().dataMemoryIntArray[5][2] = value;
 			    		System.out.println("RA2 = 1");
 			    	}
 			    	else
 			    	{
 			    		value = 0;
+			    		ctr.getMemo().dataMemoryIntArray[5][2] = value;
 			    		System.out.println("RA2 = 0");
 			    	}
 		    }
@@ -643,11 +648,13 @@ public class Simulator_Window {
 			    	if(rdbtnRA3.isSelected())
 			    	{
 			    		value = 1;
+			    		ctr.getMemo().dataMemoryIntArray[5][3] = value;
 			    		System.out.println("RA3 = 1");
 			    	}
 			    	else
 			    	{
 			    		value = 0;
+			    		ctr.getMemo().dataMemoryIntArray[5][3] = value;
 			    		System.out.println("RA3 = 0");
 			    	}
 		    }
@@ -661,11 +668,13 @@ public class Simulator_Window {
 			    	if(rdbtnRA4.isSelected())
 			    	{
 			    		value = 1;
+			    		ctr.getMemo().dataMemoryIntArray[5][4] = value;
 			    		System.out.println("RA4 = 1");
 			    	}
 			    	else
 			    	{
 			    		value = 0;
+			    		ctr.getMemo().dataMemoryIntArray[5][4] = value;
 			    		System.out.println("RA4 = 0");
 			    	}
 		    }

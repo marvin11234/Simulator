@@ -15,12 +15,12 @@ public class Timer {
 
 		// pruefenen des T0CS bit (externer Takt überber Ra4 == 0)
 		if (ctr.getMemo().getBitValue(129, 5) == 1) {
-			// Prï¿½fen ob T0Se bit gesetzt == fallende Flanke oder nicht == steigenden Flanke
+			// Prue fen ob T0Se bit gesetzt == fallende Flanke oder nicht == steigenden Flanke
 			if (ctr.getMemo().getBitValue(129, 4) == 0) {
-				// prï¿½fen on Steigende Flanke anliegt, diese kann von 0 zu 1 aber auch von 1 zu
+				// pruefen on Steigende Flanke anliegt, diese kann von 0 zu 1 aber auch von 1 zu
 				// 0gehen
 				if (raEdge == 1) {
-					incrementTimer(); // TODO incrementTimer funktion schreiben
+					incrementTimer(); 
 				}
 			} else {
 				if (raEdge == 2) {
@@ -68,12 +68,12 @@ public class Timer {
 	}
 	
 
-	// Getter fï¿½r Vorteiler
+	// Getter fuer Vorteiler
 	public double getVorteiler() {
 		return Vorteiler;
 	}
 
-	// Setter fï¿½r Vorteiler
+	// Setter fuer Vorteiler
 	public void setVorteiler(int VorteilerWert) {
 		Vorteiler = VorteilerWert;
 	}
