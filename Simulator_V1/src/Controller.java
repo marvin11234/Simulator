@@ -29,6 +29,7 @@ public class Controller {
 	//Array für PC an denen ein BreakPoint liegt
 	int bP[] = new int[20];
 	int helper = 0;
+	double laufzeit = 0;
 	
 	//gui und memo Instanz erzeugen
 	public Controller(Simulator_Window simulator_Window) {
@@ -1039,6 +1040,34 @@ public class Controller {
 				helper++;
 			}
 		}
+	}
+	
+	public void laufZeitBerechnung()
+	{
+		 
+		if(getGui().takt == 500)
+		{
+			laufzeit = laufzeit + ((4*Math.pow(10, 6)/500000));
+		}
+		else if(getGui().takt == 1)
+		{
+			laufzeit = laufzeit + ((4*Math.pow(10, 6)/1000000));
+		}
+		else if(getGui().takt == 2)
+		{
+			laufzeit = laufzeit + ((4*Math.pow(10, 6)/2000000));
+		}
+		else if(getGui().takt == 3)
+		{
+			laufzeit = laufzeit + ((4*Math.pow(10, 6)/3000000));
+		}	
+		else if(getGui().takt == 4)
+		{
+			laufzeit = laufzeit + ((4*Math.pow(10, 6))/4000000);
+		}
+		gui.printLaufzeit(laufzeit);
+		
+		System.out.println("LaufZeit:" + laufzeit);
 	}
 	
 	public void start() 

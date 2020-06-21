@@ -13,6 +13,7 @@ public class Prozessor extends Thread {
 				ctr.getMemo().CheckSFR();
 				ctr.getMemo().CheckIO();
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
+				ctr.laufZeitBerechnung();
 
 				
 				this.befehlsAbarabeitung(ctr.getMemo().programMemoryIntArray[ctr.getMemo().programCounterInt]);
