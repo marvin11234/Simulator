@@ -16,6 +16,10 @@ public class Prozessor extends Thread {
 		while(! exit) {
 			try {
 				ctr.CheckBreakPoint();
+				if(ctr.getGui().einzellschritt == true)
+				{
+					ctr.stop();
+				}
 				/*ctr.getMemo().checkSFR();
 				ctr.getMemo().CheckIO();*/
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
@@ -46,7 +50,10 @@ public class Prozessor extends Thread {
 
 				ctr.getMemo().checkSFR();
 				ctr.getMemo().checkRA();
+				ctr.getMemo().checkTRIS();
 				ctr.getMemo().CheckIO();
+				ctr.getMemo().checkEdit();
+				ctr.PrintGPR();
 				ctr.getGui().printWReg(ctr.getMemo().GetWInt());
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
 				clockout = false;

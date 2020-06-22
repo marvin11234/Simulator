@@ -54,7 +54,7 @@ public class Interrupt {
  	   {
 
  		   System.out.println("RB Interrupt");
- 		  ctr.getMemo().dataMemoryIntArray[0x0b][2] = 0;
+ 		   ctr.getMemo().dataMemoryIntArray[0x0b][2] = 0;
  		   return true;
 
  	   }else

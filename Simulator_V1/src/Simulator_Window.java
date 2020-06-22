@@ -49,6 +49,8 @@ public class Simulator_Window {
 	boolean zfStatus;
 	boolean Reg1Status;
 	
+	boolean einzellschritt = false;
+	
 	boolean trisA0Status;
 	boolean trisA1Status;
 	boolean trisA2Status;
@@ -240,6 +242,25 @@ public class Simulator_Window {
 		btnStop.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnStop.setBounds(10, 60, 144, 42);
 		panelControl.add(btnStop);
+		
+		JButton btnStep = new JButton("Step");
+		btnStep.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnStep.setBounds(10, 110, 144, 42);
+		panelControl.add(btnStep);
+		
+		btnStep.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent c) {
+		if(einzellschritt == true)
+		{
+			einzellschritt = false;
+			
+		}
+		else
+		{
+			einzellschritt = true;
+		}
+		}
+		});
 		
 		//GPR Anzeige
 		JPanel panelGPR = new JPanel();

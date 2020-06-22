@@ -832,6 +832,222 @@ public class Memory extends Thread {
 		}
 	}
 	
+	public void checkTRIS()
+	{
+		//TRISA 0
+		if(dataMemoryIntArray[133][0] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISA0.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISA0.setSelected(false);
+		}
+		//TRISA 1
+		if(dataMemoryIntArray[133][0] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISA1.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISA1.setSelected(false);
+		}
+		//TRISA 2
+		if(dataMemoryIntArray[133][2] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISA2.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISA2.setSelected(false);
+		}
+		//TRISA 3
+		if(dataMemoryIntArray[133][3] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISA3.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISA3.setSelected(false);
+		}
+		//TRISA 4
+		if(dataMemoryIntArray[133][4] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISA4.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISA4.setSelected(false);
+		}
+		
+		//TRISB 0
+		if(dataMemoryIntArray[134][0] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISB0.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISB0.setSelected(false);
+		}
+		//TRISB 1
+		if(dataMemoryIntArray[134][0] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISB1.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISB1.setSelected(false);
+		}
+		//TRISB 2
+		if(dataMemoryIntArray[134][2] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISB2.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISB2.setSelected(false);
+		}
+		//TRISA 3
+		if(dataMemoryIntArray[134][3] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISB3.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISB3.setSelected(false);
+		}
+		//TRISA 4
+		if(dataMemoryIntArray[134][4] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISB4.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISB4.setSelected(false);
+		}
+		//TRISB 5
+		if(dataMemoryIntArray[134][5] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISB5.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISB5.setSelected(false);
+		}
+		//TRISA 6
+		if(dataMemoryIntArray[134][6] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISB6.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISB6.setSelected(false);
+		}
+		//TRISA 7
+		if(dataMemoryIntArray[134][7] == 1)
+		{
+
+			ctr.getGui().rdbtnTRISB7.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnTRISB7.setSelected(false);
+		}
+	}
+	
+	public void checkEdit()
+	{
+		//prüfen ob RB gesperrt sind
+		if(dataMemoryIntArray[134][0] == 1)
+		{
+
+			ctr.getGui().rdbtnRB0.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB0.setEnabled(false);
+		}
+		
+		if(dataMemoryIntArray[134][1] == 1)
+		{
+
+			ctr.getGui().rdbtnRB1.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB1.setEnabled(false);
+		}
+		
+		if(dataMemoryIntArray[134][2] == 1)
+		{
+
+			ctr.getGui().rdbtnRB2.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB2.setEnabled(false);
+		}
+		if(dataMemoryIntArray[134][3] == 1)
+		{
+
+			ctr.getGui().rdbtnRB3.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB3.setEnabled(false);
+		}
+		if(dataMemoryIntArray[134][4] == 1)
+		{
+
+			ctr.getGui().rdbtnRB4.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB4.setEnabled(false);
+		}
+		if(dataMemoryIntArray[134][5] == 1)
+		{
+
+			ctr.getGui().rdbtnRB5.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB5.setEnabled(false);
+		}
+		if(dataMemoryIntArray[134][6] == 1)
+		{
+
+			ctr.getGui().rdbtnRB6.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB6.setEnabled(false);
+		}
+		if(dataMemoryIntArray[134][7] == 1)
+		{
+
+			ctr.getGui().rdbtnRB7.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB7.setEnabled(false);
+		}
+		
+		
+	}
+	
 	/*public void CheckSFR()
 	{
 		if(((dataMemoryIntArray[3][0] == 0) & (ctr.getGui().cfStatus == false)) | (dataMemoryIntArray[3][0] == 1) & (ctr.getGui().cfStatus == true) )

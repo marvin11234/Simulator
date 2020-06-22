@@ -771,7 +771,7 @@ public class Controller {
 	public void InitGprView()
 	{
 
-		for (int i = 0; (i < 48); i++)
+		for (int i = 0; (i < 177); i++)
 		{
 			int f = i;
 			String hex = Integer.toHexString(i);
@@ -795,7 +795,7 @@ public class Controller {
 			gui.tblGprMdl.removeRow(i);
 		}
 
-		for (int i = 0; (i < 48); i++)
+		for (int i = 0; (i < 177); i++)
 		{
 			int f = i;
 			String hex = Integer.toHexString(i);
