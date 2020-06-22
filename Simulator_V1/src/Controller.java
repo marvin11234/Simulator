@@ -29,6 +29,11 @@ public class Controller {
 	int i = 0;
 	int[] befehlDezimalIntArray = new int[1024];
 	
+	//Array für PC an denen ein BreakPoint liegt
+	int bP[] = new int[20];
+	int helper = 0;
+	double laufzeit = 0;
+	
 	//gui und memo Instanz erzeugen
 	public Controller(Simulator_Window simulator_Window) {
 		gui = simulator_Window;
@@ -965,6 +970,74 @@ public class Controller {
 	public void SetTRISBIO7(int value)
 	{
 		getMemo().SetTRISBIO7Bit(value);
+	}
+	
+	public void CheckBreakPoint()
+	{
+		for (int i = 0; i<= bP.length -1 ;i ++)
+		{
+			if(bP[i] - 1 == getMemo().programCounterInt)
+			{
+				//System.out.println("BP TEST AUSGABE " + bP[i] +" "+ getMemo().programCounterInt);
+				stop();
+			}
+		}
+	}
+
+	public void SetBreakPoint(int row)
+	{
+		String breakPoint = "BP";
+		int bPpc;
+		
+		if( ! gui.tblCode.getValueAt(row, 1).equals("    ")) //BREAKPOINT IN ZEILE MIT CODE ?
+		{
+			if( gui.tblCode.getValueAt(row, 0).equals(breakPoint)) //BREAKPOINT ENTFERNEN
+			{
+				gui.tblCode.setValueAt(" ", row, 0);
+				for(int i = 0; i <= bP.length-1; i++)
+				{
+					if(bP[i] == Integer.parseInt(gui.tblCode.getValueAt(row, 1).toString()))
+					{
+						bP[i]=400;
+					}
+				}
+			}
+			else //BREAKPOINT SETZEN
+			{
+				bPpc = Integer.parseInt(gui.tblCode.getValueAt(row, 1).toString());
+				bP[helper]= (bPpc);
+				gui.tblCode.setValueAt(breakPoint, row, 0);
+				helper++;
+			}
+		}
+	}
+	
+	public void laufZeitBerechnung()
+	{
+		 
+		if(getGui().takt == 500)
+		{
+			laufzeit = laufzeit + ((4*Math.pow(10, 6)/500000));
+		}
+		else if(getGui().takt == 1)
+		{
+			laufzeit = laufzeit + ((4*Math.pow(10, 6)/1000000));
+		}
+		else if(getGui().takt == 2)
+		{
+			laufzeit = laufzeit + ((4*Math.pow(10, 6)/2000000));
+		}
+		else if(getGui().takt == 3)
+		{
+			laufzeit = laufzeit + ((4*Math.pow(10, 6)/3000000));
+		}	
+		else if(getGui().takt == 4)
+		{
+			laufzeit = laufzeit + ((4*Math.pow(10, 6))/4000000);
+		}
+		gui.printLaufzeit(laufzeit);
+		
+		//System.out.println("LaufZeit:" + laufzeit);
 	}
 	
 	public void start() 

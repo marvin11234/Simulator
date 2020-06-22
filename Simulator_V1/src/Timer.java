@@ -13,7 +13,7 @@ public class Timer {
 
 	public void checkIncrement() {
 
-		// pruefenen des T0CS bit (externer Takt überber Ra4 == 0)
+		// pruefenen des T0CS bit (externer Takt ï¿½berber Ra4 == 0)
 		if (ctr.getMemo().getBitValue(129, 5) == 1) {
 			// Prue fen ob T0Se bit gesetzt == fallende Flanke oder nicht == steigenden Flanke
 			if (ctr.getMemo().getBitValue(129, 4) == 0) {

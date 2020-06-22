@@ -18,10 +18,12 @@ public class Prozessor extends Thread {
 		ctr.getMemo().CheckIO();
 		while(! exit) {
 			try {
-
-
+				
+				ctr.CheckBreakPoint();
 				ctr.getMemo().CheckSFR();
 				ctr.getMemo().CheckIO();
+				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
+				ctr.laufZeitBerechnung();
 				
 
 				if(isNop)
@@ -67,9 +69,8 @@ public class Prozessor extends Thread {
 	 * 
 	 *
 	 * 
-	 * Switch Case f�r das erkennen des Befehls und den Aufruf der
-	 * entsprechenden Funktion
-	 * 
+	 * switch case fuer das Erkennen des Befehls und das 
+	 * Aufrufen der enstprechnenden Funktion
 	 * #########################################################################*/
 	public void befehlsAbarabeitung(int codeLine) throws Exception {
 

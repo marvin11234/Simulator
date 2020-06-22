@@ -1,27 +1,27 @@
 
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 
 import javax.swing.JMenuBar;
 import java.awt.event.ActionListener;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Font;
 import javax.swing.JRadioButton;
-import java.awt.FlowLayout;
 
 
 public class Simulator_Window {
@@ -43,9 +43,11 @@ public class Simulator_Window {
 	JRadioButton rdbtnZ = new JRadioButton("Zero Flag");
 	JRadioButton rdbtnReg1 = new JRadioButton("RP0/1");
 	JRadioButton rdbtnPD = new JRadioButton("Power-Down");
+	
 	boolean cfStatus;
 	boolean dcStatus;
 	boolean zfStatus;
+	
 	boolean Reg1Status;
 	
 	boolean trisA0Status;
@@ -53,6 +55,8 @@ public class Simulator_Window {
 	boolean trisA2Status;
 	boolean trisA3Status;
 	boolean trisA4Status;
+	
+
 	
 	boolean trisB0Status;
 	boolean trisB1Status;
@@ -92,6 +96,17 @@ public class Simulator_Window {
 	JRadioButton rdbtnRB5 = new JRadioButton("RB5");
 	JRadioButton rdbtnRB6 = new JRadioButton("RB6");
 	JRadioButton rdbtnRB7 = new JRadioButton("RB7");
+	
+	//Auswahl fÃ¼r die Laufzeitberechnung
+	JRadioButton rdbtn500KHz = new JRadioButton("500 KHz");
+	JRadioButton rdbtn1MHz = new JRadioButton("1 MHz");
+	JRadioButton rdbtn2MHz = new JRadioButton("2 MHz");
+	JRadioButton rdbtn3MHz = new JRadioButton("3 MHz");
+	JRadioButton rdbtn4MHz = new JRadioButton("4 MHz");
+	JLabel lblLfZt = new JLabel();
+	
+	int takt = 4;
+	
 	public Simulator_Window() {
 		ctr = new Controller(this);
 	}
@@ -120,11 +135,11 @@ public class Simulator_Window {
 		Simulator_WindowInst.frame.setVisible(true);
 
 		
-		//einfügen Menübar
+		//einfï¿½gen Menï¿½bar
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		//einbinden Button für File load in Menubar
+		//einbinden Button fï¿½r File load in Menubar
 		JButton btnLoad_File = new JButton("Load File");
 		btnLoad_File.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -160,10 +175,36 @@ public class Simulator_Window {
 		tblCodeAusgabe.setEnabled(false);
 		tblCodeAusgabe.setModel(tblCode);
 		spCodeAusgabe.setViewportView(tblCodeAusgabe);
-
+		
+		for(int i = 0; i < 5; i++)
+		{
+			TableColumn column = tblCodeAusgabe.getColumnModel().getColumn(i);
+			if(i == 0)
+			{
+				column.setPreferredWidth(30);
+				column.setMaxWidth(30);
+				column.setMinWidth(30);
+				column.setResizable(false);
+			} 
+			else if(i > 0 && i <4)
+			{
+				column.setPreferredWidth(80);
+				column.setMaxWidth(80);
+				column.setMinWidth(80);
+			 
+			} 
+			else if(i == 4)
+			{
+				column.setPreferredWidth(110);
+			 	column.setMaxWidth(110);
+			 	column.setResizable(false);
+			}
+		 }
+		
+		//Start & Stop Button
 		JPanel panelControl = new JPanel();
 		panelControl.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelControl.setBounds(810, 29, 168, 157);
+		panelControl.setBounds(1365, 11, 168, 157);
 		frame.getContentPane().add(panelControl);
 		panelControl.setLayout(null);
 
@@ -186,31 +227,6 @@ public class Simulator_Window {
 		btnStop.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnStop.setBounds(10, 60, 144, 42);
 		panelControl.add(btnStop);
-		
-		for(int i = 0; i < 5; i++)
-		{
-		 TableColumn column = tblCodeAusgabe.getColumnModel().getColumn(i);
-		 if(i == 0)
-		 {
-			 column.setPreferredWidth(30);
-			 column.setMaxWidth(30);
-			 column.setMinWidth(30);
-			 column.setResizable(false);
-		 } 
-		 else if(i > 0 && i <4)
-		 {
-			 column.setPreferredWidth(80);
-			 column.setMaxWidth(80);
-			 column.setMinWidth(80);
-			 
-		 } 
-		 else if(i == 4)
-		 {
-			 column.setPreferredWidth(110);
-			 column.setMaxWidth(110);
-			 column.setResizable(false);
-		 }
-		 }
 		
 		//GPR Anzeige
 		JPanel panelGPR = new JPanel();
@@ -748,6 +764,7 @@ public class Simulator_Window {
 		rdbtnTRISB7.setBounds(157, 196, 109, 23);
 		panelTRISBIO.add(rdbtnTRISB7);
 		
+		
 		 ActionListener alrdbtnRB0 = new ActionListener() 
 		 {
 			 int value = 0;
@@ -1069,7 +1086,92 @@ public class Simulator_Window {
 		trisB6Status = rdbtnRB6.isSelected();
 		trisB7Status = rdbtnRB7.isSelected();
 		
+		//Anzeige Laufzeit
+		JPanel panelLfZt = new JPanel();
+		panelLfZt.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelLfZt.setBounds(696, 11, 168, 175);
+		frame.getContentPane().add(panelLfZt);
+		panelLfZt.setLayout(null);
+
+
+		lblLfZt.setBounds(23, 124, 118, 32);
+		panelLfZt.add(lblLfZt);
+
+
+		rdbtn500KHz.setBounds(26, 7, 109, 23);
+		panelLfZt.add(rdbtn500KHz);
+
+		rdbtn1MHz.setBounds(26, 27, 109, 23);
+		panelLfZt.add(rdbtn1MHz);
+
+		rdbtn2MHz.setBounds(26, 47, 109, 23);
+		panelLfZt.add(rdbtn2MHz);
+
+		rdbtn3MHz.setBounds(26, 67, 109, 23);
+		panelLfZt.add(rdbtn3MHz);
+
+		rdbtn4MHz.setBounds(26, 87, 109, 23);
+		rdbtn4MHz.setSelected(true);
+		panelLfZt.add(rdbtn4MHz);
+
+		//Nur einer klickbar
+		ButtonGroup laufZeitBg = new ButtonGroup();
+		laufZeitBg.add(rdbtn500KHz);
+		laufZeitBg.add(rdbtn1MHz);
+		laufZeitBg.add(rdbtn2MHz);
+		laufZeitBg.add(rdbtn3MHz);
+		laufZeitBg.add(rdbtn4MHz);
+
+		 ActionListener alRdbtn500KHz = new ActionListener() 
+		 {
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+				 takt = 500;
+				 System.out.println("500KHz");
+		    }
+		};
+		 ActionListener alRdbtn1MHz = new ActionListener() 
+		 {
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+				 takt = 1;
+				 System.out.println("1mhz");
+		    }
+		};
+		 ActionListener alRdbtn2MHz = new ActionListener() 
+		 {
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+				 takt = 2;
+				 System.out.println("2mhz");
+		    } 
+		};
+		 ActionListener alRdbtn3MHz = new ActionListener() 
+		 {
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+				 takt = 3;
+				 System.out.println("3Mhz");
+		    }
+		};
+		 ActionListener alRdbtn4MHz = new ActionListener() 
+		 {
+			 public void actionPerformed(ActionEvent actionEvent) 
+			{
+				 takt = 4;
+				 System.out.println("4 Mhz");
+		    }
+		};
+
+		rdbtn500KHz.addActionListener(alRdbtn500KHz);	
+		rdbtn1MHz.addActionListener(alRdbtn1MHz);	
+		rdbtn2MHz.addActionListener(alRdbtn2MHz);	
+		rdbtn3MHz.addActionListener(alRdbtn3MHz);	
+		rdbtn4MHz.addActionListener(alRdbtn4MHz);
+		
 	}
+	
+	
 	
 	public void SetCFGui(int flagValue)
 	{
@@ -1281,32 +1383,41 @@ public class Simulator_Window {
 		else
 		{
 			rdbtnTRISB7.setSelected(false);
-		}
-		
+		}	
 	}
 	
-	
+
 	public void Befehlsmarkierung(int programmCounterInt)
 	{
-		int cellValue;
+		String cellValue;
+		int cellValueInt;
 	
 		for(int i = 0 ; i <= tblCodeAusgabe.getRowCount() -1; i++ )
 		{
 			if(tblCodeAusgabe.getValueAt(i, 1).equals("    "))
 			{
-				//System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
 			}
-			/*else 
+			else 
 			{
-				//System.out.println("##### " +  tblCodeAusgabe.getValueAt(i, 1));
-				cellValue = Integer.valueOf((String) tblCodeAusgabe.getValueAt(i, 1));
-				if( cellValue == programmCounterInt)
+				cellValue = String.valueOf((String) tblCodeAusgabe.getValueAt(i, 1));
+				cellValueInt = Integer.parseInt(cellValue, 16);
+				if( cellValueInt == programmCounterInt)
 				{	
 					tblCodeAusgabe.setRowSelectionInterval(i, i);
 					tblCodeAusgabe.setSelectionBackground(Color.GREEN);
 				}
-			}*/
+				//System.out.println("cellValueInt: " + cellValueInt);
+			}
 		}
 	}
+	
+	public void printLaufzeit(double laufzeit)
+	{
+		DecimalFormat dfLz = new DecimalFormat("###.##");
+		dfLz.setRoundingMode(RoundingMode.HALF_UP);
+		lblLfZt.setText(dfLz.format(laufzeit) + " ÂµS");
+	}
+	
+
 }
 
