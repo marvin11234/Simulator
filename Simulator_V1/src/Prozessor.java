@@ -13,15 +13,11 @@ public class Prozessor extends Thread {
 	}
 	@Override public void run(){ 
 		ctr.getMemo().InitMemoryPWROn();
-		ctr.getMemo().SetPC(0);
-		ctr.getMemo().CheckSFR();
-		ctr.getMemo().CheckIO();
 		while(! exit) {
 			try {
-				
 				ctr.CheckBreakPoint();
-				ctr.getMemo().CheckSFR();
-				ctr.getMemo().CheckIO();
+				/*ctr.getMemo().checkSFR();
+				ctr.getMemo().CheckIO();*/
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
 				ctr.laufZeitBerechnung();
 				
@@ -48,8 +44,10 @@ public class Prozessor extends Thread {
     			ctr.getInterrupt().checkRBISR();
     			ctr.getInterrupt().checkInterrupt();
 
-				ctr.getMemo().CheckSFR();
+				ctr.getMemo().checkSFR();
+				ctr.getMemo().checkRA();
 				ctr.getMemo().CheckIO();
+				ctr.getGui().printWReg(ctr.getMemo().GetWInt());
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
 				clockout = false;
 				

@@ -66,6 +66,18 @@ public class Controller {
 				br = new BufferedReader(new FileReader(file));
 				
 				String currentLineSt;
+				if(gui.tblCode.getRowCount() != 0)
+				{
+					gui.tblCode.setRowCount(0);
+				}
+				if(gui.tblGprMdl.getRowCount() != 0)
+				{
+					gui.tblGprMdl.setRowCount(0);
+				}
+				if(gui.tblStackMdl.getRowCount() != 0)
+				{
+					gui.tblStackMdl.setRowCount(0);
+				}
 				while ((currentLineSt = br.readLine()) != null)
 				{
 					String pcSt = currentLineSt.substring(0,4);
@@ -95,11 +107,22 @@ public class Controller {
 						int code = Integer.parseInt(codeSt ,16);
 						this.getMemo().programMemoryIntArray[pc] = code;
 					}
+					
+			
 				}
+				//breakpoints löschen
+				initBreakpointSpeicher();
+				//speicher und stack löschen
+				getMemo().resetRam();
+				//initialiseren pwr on zustand
+				getMemo().InitMemoryPWROn();
+				//pc auf 0 setzen
+				getMemo().SetPC(0);
 				//initialisierung Speicher anzeige
 				InitGprView();
-				
 				InitStackView();
+				//Laufzeit auf 0 setzen
+				laufzeit = 0;
 						
 			}
 			catch (IOException e)
@@ -137,6 +160,7 @@ public class Controller {
 		}
 		
 		Zeroflag(erg);
+		getMemo().checkDCFlag(temp,temp2);
 		
 		if (d == 0 )
 		{
@@ -315,25 +339,25 @@ public class Controller {
 		int temp = getMemo().GetF(f);
 		int erg = 0; 
 		
-		if(erg == 255) 
+		if(temp == 255) 
 		{
-			erg = 0;
+			temp = 0;
 			getMemo().IncPc();
 			this.proc.setNop(true);
 
 		}
 		else 
 		{
-			erg++;
+			temp++;
 		}
 		
 		if(d == 0 )
 		{
-			getMemo().WriteW(erg);
+			getMemo().WriteW(temp);
 		}
 		else if (d == 1)
 		{
-			getMemo().set_SRAM(erg, f);
+			getMemo().set_SRAM(temp, f);
 			PrintGPR();
 		}
 		getMemo().IncPc();
@@ -487,6 +511,7 @@ public class Controller {
 		}
 		
 		Zeroflag(erg);
+		getMemo().checkDCFlag(temp,temp2);
 		
 		if(d == 0 )
 		{
@@ -582,8 +607,15 @@ public class Controller {
 	public void btfsc(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("btfsc");
-		int[] tempF = getMemo().GetFBin(f);
+		/*int[] tempF = getMemo().GetFBin(f);
 		if(tempF[b] == 0)
+		{
+			getMemo().IncPc();
+			this.proc.setNop(true);
+		}
+		getMemo().IncPc();*/
+		int in = getMemo().get_Memory(f, b);
+		if(in == 0) 
 		{
 			getMemo().IncPc();
 			this.proc.setNop(true);
@@ -593,13 +625,20 @@ public class Controller {
 	public void btfss(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("btfss");
-		int[] tempF = getMemo().GetFBin(f);
+		/*int[] tempF = getMemo().GetFBin(f);
 		if(tempF[b] == 1)
 		{
 			getMemo().IncPc();
 			this.proc.setNop(true);
 		}
-		getMemo().IncPc();
+		getMemo().IncPc();*/
+		int in = getMemo().get_Memory(f, b);
+		if(in == 1) 
+		{
+			getMemo().IncPc();
+			this.proc.setNop(true);
+		}
+		getMemo().IncPc();;
 	}
 	
 	public void call(int k)throws Exception //BEEINFLUSST KEINE STATI
@@ -635,6 +674,7 @@ public class Controller {
 		}
 		
 		Zeroflag(erg);
+		getMemo().checkDCFlag(temp,k);
 		
 		getMemo().WriteW(erg);
 		getMemo().IncPc();
@@ -647,6 +687,7 @@ public class Controller {
 		
 		
 		Zeroflag(erg);
+		getMemo().checkDCFlag(temp,k);
 		
 		getMemo().WriteW(erg);
 		getMemo().IncPc();
@@ -689,7 +730,7 @@ public class Controller {
 			erg = k-temp;
 			getMemo().SetCarry();
 		}
-		
+		getMemo().checkDCFlag(temp,k);
 		Zeroflag(erg);
 		
 		getMemo().WriteW(erg);
@@ -730,7 +771,7 @@ public class Controller {
 	public void InitGprView()
 	{
 
-		for (int i = 12; (i < 48); i++)
+		for (int i = 0; (i < 48); i++)
 		{
 			int f = i;
 			String hex = Integer.toHexString(i);
@@ -754,7 +795,7 @@ public class Controller {
 			gui.tblGprMdl.removeRow(i);
 		}
 
-		for (int i = 12; (i < 48); i++)
+		for (int i = 0; (i < 48); i++)
 		{
 			int f = i;
 			String hex = Integer.toHexString(i);
@@ -937,6 +978,14 @@ public class Controller {
 	{
 		getMemo().SetTRISB7Bit(value);
 	}
+	
+	public void initBreakpointSpeicher()
+	{
+	for(int i = 0; i <= bP.length-1; i++)
+	{
+	bP[i] = 400;
+	}
+	}
 	//TRISB IO
 	public void SetTRISBIO0(int value)
 	{
@@ -986,30 +1035,37 @@ public class Controller {
 
 	public void SetBreakPoint(int row)
 	{
-		String breakPoint = "BP";
-		int bPpc;
-		
-		if( ! gui.tblCode.getValueAt(row, 1).equals("    ")) //BREAKPOINT IN ZEILE MIT CODE ?
-		{
-			if( gui.tblCode.getValueAt(row, 0).equals(breakPoint)) //BREAKPOINT ENTFERNEN
-			{
-				gui.tblCode.setValueAt(" ", row, 0);
-				for(int i = 0; i <= bP.length-1; i++)
-				{
-					if(bP[i] == Integer.parseInt(gui.tblCode.getValueAt(row, 1).toString()))
-					{
-						bP[i]=400;
-					}
-				}
-			}
-			else //BREAKPOINT SETZEN
-			{
-				bPpc = Integer.parseInt(gui.tblCode.getValueAt(row, 1).toString());
-				bP[helper]= (bPpc);
-				gui.tblCode.setValueAt(breakPoint, row, 0);
-				helper++;
-			}
-		}
+	String breakPoint = "BP";
+	String test;
+	String test2;
+	int testInt;
+	int bPpc;
+
+	if( ! gui.tblCode.getValueAt(row, 1).equals(" ")) //BREAKPOINT IN ZEILE MIT CODE ?
+	{
+	if( gui.tblCode.getValueAt(row, 0).equals(breakPoint)) //BREAKPOINT ENTFERNEN
+	{
+	gui.tblCode.setValueAt(" ", row, 0);
+	for(int i = 0; i <= bP.length-1; i++)
+	{
+	test2 = String.valueOf((String) gui.tblCode.getValueAt(row, 1));
+	testInt = Integer.parseInt(test2, 16);
+	if(bP[i] == testInt)
+	{
+	bP[i]=400;
+	}
+	}
+	}
+	else //BREAKPOINT SETZEN
+	{
+	test = String.valueOf((String) gui.tblCode.getValueAt(row, 1));
+
+	bPpc = Integer.parseInt(test, 16);
+	bP[helper]= (bPpc);
+	gui.tblCode.setValueAt(breakPoint, row, 0);
+	helper++;
+	}
+	}
 	}
 	
 	public void laufZeitBerechnung()

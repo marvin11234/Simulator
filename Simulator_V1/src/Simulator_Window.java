@@ -28,13 +28,13 @@ public class Simulator_Window {
 
 	private Controller ctr;
 	private JFrame frame;
-	private JTable tblCodeAusgabe;
+	public JTable tblCodeAusgabe;
 	protected DefaultTableModel tblCode;
-	private JTable tblGPR;
+	public JTable tblGPR;
 	protected DefaultTableModel tblGprMdl;
 	private JTable tblStack_1;
 	protected DefaultTableModel tblStackMdl;
-	private JTable tblStack;
+	public JTable tblStack;
 
 	
 	//SFR Pins die von aussen angesteuert werden
@@ -47,7 +47,6 @@ public class Simulator_Window {
 	boolean cfStatus;
 	boolean dcStatus;
 	boolean zfStatus;
-	
 	boolean Reg1Status;
 	
 	boolean trisA0Status;
@@ -104,7 +103,7 @@ public class Simulator_Window {
 	JRadioButton rdbtn3MHz = new JRadioButton("3 MHz");
 	JRadioButton rdbtn4MHz = new JRadioButton("4 MHz");
 	JLabel lblLfZt = new JLabel();
-	
+	JLabel lblWReg = new JLabel("W:");
 	int takt = 4;
 	
 	public Simulator_Window() {
@@ -174,6 +173,20 @@ public class Simulator_Window {
 		tblCodeAusgabe.setBounds(0, 0, 837, 372);
 		tblCodeAusgabe.setEnabled(false);
 		tblCodeAusgabe.setModel(tblCode);
+		tblCodeAusgabe.addMouseListener(new java.awt.event.MouseAdapter()
+				{
+					@Override
+					public void mouseClicked(java.awt.event.MouseEvent evt)
+					{
+					 int row = tblCodeAusgabe.rowAtPoint(evt.getPoint());
+					 int coll = tblCodeAusgabe.columnAtPoint(evt.getPoint());
+					
+					 if(coll == 0)
+					 {
+						 ctr.SetBreakPoint(row);
+					 }
+					}
+				});
 		spCodeAusgabe.setViewportView(tblCodeAusgabe);
 		
 		for(int i = 0; i < 5; i++)
@@ -1089,7 +1102,7 @@ public class Simulator_Window {
 		//Anzeige Laufzeit
 		JPanel panelLfZt = new JPanel();
 		panelLfZt.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelLfZt.setBounds(696, 11, 168, 175);
+		panelLfZt.setBounds(696, 11, 168, 219);
 		frame.getContentPane().add(panelLfZt);
 		panelLfZt.setLayout(null);
 
@@ -1121,7 +1134,11 @@ public class Simulator_Window {
 		laufZeitBg.add(rdbtn2MHz);
 		laufZeitBg.add(rdbtn3MHz);
 		laufZeitBg.add(rdbtn4MHz);
+		
 
+		lblWReg.setBounds(57, 190, 56, 16);
+		panelLfZt.add(lblWReg);
+		lblWReg.setVisible(false);
 		 ActionListener alRdbtn500KHz = new ActionListener() 
 		 {
 			 public void actionPerformed(ActionEvent actionEvent) 
@@ -1173,9 +1190,9 @@ public class Simulator_Window {
 	
 	
 	
-	public void SetCFGui(int flagValue)
+	public void SetCFGui(boolean flagValue)
 	{
-		if(flagValue == 1)
+		if(flagValue == true)
 		{
 			rdbtnCF.setSelected(true);
 		}
@@ -1415,9 +1432,13 @@ public class Simulator_Window {
 	{
 		DecimalFormat dfLz = new DecimalFormat("###.##");
 		dfLz.setRoundingMode(RoundingMode.HALF_UP);
-		lblLfZt.setText(dfLz.format(laufzeit) + " ÂµS");
+		lblLfZt.setText(dfLz.format(laufzeit) + " µS");
 	}
-	
-
+	public void printWReg(int wreg)
+	{
+		String test = Integer.toHexString(wreg);
+		lblWReg.setText(test);
+	}
 }
+
 

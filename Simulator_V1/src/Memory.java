@@ -244,7 +244,20 @@ public class Memory extends Thread {
 		}
 		return Integer.parseInt(c,2);
 	}
-
+//bit direkt kriegen
+	protected int get_Memory(int fileaddress, int bit) 
+	{
+		if(dataMemoryIntArray[3][5] == 0) 
+		{
+			return dataMemoryIntArray[fileaddress][bit];
+		}else  if((dataMemoryIntArray[3][5] == 1) && (fileaddress < 128))
+		{
+			return dataMemoryIntArray[fileaddress+128][bit];
+		}else 
+		{
+			return 0;
+		}
+	}
 	/*
 	 * ############################################################################
 	 * 
@@ -580,9 +593,19 @@ public class Memory extends Thread {
 		// RBPU
 		dataMemoryIntArray[129][7] = 1;
 		
-		System.out.println("Option Register: " + dataMemoryIntArray[129][4]);
+		//System.out.println("Option Register: " + dataMemoryIntArray[129][4]);
 	}
 
+	public void resetRam()
+	{
+		//löschen des SRam inhalts
+		for(int i = 12; i <= 47; i++)
+		{
+			set_SRAM(0,i);
+		}
+		//löschen des Stack
+		cmdStack.clear();
+	}
 	protected int get_Memory(int fileaddress) {
 		String c = "";
 		for (int i = 0; i < 8; i++) {
@@ -751,14 +774,81 @@ public class Memory extends Thread {
 	}
 	//Datenblatt Seite 24
 	
-	public void CheckSFR()
+	
+	public void checkSFR()
+	{
+		//carry Flag
+		if(dataMemoryIntArray[3][0] == 1)
+		{
+
+			ctr.getGui().rdbtnCF.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnCF.setSelected(false);
+		}
+		
+		//Dc Flag Gui
+		if(dataMemoryIntArray[3][1] == 1)
+		{
+
+			ctr.getGui().rdbtnDC.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnDC.setSelected(false);
+		}
+		//ZF
+		if(dataMemoryIntArray[3][2] == 1)
+		{
+
+			ctr.getGui().rdbtnZ.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnZ.setSelected(false);
+		}
+		//RP0
+		if(dataMemoryIntArray[3][5] == 1)
+		{
+
+			ctr.getGui().rdbtnReg1.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnReg1.setSelected(false);
+		}
+	}
+	public void checkRA()
+	{
+		if(dataMemoryIntArray[5][4] == 1)
+		{
+
+			ctr.getGui().rdbtnRA4.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRA4.setSelected(false);
+		}
+	}
+	
+	/*public void CheckSFR()
 	{
 		if(((dataMemoryIntArray[3][0] == 0) & (ctr.getGui().cfStatus == false)) | (dataMemoryIntArray[3][0] == 1) & (ctr.getGui().cfStatus == true) )
 		{
 		}
 		else if(((dataMemoryIntArray[3][0] == 0) & (ctr.getGui().cfStatus == true)) | (dataMemoryIntArray[3][0] == 1) & (ctr.getGui().cfStatus == false))
 		{
-			ctr.getGui().SetCFGui((dataMemoryIntArray[3][0]));
+			boolean cf = false;
+			if(dataMemoryIntArray[3][0] == 1)
+			{
+
+				ctr.getGui().rdbtnCF.setSelected(true);
+			}
+			else
+			{
+				ctr.getGui().rdbtnCF.setSelected(false);
+			}
 		}
 		
 		if(((dataMemoryIntArray[3][1] == 0) & (ctr.getGui().dcStatus == false)) | (dataMemoryIntArray[3][1] == 1) & (ctr.getGui().dcStatus == true) )
@@ -784,7 +874,7 @@ public class Memory extends Thread {
 			ctr.getGui().SetRP0Gui((dataMemoryIntArray[3][5]));
 		}
 		
-	}
+	}*/
 	
 	public void CheckIO()
 	{		
@@ -893,7 +983,14 @@ public class Memory extends Thread {
 		}
 		
 		
-	
-		
+	}
+	protected void checkDCFlag(int in_1, int in_2) 
+	{
+		if (((in_1 & 0x0F) + (in_2 & 0x0F)) > 0x0F) {
+			SetDigitCarry();
+		}
+		else {
+			ResetDigitCarry();
+		}
 	}
 }
