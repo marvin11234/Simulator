@@ -97,7 +97,9 @@ public class Simulator_Window {
 	JRadioButton rdbtnRB6 = new JRadioButton("RB6");
 	JRadioButton rdbtnRB7 = new JRadioButton("RB7");
 	
-	//Auswahl für die Laufzeitberechnung
+
+	//Auswahl fuer die Laufzeitberechnung
+
 	JRadioButton rdbtn500KHz = new JRadioButton("500 KHz");
 	JRadioButton rdbtn1MHz = new JRadioButton("1 MHz");
 	JRadioButton rdbtn2MHz = new JRadioButton("2 MHz");
