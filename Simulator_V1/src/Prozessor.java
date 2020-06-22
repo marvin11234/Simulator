@@ -41,13 +41,16 @@ public class Prozessor extends Thread {
 				ctr.getTimer().updateTimer((ctr.getMemo().getBitValue(0x05, 4)), clockout);
 				ctr.getTimer().checkIncrement();
 				
-				clockout = false;
-
+		
+				ctr.getInterrupt().updateSources(ctr.getMemo().GetF(0x06));
+    			ctr.getInterrupt().checkRBISR();
+    			ctr.getInterrupt().checkInterrupt();
 
 				ctr.getMemo().CheckSFR();
 				ctr.getMemo().CheckIO();
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
-
+				clockout = false;
+				
 				if(exit)
 				{
 					break;

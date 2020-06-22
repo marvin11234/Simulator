@@ -14,6 +14,7 @@ public class Controller {
 	private Prozessor proc; 
 	private Memory memo;
 	private Timer tmr;
+	private Interrupt intp;
 	
 	private boolean processorRunning = false; 
 	
@@ -33,6 +34,7 @@ public class Controller {
 		gui = simulator_Window;
 		memo = new Memory(this);
 		tmr = new Timer(this);
+		intp = new Interrupt(this);
 	}
 	
 
@@ -376,7 +378,8 @@ public class Controller {
 	public void retfie()throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("retfie");
-		getMemo().IncPc();
+		getMemo().dataMemoryIntArray[0x0b][7] = 1;
+		getMemo().SetPC(getMemo().GetStack());
 		this.proc.setNop(true);
 	}
 	
@@ -1021,8 +1024,13 @@ public class Controller {
 		return memo;
 	}
 
-	public Simulator_Window getGui()
+	protected Simulator_Window getGui()
 	{
 		return gui;
+	}
+	
+	protected Interrupt getInterrupt()
+	{
+		return intp;
 	}
 }
