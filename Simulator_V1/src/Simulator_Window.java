@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import java.awt.event.ActionListener;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Stack;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -1597,6 +1598,68 @@ public class Simulator_Window {
 		{
 			ctr.getGui().rdbtnRA4.setEnabled(false);
 		}
+	}
+	
+	public void InitStackView()
+	{
+		System.out.println("Init Stack");
+		for(int i = 0; i <= 7; i++)
+		{
+			tblStackMdl.addRow(new Object[] {i, 0});
+		}
+	}
+	
+	public void updateStack(int[] stack)
+	{ 
+		
+		for(int i = 6; i >= 0; i--)
+		{
+			tblStackMdl.setValueAt(stack[i], 0, 1);
+			
+		}
+	}
+	
+	public void updateFlags(int[] GetFlags)
+	{
+		if(GetFlags[0] == 1)
+		{
+
+			ctr.getGui().rdbtnCF.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnCF.setSelected(false);
+		}
+		
+		if(GetFlags[1] == 1)
+		{
+
+			ctr.getGui().rdbtnDC.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnDC.setSelected(false);
+		}
+		
+		if(GetFlags[2] == 1)
+		{
+
+			ctr.getGui().rdbtnZ.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnZ.setSelected(false);
+		}
+		if(GetFlags[5] == 1)
+		{
+
+			ctr.getGui().rdbtnReg1.setSelected(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnReg1.setSelected(false);
+		}
+		
 	}
 	
 	public void printLaufzeit(double laufzeit)

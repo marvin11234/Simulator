@@ -26,6 +26,8 @@ public class Memory extends Thread {
 				ctr.getGui().updateGPR(i/8, i%8, this.GetF(i));
 				ctr.getGui().updateTrisB(GetTRISB());
 				ctr.getGui().updateTrisA(GetTRISA());
+				ctr.getGui().updateStack(intStack);
+				ctr.getGui().updateFlags(GetFlags());
 			}
 			try {
 				Thread.sleep(50);
@@ -98,7 +100,8 @@ public class Memory extends Thread {
 	 * 
 	 * #########################################################################
 	 */
-	protected Stack<Integer> cmdStack = new Stack<Integer>();
+	protected int[] intStack = new int[8];
+	private int intstackSize = 0;
 
 	/*
 	 * ############################################################################
@@ -331,11 +334,11 @@ public class Memory extends Thread {
 	 * 
 	 * #########################################################################
 	 */
-	public void SetStack() {
+/*	public void SetStack() {
 		cmdStack.push(programCounterInt + 1);
 		System.out.println("Stack: " + cmdStack.peek());
 	}
-
+*/
 	/*
 	 * ############################################################################
 	 * 
@@ -387,7 +390,7 @@ public class Memory extends Thread {
 	 * 
 	 * #########################################################################
 	 */
-	public int GetStack() {
+	/*public int GetStack() {
 		int stackInt = cmdStack.peek();
 		cmdStack.pop();
 		return stackInt;
@@ -404,6 +407,10 @@ public class Memory extends Thread {
 		return stackInt;
 	}
 
+	public Stack<Integer> getStack()
+	{
+		return cmdStack;
+	}*/
 	/*
 	 * ############################################################################
 	 * 
@@ -624,7 +631,7 @@ public class Memory extends Thread {
 			set_SRAM(0,i);
 		}
 		//löschen des Stack
-		cmdStack.clear();
+		clearStack();
 	}
 	protected int get_Memory(int fileaddress) {
 		String c = "";
@@ -854,8 +861,39 @@ public class Memory extends Thread {
 	}
 	
 
+	protected void pushToStack(int adr)
+	{
+		for(int i = 7; i> 0; i--)
+		{
+			intStack[i] = intStack[i-1];
+		}
+		intStack[0] = adr;
+		if(this.intstackSize <8)
+		{
+			this.intstackSize +=1;
+		}
+	}
 	
+	protected int popFromStack() 
+	{
+		this.intstackSize -= 1;
+		int retVal = intStack[0];
+		for(int i = 0; i < 7; i++) {
+			intStack[i] = intStack[i + 1];
+		}
+		return retVal;
+	}
 	
+	protected void clearStack() {
+		this.intstackSize = 0;
+		for (int i = 0; i < 8; i++) {
+			intStack[i] = 0;
+		}
+	}
+	protected int[] getStack()
+	{
+		return intStack;
+	}
 	
 	
 	
@@ -868,7 +906,10 @@ public class Memory extends Thread {
 	private int[] GetTRISA() {
 		return this.GetFBin(0x85);
 	}
-	
+	private int[] GetFlags()
+	{
+		return this.GetFBin(0x03);
+	}
 	protected void checkDCFlag(int in_1, int in_2) 
 	{
 		if (((in_1 & 0x0F) + (in_2 & 0x0F)) > 0x0F) {

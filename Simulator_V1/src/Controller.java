@@ -45,6 +45,7 @@ public class Controller {
 
 	public void initialize() {
 		gui.InitGprView();
+		gui.InitStackView();
 		memo.InitMemoryPWROn();
 		memo.start();
 	}
@@ -392,9 +393,9 @@ public class Controller {
 	
 	public void Return()throws Exception //BEEINFLUSST KEINE STATI
 	{
-		int k  = getMemo().GetStack();
+		int k  = getMemo().popFromStack();
 		System.out.println("Return " + k + "1");
-		PrintAfterPop();
+		//PrintAfterPop();
 		
 		System.out.println("Return " + k + "2");
 		
@@ -408,7 +409,7 @@ public class Controller {
 	{
 		System.out.println("retfie");
 		getMemo().dataMemoryIntArray[0x0b][7] = 1;
-		getMemo().SetPC(getMemo().GetStack());
+		getMemo().SetPC(getMemo().popFromStack());
 		this.proc.setNop(true);
 	}
 	
@@ -621,7 +622,7 @@ public class Controller {
 	public void call(int k)throws Exception //BEEINFLUSST KEINE STATI
 	{	
 		System.out.println("call" + k );
-		getMemo().SetStack();
+		getMemo().pushToStack(k);
 		getMemo().SetPC(k);
 		this.proc.setNop(true);
 
@@ -682,9 +683,9 @@ public class Controller {
 		int erg = k;
 		System.out.println("RetLW 1 " + erg );
 		getMemo().WriteW(erg);
-		k  = getMemo().GetStack();
+		k  = getMemo().popFromStack();
 		System.out.println("RetLW 2" + k);
-		PrintAfterPop();
+		//PrintAfterPop();
 		getMemo().SetPC(k);
 
 		getMemo().IncPc();
@@ -737,73 +738,7 @@ public class Controller {
 	}
 	
 
-	//#########################################################################
-	//
-	//
-	//
-	//
-	//
-	//
-	//Stack
-	//
-	//
-	//
-	//
-	//
-	//#########################################################################
-	public void InitStackView()
-	{
-		System.out.println("Init Stack");
-		for(int i = 0; i <= 7; i++)
-		{
-			gui.tblStackMdl.addRow(new Object[] {i, 0});
-			
-		}
-	}
-	int stackAr[]; 
-	
-	public void PrintStack()
-	{ 
-		
-		for(int i = 6; i >= 0; i--)
-		{
-			 Object test = gui.tblStackMdl.getValueAt(i, 1);
-			 int stack = (int) test;
-			 gui.tblStackMdl.setValueAt(stack, i+1, 1);
-		}
-		gui.tblStackMdl.setValueAt(getMemo().ShowStack(), 0, 1);
-	}
-	
-	public void PrintAfterPop()
-	{
-		if(getMemo().cmdStack.isEmpty() == true)
-		{
-			for(int i = 0; i <= 7; i++)
-			{
-				gui.tblStackMdl.setValueAt(0, i, 1);
-				
-			}
-		}
-		else 
-		{
-			for(int i = 0; i <= 6; i++)
-			{
-				if(i == 0) 
-				{
-					gui.tblStackMdl.setValueAt(0, i, 1);
-				}
-				else
-				{
-					 Object test = gui.tblStackMdl.getValueAt(i, 1);
-					 int stack = (int) test;
-					 gui.tblStackMdl.setValueAt(stack, i-1, 1);
-				}
-			}
-			 gui.tblStackMdl.setValueAt(0, 7, 1);
-			
-		}
 
-	}
 	
 	//#########################################################################
 	//

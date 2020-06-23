@@ -157,7 +157,7 @@ public class Interrupt {
 
 			//ctr.memory.pushToStack(ctr.memory.programmcounter);
 
-			ctr.getMemo().SetStack();
+			ctr.getMemo().pushToStack(ctr.getMemo().programCounterInt +1);
 
 			// clearing GIE bit to disable other interrupts
 
