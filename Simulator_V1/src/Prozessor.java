@@ -12,19 +12,19 @@ public class Prozessor extends Thread {
 		ctr = controller;
 	}
 	@Override public void run(){ 
-		ctr.getMemo().InitMemoryPWROn();
 		while(! exit) {
 			try {
-    			if(ctr.getBreakPointList()[ctr.getMemo().programCounterInt]) 
+    			/*if(ctr.getBreakPointList()[ctr.getMemo().programCounterInt]) 
     			{
     				ctr.stop();
-    			}
+    			}*/
+				ctr.CheckBreakPoint();
 
 				if(ctr.getGui().einzellschritt == true)
 				{
 					ctr.stop();
 				}
-				ctr.getMemo().checkRA();
+				//ctr.getMemo().checkRA();
 				/*ctr.getMemo().checkSFR();
 				ctr.getMemo().CheckIO();*/
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
@@ -54,15 +54,13 @@ public class Prozessor extends Thread {
     			ctr.getInterrupt().checkInterrupt();
 
     			//UpdateGui
-				ctr.getMemo().checkSFR();
+				/*ctr.getMemo().checkSFR();
 				ctr.getMemo().checkRA();
 				ctr.getMemo().checkTRIS();
 				ctr.getMemo().CheckIO();
 				ctr.getMemo().checkEdit();
 				ctr.PrintStack();
-				ctr.PrintGPR();
-				ctr.getGui().printWReg(ctr.getMemo().GetWInt());
-				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
+				ctr.getGui().printWReg(ctr.getMemo().GetWInt());*/
 				clockout = false;
 				
 				if(exit)

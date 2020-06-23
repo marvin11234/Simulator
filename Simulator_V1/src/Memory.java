@@ -18,6 +18,21 @@ public class Memory extends Thread {
 	public Memory(Controller controller) {
 		ctr = controller;
 	}
+	
+	public void run() {
+		while(true) {
+			for(int i = 0; i <256; i++)
+			{
+				ctr.getGui().updateGPR(i/8, i%8, this.GetF(i));
+			}
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 	/*
 	 * ############################################################################
@@ -106,8 +121,6 @@ public class Memory extends Thread {
 	 */
 	public void set_SRAM(int erg, int f)
 	{
-		System.out.println("Set_Sram f: " + f);
-		System.out.println("Set_Sram erg: " + erg);
 		
 		int RP0 = this.dataMemoryIntArray[3][5];
 		f = (RP0 << 7) | f;
@@ -116,8 +129,6 @@ public class Memory extends Thread {
 	
 	public void set_SRAM_Direct(int erg, int f)
 	{
-		System.out.println("Set_Sramdirect f: " + f);
-		System.out.println("Set_Sramdirect erg: " + erg);
 	
 		String c = Integer.toBinaryString(erg);
 		for(int l = c.length(); l < 8; l++) 
@@ -142,9 +153,7 @@ public class Memory extends Thread {
 	 * #########################################################################
 	 */
 	public void set_SRAM_Bit(int f, int bit, int Wert) {
-		System.out.println("SetSram f: " + f);
-		System.out.println("SetSram bit: " + bit);
-		System.out.println("SetSram Wert: " + Wert);
+
 		switch (f) {
 		// INDF
 		case 0:
@@ -228,10 +237,7 @@ public class Memory extends Thread {
 	 * 
 	 * #########################################################################
 	 */
-	private void WriteSRAM(int sAdresse, int sStelle, int sWert) {
-		System.out.println("WriteSram f: " + sAdresse);
-		System.out.println("WriteSram bit: " + sStelle);
-		System.out.println("WriteSram Wert: " + sWert);
+	private void WriteSRAM(int sAdresse, int sStelle, int sWert) {;
 		dataMemoryIntArray[sAdresse][sStelle] = sWert;
 
 	}

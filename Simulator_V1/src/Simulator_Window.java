@@ -108,8 +108,12 @@ public class Simulator_Window {
 	JLabel lblWReg = new JLabel("W:");
 	int takt = 4;
 	
+	
+	//Konstruktor
 	public Simulator_Window() {
+		initialize();
 		ctr = new Controller(this);
+		ctr.initialize();
 	}
 	
 	public static void main(String[] args) {
@@ -117,7 +121,7 @@ public class Simulator_Window {
 			public void run() {
 				try {	
 					Simulator_Window Simulator_WindowInst = new Simulator_Window();
-					Simulator_WindowInst.initialize(Simulator_WindowInst);
+					Simulator_WindowInst.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -128,12 +132,12 @@ public class Simulator_Window {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initialize(Simulator_Window Simulator_WindowInst) 
+	public void initialize() 
 	{
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1544, 861);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Simulator_WindowInst.frame.setVisible(true);
+
 
 		
 		//einf�gen Men�bar
@@ -185,8 +189,8 @@ public class Simulator_Window {
 					
 					 if(coll == 0)
 					 {
-						 //ctr.SetBreakPoint(row);
-						 ctr.setBreakPoint(row);
+						 ctr.SetBreakPoint(row);
+						 //ctr.setBreakPoint(row);
 					 }
 					}
 				});
@@ -276,7 +280,7 @@ public class Simulator_Window {
 		panelGPR.add(spGPR);
 
 		tblGprMdl = new DefaultTableModel();
-		tblGprMdl.setColumnIdentifiers(new Object[] {"", "07", "06", "05", "04", "03", "02", "01", "00" });
+		tblGprMdl.setColumnIdentifiers(new Object[] {"", "0", "01", "02", "03", "04", "05", "06", "07" });
 		tblGPR = new JTable();
 		tblGPR.setBounds(0, 0, 837, 372);
 		tblGPR.setEnabled(false);
@@ -1448,6 +1452,19 @@ public class Simulator_Window {
 				//System.out.println("cellValueInt: " + cellValueInt);
 			}
 		}
+	}
+	
+	public void InitGprView()
+	{
+		for(int i = 0; i < 32; i++)
+		{
+			this.tblGprMdl.addRow(new Object[] {Integer.toHexString(i*8),"00","00","00","00","00","00","00","00"});
+		}
+	}
+	
+	public void updateGPR(int y, int x, int value)
+	{
+		this.tblGPR.getModel().setValueAt(Integer.toHexString(value), y , x+1);
 	}
 	
 	public void printLaufzeit(double laufzeit)

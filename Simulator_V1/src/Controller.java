@@ -44,6 +44,13 @@ public class Controller {
 		tmr = new Timer(this);
 		intp = new Interrupt(this);
 	}
+	
+
+	public void initialize() {
+		gui.InitGprView();
+		memo.InitMemoryPWROn();
+		memo.start();
+	}
 
 
 
@@ -67,10 +74,11 @@ public class Controller {
 				br = new BufferedReader(new FileReader(file));
 				
 				String currentLineSt;
-				clearBreakPointList();
+				this.initBreakpointSpeicher();
+				//clearBreakPointList();
 				clearCodeTable();
 				
-				if(gui.tblCode.getRowCount() != 0)
+			/*	if(gui.tblCode.getRowCount() != 0)
 				{
 					gui.tblCode.setRowCount(0);
 				}
@@ -81,7 +89,7 @@ public class Controller {
 				if(gui.tblStackMdl.getRowCount() != 0)
 				{
 					gui.tblStackMdl.setRowCount(0);
-				}
+				}*/
 				while ((currentLineSt = br.readLine()) != null)
 				{
 					String pcSt = currentLineSt.substring(0,4);
@@ -111,14 +119,15 @@ public class Controller {
 						int pc =Integer.parseInt(pcSt ,16);
 						int code = Integer.parseInt(codeSt ,16);
 						this.getMemo().programMemoryIntArray[pc] = code;
+						
 						//test
-						programCounterList[CodeLenght] = Integer.parseInt(currentLineSt.substring(20,25));
+						//programCounterList[CodeLenght] = Integer.parseInt(currentLineSt.substring(20,25));
 				
 					}
 					
 			
 				}
-				//breakpoints löschen
+				/*//breakpoints löschen
 				initBreakpointSpeicher();
 				//speicher und stack löschen
 				getMemo().resetRam();
@@ -126,11 +135,10 @@ public class Controller {
 				getMemo().InitMemoryPWROn();
 				//pc auf 0 setzen
 				getMemo().SetPC(0);
-				//initialisierung Speicher anzeige
-				InitGprView();
-				InitStackView();
+				InitStackView();*/
 				//Laufzeit auf 0 setzen
 				laufzeit = 0;
+				getMemo().SetPC(0);
 						
 			}
 			catch (IOException e)
@@ -742,52 +750,9 @@ public class Controller {
 		getMemo().IncPc();
 	}
 	
-	/*############################################################################
-	 * 
-	 *
-	 * 
-	 * Initialisieren der GPR Ausgabe
-	 * 
-	 * 
-	 * #########################################################################*/
-	public void InitGprView()
-	{
 
-		for (int i = 0; (i < 256); i++)
-		{
-			int f = i;
-			String hex = Integer.toHexString(i);
-			int[] fRegIntArray = getMemo().GetFBin(f);
-			gui.tblGprMdl.addRow(new Object[] {hex, fRegIntArray[7], fRegIntArray[6], fRegIntArray[5], fRegIntArray[4],fRegIntArray[3], fRegIntArray[2], fRegIntArray[1], fRegIntArray[0]} ); 
-		}
-
-	}
 	
-	/*############################################################################
-	 * 
-	 *
-	 * 
-	 * Beschrieben der GPR Ausgabe
-	 * 
-	 * 
-	 * #########################################################################*/
-	public void PrintGPR()
-	{
-		for (int i = gui.tblGprMdl.getRowCount() - 1; i >= 0; i--)
-		{
-			gui.tblGprMdl.removeRow(i);
-		}
-
-
-		for (int i = 0; (i < 256); i++)
-		{
-			int f = i;
-			String hex = Integer.toHexString(i);
-			int[] fRegIntArray = getMemo().GetFBin(f);
-			gui.tblGprMdl.addRow(new Object[] {hex, fRegIntArray[7], fRegIntArray[6], fRegIntArray[5], fRegIntArray[4],fRegIntArray[3], fRegIntArray[2], fRegIntArray[1], fRegIntArray[0]} ); 
-		}
-	}
-
+	
 
 	public void InitStackView()
 	{
@@ -1026,7 +991,7 @@ public class Controller {
 	//
 	//
 	//#########################################################################################################################
-	private void clearProgramCounterList() 
+	/*private void clearProgramCounterList() 
 	{
 		for(int i = 0; i< this.programCounterList.length; i++) 
 		{
@@ -1074,19 +1039,18 @@ public class Controller {
 		for(int i = 0; i < breakPointList.length; i++) {
 			breakPointList[i] = false;
 		}
-	}
+	}*/
 	
 	
 	
-	/*
+	
 	public void CheckBreakPoint()
 	{
 		for (int i = 0; i<= bP.length -1 ;i ++)
 		{
-			if(bP[i] - 1 == getMemo().programCounterInt)
+			if(bP[i]  == getMemo().programCounterInt)
 			{
 				//System.out.println("BP TEST AUSGABE " + bP[i] +" "+ getMemo().programCounterInt);
-				 * 
 				stop();
 			}
 		}
@@ -1103,18 +1067,18 @@ public class Controller {
 
 	if( ! gui.tblCode.getValueAt(row, 1).equals(" ")) //BREAKPOINT IN ZEILE MIT CODE ?
 	{
-	if( gui.tblCode.getValueAt(row, 0).equals(breakPoint)) //BREAKPOINT ENTFERNEN
-	{
-	gui.tblCode.setValueAt(" ", row, 0);
-	for(int i = 0; i <= bP.length-1; i++)
-	{
-	test2 = String.valueOf((String) gui.tblCode.getValueAt(row, 1));
-	testInt = Integer.parseInt(test2, 16);
-	if(bP[i] == testInt)
-	{
-	bP[i]=400;
-	}
-	}
+		if( gui.tblCode.getValueAt(row, 0).equals(breakPoint)) //BREAKPOINT ENTFERNEN
+		{
+			gui.tblCode.setValueAt(" ", row, 0);
+			for(int i = 0; i <= bP.length-1; i++)
+			{
+				test2 = String.valueOf((String) gui.tblCode.getValueAt(row, 1));
+				testInt = Integer.parseInt(test2, 16);
+				if(bP[i] == testInt)
+			{
+					bP[i]=400;
+			}
+		}
 	}
 	else //BREAKPOINT SETZEN
 	{
@@ -1127,7 +1091,7 @@ public class Controller {
 	}
 	}
 	}
-	*/
+	
 	public void laufZeitBerechnung()
 	{
 		 
@@ -1217,4 +1181,7 @@ public class Controller {
 	{
 		return intp;
 	}
+
+
+
 }
