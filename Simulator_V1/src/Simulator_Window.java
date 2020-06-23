@@ -1467,6 +1467,138 @@ public class Simulator_Window {
 		this.tblGPR.getModel().setValueAt(Integer.toHexString(value), y , x+1);
 	}
 	
+
+	//Check RB und sperre Ports
+	public void updateTrisB(int [] GetTRISB)
+	{
+		if(GetTRISB[0] == 1)
+		{
+
+			ctr.getGui().rdbtnRB0.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB0.setEnabled(false);
+		}
+		
+		if(GetTRISB[1] == 1)
+		{
+
+			ctr.getGui().rdbtnRB1.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB1.setEnabled(false);
+		}
+		
+		if(GetTRISB[2] == 1)
+		{
+
+			ctr.getGui().rdbtnRB2.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB2.setEnabled(false);
+		}
+		if(GetTRISB[3] == 1)
+		{
+
+			ctr.getGui().rdbtnRB3.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB3.setEnabled(false);
+		}
+		if(GetTRISB[4] == 1)
+		{
+
+			ctr.getGui().rdbtnRB4.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB4.setEnabled(false);
+		}
+		if(GetTRISB[5] == 1)
+		{
+
+			ctr.getGui().rdbtnRB5.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB5.setEnabled(false);
+		}
+		if(GetTRISB[6] == 1)
+		{
+
+			ctr.getGui().rdbtnRB6.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB6.setEnabled(false);
+		}
+		if(GetTRISB[7] == 1)
+		{
+
+			ctr.getGui().rdbtnRB7.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRB7.setEnabled(false);
+		}
+	}
+
+	//Check TRISA und sperre Ports
+	public void updateTrisA(int [] GetTRISA)
+	{
+		if(GetTRISA[0] == 1)
+		{
+
+			ctr.getGui().rdbtnRA0.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRA0.setEnabled(false);
+		}
+		
+		if(GetTRISA[1] == 1)
+		{
+
+			ctr.getGui().rdbtnRA1.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRA1.setEnabled(false);
+		}
+		
+		if(GetTRISA[2] == 1)
+		{
+
+			ctr.getGui().rdbtnRA2.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRA2.setEnabled(false);
+		}
+		if(GetTRISA[3] == 1)
+		{
+
+			ctr.getGui().rdbtnRA3.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRA3.setEnabled(false);
+		}
+		if(GetTRISA[4] == 1)
+		{
+
+			ctr.getGui().rdbtnRA4.setEnabled(true);
+		}
+		else
+		{
+			ctr.getGui().rdbtnRA4.setEnabled(false);
+		}
+	}
+	
 	public void printLaufzeit(double laufzeit)
 	{
 		DecimalFormat dfLz = new DecimalFormat("###.##");

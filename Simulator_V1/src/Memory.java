@@ -24,6 +24,8 @@ public class Memory extends Thread {
 			for(int i = 0; i <256; i++)
 			{
 				ctr.getGui().updateGPR(i/8, i%8, this.GetF(i));
+				ctr.getGui().updateTrisB(GetTRISB());
+				ctr.getGui().updateTrisA(GetTRISA());
 			}
 			try {
 				Thread.sleep(50);
@@ -33,6 +35,8 @@ public class Memory extends Thread {
 			}
 		}
 	}
+
+
 
 	/*
 	 * ############################################################################
@@ -849,332 +853,22 @@ public class Memory extends Thread {
 		}
 	}
 	
-	public void checkTRIS()
+
+	
+	
+	
+	
+	
+	//getter for TrisB
+	public int[] GetTRISB()
 	{
-		//TRISA 0
-		if(dataMemoryIntArray[133][0] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISA0.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISA0.setSelected(false);
-		}
-		//TRISA 1
-		if(dataMemoryIntArray[133][0] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISA1.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISA1.setSelected(false);
-		}
-		//TRISA 2
-		if(dataMemoryIntArray[133][2] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISA2.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISA2.setSelected(false);
-		}
-		//TRISA 3
-		if(dataMemoryIntArray[133][3] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISA3.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISA3.setSelected(false);
-		}
-		//TRISA 4
-		if(dataMemoryIntArray[133][4] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISA4.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISA4.setSelected(false);
-		}
-		
-		//TRISB 0
-		if(dataMemoryIntArray[134][0] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISB0.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISB0.setSelected(false);
-		}
-		//TRISB 1
-		if(dataMemoryIntArray[134][0] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISB1.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISB1.setSelected(false);
-		}
-		//TRISB 2
-		if(dataMemoryIntArray[134][2] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISB2.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISB2.setSelected(false);
-		}
-		//TRISA 3
-		if(dataMemoryIntArray[134][3] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISB3.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISB3.setSelected(false);
-		}
-		//TRISA 4
-		if(dataMemoryIntArray[134][4] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISB4.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISB4.setSelected(false);
-		}
-		//TRISB 5
-		if(dataMemoryIntArray[134][5] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISB5.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISB5.setSelected(false);
-		}
-		//TRISA 6
-		if(dataMemoryIntArray[134][6] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISB6.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISB6.setSelected(false);
-		}
-		//TRISA 7
-		if(dataMemoryIntArray[134][7] == 1)
-		{
-
-			ctr.getGui().rdbtnTRISB7.setSelected(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnTRISB7.setSelected(false);
-		}
+		return this.GetFBin(0x86);
+	}
+	//Getter for TrisB
+	private int[] GetTRISA() {
+		return this.GetFBin(0x85);
 	}
 	
-	public void checkEdit()
-	{
-		//prüfen ob RB gesperrt sind
-		if(dataMemoryIntArray[134][0] == 1)
-		{
-
-			ctr.getGui().rdbtnRB0.setEnabled(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnRB0.setEnabled(false);
-		}
-		
-		if(dataMemoryIntArray[134][1] == 1)
-		{
-
-			ctr.getGui().rdbtnRB1.setEnabled(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnRB1.setEnabled(false);
-		}
-		
-		if(dataMemoryIntArray[134][2] == 1)
-		{
-
-			ctr.getGui().rdbtnRB2.setEnabled(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnRB2.setEnabled(false);
-		}
-		if(dataMemoryIntArray[134][3] == 1)
-		{
-
-			ctr.getGui().rdbtnRB3.setEnabled(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnRB3.setEnabled(false);
-		}
-		if(dataMemoryIntArray[134][4] == 1)
-		{
-
-			ctr.getGui().rdbtnRB4.setEnabled(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnRB4.setEnabled(false);
-		}
-		if(dataMemoryIntArray[134][5] == 1)
-		{
-
-			ctr.getGui().rdbtnRB5.setEnabled(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnRB5.setEnabled(false);
-		}
-		if(dataMemoryIntArray[134][6] == 1)
-		{
-
-			ctr.getGui().rdbtnRB6.setEnabled(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnRB6.setEnabled(false);
-		}
-		if(dataMemoryIntArray[134][7] == 1)
-		{
-
-			ctr.getGui().rdbtnRB7.setEnabled(true);
-		}
-		else
-		{
-			ctr.getGui().rdbtnRB7.setEnabled(false);
-		}
-		
-		
-	}
-	
-	
-	
-	public void CheckIO()
-	{		
-		//Tris A ports
-		if(((dataMemoryIntArray[5][0] == 0) & (ctr.getGui().trisA0Status == false)) | (dataMemoryIntArray[5][0] == 1) & (ctr.getGui().trisA0Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[5][0] == 0) & (ctr.getGui().trisA0Status == true)) | (dataMemoryIntArray[5][0] == 1) & (ctr.getGui().trisA0Status == false))
-		{
-			ctr.getGui().SetTRISABit0Gui((dataMemoryIntArray[5][0]));
-		}
-		
-		if(((dataMemoryIntArray[5][1] == 0) & (ctr.getGui().trisA1Status == false)) | (dataMemoryIntArray[5][1] == 1) & (ctr.getGui().trisA1Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[5][1] == 0) & (ctr.getGui().trisA1Status == true)) | (dataMemoryIntArray[5][1] == 1) & (ctr.getGui().trisA1Status == false))
-		{
-			ctr.getGui().SetTRISABit1Gui((dataMemoryIntArray[5][1]));
-		}
-		
-		if(((dataMemoryIntArray[5][2] == 0) & (ctr.getGui().trisA2Status == false)) | (dataMemoryIntArray[5][2] == 1) & (ctr.getGui().trisA2Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[5][2] == 0) & (ctr.getGui().trisA2Status == true)) | (dataMemoryIntArray[5][2] == 1) & (ctr.getGui().trisA2Status == false))
-		{
-			ctr.getGui().SetTRISABit2Gui((dataMemoryIntArray[5][2]));
-		}
-		
-		if(((dataMemoryIntArray[5][3] == 0) & (ctr.getGui().trisA3Status == false)) | (dataMemoryIntArray[5][3] == 1) & (ctr.getGui().trisA3Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[5][3] == 0) & (ctr.getGui().trisA3Status == true)) | (dataMemoryIntArray[5][3] == 1) & (ctr.getGui().trisA3Status == false))
-		{
-			ctr.getGui().SetTRISABit3Gui((dataMemoryIntArray[5][3]));
-		}
-		
-		if(((dataMemoryIntArray[5][4] == 0) & (ctr.getGui().trisA4Status == false)) | (dataMemoryIntArray[5][4] == 1) & (ctr.getGui().trisA4Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[5][4] == 0) & (ctr.getGui().trisA4Status == true)) | (dataMemoryIntArray[5][4] == 1) & (ctr.getGui().trisA4Status == false))
-		{
-			ctr.getGui().SetTRISABit4Gui((dataMemoryIntArray[5][4]));
-		}
-		//Tris B Ports
-		if(((dataMemoryIntArray[6][0] == 0) & (ctr.getGui().trisB0Status == false)) | (dataMemoryIntArray[6][0] == 1) & (ctr.getGui().trisB0Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[6][0] == 0) & (ctr.getGui().trisB0Status == true)) | (dataMemoryIntArray[6][0] == 1) & (ctr.getGui().trisB0Status == false))
-		{
-			ctr.getGui().SetTRISBBit0Gui(dataMemoryIntArray[6][0]);
-		}
-		
-		if(((dataMemoryIntArray[6][1] == 0) & (ctr.getGui().trisB1Status == false)) | (dataMemoryIntArray[6][1] == 1) & (ctr.getGui().trisB1Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[6][1] == 0) & (ctr.getGui().trisB1Status == true)) | (dataMemoryIntArray[6][1] == 1) & (ctr.getGui().trisB1Status == false))
-		{
-			ctr.getGui().SetTRISBBit1Gui((dataMemoryIntArray[6][1]));
-		}
-		
-		if(((dataMemoryIntArray[6][2] == 0) & (ctr.getGui().trisB2Status == false)) | (dataMemoryIntArray[6][2] == 1) & (ctr.getGui().trisB2Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[6][2] == 0) & (ctr.getGui().trisB2Status == true)) | (dataMemoryIntArray[6][2] == 1) & (ctr.getGui().trisB2Status == false))
-		{
-			ctr.getGui().SetTRISBBit2Gui((dataMemoryIntArray[6][2]));
-		}
-		
-		if(((dataMemoryIntArray[6][3] == 0) & (ctr.getGui().trisB3Status == false)) | (dataMemoryIntArray[6][3] == 1) & (ctr.getGui().trisB3Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[6][3] == 0) & (ctr.getGui().trisB3Status == true)) | (dataMemoryIntArray[6][3] == 1) & (ctr.getGui().trisB3Status == false))
-		{
-			ctr.getGui().SetTRISBBit3Gui((dataMemoryIntArray[6][3]));
-		}
-		
-		if(((dataMemoryIntArray[6][4] == 0) & (ctr.getGui().trisB4Status == false)) | (dataMemoryIntArray[6][4] == 1) & (ctr.getGui().trisB4Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[6][4] == 0) & (ctr.getGui().trisB4Status == true)) | (dataMemoryIntArray[6][4] == 1) & (ctr.getGui().trisB4Status == false))
-		{
-			ctr.getGui().SetTRISBBit4Gui((dataMemoryIntArray[6][4]));
-		}
-		if(((dataMemoryIntArray[6][5] == 0) & (ctr.getGui().trisB5Status == false)) | (dataMemoryIntArray[6][5] == 1) & (ctr.getGui().trisB5Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[6][5] == 0) & (ctr.getGui().trisB5Status == true)) | (dataMemoryIntArray[6][5] == 1) & (ctr.getGui().trisB5Status == false))
-		{
-			ctr.getGui().SetTRISBBit5Gui((dataMemoryIntArray[6][5]));
-		}
-		
-		if(((dataMemoryIntArray[6][6] == 0) & (ctr.getGui().trisB6Status == false)) | (dataMemoryIntArray[6][6] == 1) & (ctr.getGui().trisB6Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[6][6] == 0) & (ctr.getGui().trisB6Status == true)) | (dataMemoryIntArray[6][6] == 1) & (ctr.getGui().trisB6Status == false))
-		{
-			ctr.getGui().SetTRISBBit6Gui((dataMemoryIntArray[6][6]));
-		}
-		
-		if(((dataMemoryIntArray[6][7] == 0) & (ctr.getGui().trisB7Status == false)) | (dataMemoryIntArray[6][7] == 1) & (ctr.getGui().trisB7Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[6][7] == 0) & (ctr.getGui().trisB7Status == true)) | (dataMemoryIntArray[6][7] == 1) & (ctr.getGui().trisB7Status == false))
-		{
-			ctr.getGui().SetTRISBBit7Gui((dataMemoryIntArray[6][7]));
-		}
-		
-		
-	}
 	protected void checkDCFlag(int in_1, int in_2) 
 	{
 		if (((in_1 & 0x0F) + (in_2 & 0x0F)) > 0x0F) {

@@ -28,9 +28,6 @@ public class Controller {
 	int zeileInt = 0;
 	int i = 0;
 	int[] befehlDezimalIntArray = new int[1024];
-	//test
-	private int[] programCounterList = new int[1024];
-	private boolean[] breakPointList = new boolean[1024];
 
 	//Array fÃ¼r PC an denen ein BreakPoint liegt
 	int bP[] = new int[20];
@@ -78,18 +75,6 @@ public class Controller {
 				//clearBreakPointList();
 				clearCodeTable();
 				
-			/*	if(gui.tblCode.getRowCount() != 0)
-				{
-					gui.tblCode.setRowCount(0);
-				}
-				if(gui.tblGprMdl.getRowCount() != 0)
-				{
-					gui.tblGprMdl.setRowCount(0);
-				}
-				if(gui.tblStackMdl.getRowCount() != 0)
-				{
-					gui.tblStackMdl.setRowCount(0);
-				}*/
 				while ((currentLineSt = br.readLine()) != null)
 				{
 					String pcSt = currentLineSt.substring(0,4);
@@ -120,23 +105,11 @@ public class Controller {
 						int code = Integer.parseInt(codeSt ,16);
 						this.getMemo().programMemoryIntArray[pc] = code;
 						
-						//test
-						//programCounterList[CodeLenght] = Integer.parseInt(currentLineSt.substring(20,25));
-				
+
 					}
 					
 			
 				}
-				/*//breakpoints löschen
-				initBreakpointSpeicher();
-				//speicher und stack löschen
-				getMemo().resetRam();
-				//initialiseren pwr on zustand
-				getMemo().InitMemoryPWROn();
-				//pc auf 0 setzen
-				getMemo().SetPC(0);
-				InitStackView();*/
-				//Laufzeit auf 0 setzen
 				laufzeit = 0;
 				getMemo().SetPC(0);
 						
@@ -163,7 +136,20 @@ public class Controller {
 	}
 	
 	
-	
+	//#########################################################################
+	//
+	//
+	//
+	//
+	//
+	//
+	//Befehlsimplementierung
+	//
+	//
+	//
+	//
+	//
+	//#########################################################################	
 	public void addwf(int d, int f)throws Exception	//BEEINFLUSST C; DC; Z
 	{
 		System.out.println("addwf");
@@ -751,9 +737,20 @@ public class Controller {
 	}
 	
 
-	
-	
-
+	//#########################################################################
+	//
+	//
+	//
+	//
+	//
+	//
+	//Stack
+	//
+	//
+	//
+	//
+	//
+	//#########################################################################
 	public void InitStackView()
 	{
 		System.out.println("Init Stack");
@@ -764,6 +761,7 @@ public class Controller {
 		}
 	}
 	int stackAr[]; 
+	
 	public void PrintStack()
 	{ 
 		
@@ -807,7 +805,20 @@ public class Controller {
 
 	}
 	
-
+	//#########################################################################
+	//
+	//
+	//
+	//
+	//
+	//
+	//Getter und Setter Methoden
+	//
+	//
+	//
+	//
+	//
+	//#########################################################################
 	protected int getVorteiler() 
 	{	
 		return (getMemo().get_Memory(0x81) & 0x07);
@@ -928,13 +939,7 @@ public class Controller {
 		getMemo().SetTRISB7Bit(value);
 	}
 	
-	public void initBreakpointSpeicher()
-	{
-	for(int i = 0; i <= bP.length-1; i++)
-	{
-	bP[i] = 400;
-	}
-	}
+
 	//TRISB IO
 	public void SetTRISBIO0(int value)
 	{
@@ -970,79 +975,30 @@ public class Controller {
 		getMemo().SetTRISBIO7Bit(value);
 	}
 	
-	
-	//############################################################################################################################
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//	Test Breakpoints!!!
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//#########################################################################################################################
-	/*private void clearProgramCounterList() 
+	public void initBreakpointSpeicher()
 	{
-		for(int i = 0; i< this.programCounterList.length; i++) 
-		{
-			this.programCounterList[i] = 0;
-		}
-	}
-	protected int[] getProgramCounterList() {
-		return programCounterList;
-	}
-	protected void setProgramCounterList(int[] programCounterList) {
-		this.programCounterList = programCounterList;
-	}
-	protected boolean[] getBreakPointList() {
-		return breakPointList;
-	}
-	protected void setBreakPointList(boolean[] breakPointList) {
-		this.breakPointList = breakPointList;
-	}
-	
-	
-	protected void setBreakPoint(int row) 
+	for(int i = 0; i <= bP.length-1; i++)
 	{
-		boolean found = false;
-		for(int i = 0; i < programCounterList.length; i++) 
-		{
-			if(programCounterList[i]-1 == row) 
-			{
-				found = true;
-				if(breakPointList[i] == false) 
-				{
-					breakPointList[i] = true;
-					this.getGui().tblCode.setValueAt("O", row, 0);
-				}else 
-				{
-					breakPointList[i] = false;
-					this.getGui().tblCode.setValueAt(" ", row, 0);
-				}
-			}
-		}
+	bP[i] = 400;
+	}
 	}
 	
 	
-	private void clearBreakPointList() 
-	{
-		for(int i = 0; i < breakPointList.length; i++) {
-			breakPointList[i] = false;
-		}
-	}*/
 	
-	
-	
+	//#########################################################################
+	//
+	//
+	//
+	//
+	//
+	//
+	//Breakpoint
+	//
+	//
+	//
+	//
+	//
+	//#########################################################################
 	
 	public void CheckBreakPoint()
 	{
@@ -1092,6 +1048,20 @@ public class Controller {
 	}
 	}
 	
+	//#########################################################################
+	//
+	//
+	//
+	//
+	//
+	//
+	//Laufzeit
+	//
+	//
+	//
+	//
+	//
+	//#########################################################################
 	public void laufZeitBerechnung()
 	{
 		 
@@ -1120,6 +1090,20 @@ public class Controller {
 		//System.out.println("LaufZeit:" + laufzeit);
 	}
 	
+	//#########################################################################
+	//
+	//
+	//
+	//
+	//
+	//
+	//Stop/Start Thread
+	//
+	//
+	//
+	//
+	//
+	//#########################################################################
 	public void start() 
 	{
 		if(! this.processorRunning)
@@ -1131,14 +1115,6 @@ public class Controller {
 		
 	}
 
-	/*############################################################################
-	 * 
-	 *
-	 * 
-	 * Stop Thread
-	 * 
-	 * 
-	 * #########################################################################*/
 	public void stop()
 	{
 		if( this.processorRunning)
@@ -1150,6 +1126,19 @@ public class Controller {
 	}
 	
 
+	//#########################################################################
+	//
+	//
+	//
+	//
+	//
+	//
+	//Zeroflag
+	//
+	//
+	//
+	//
+	//#########################################################################
 	protected void Zeroflag(int zeroflag)
 	{
 		if(zeroflag == 0)
@@ -1161,6 +1150,7 @@ public class Controller {
 			getMemo().ResetetzeroFlag();
 		}
 	}
+	
 	
 	protected Timer getTimer()
 	{
