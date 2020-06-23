@@ -15,11 +15,16 @@ public class Prozessor extends Thread {
 		ctr.getMemo().InitMemoryPWROn();
 		while(! exit) {
 			try {
-				ctr.CheckBreakPoint();
+    			if(ctr.getBreakPointList()[ctr.getMemo().programCounterInt]) 
+    			{
+    				ctr.stop();
+    			}
+
 				if(ctr.getGui().einzellschritt == true)
 				{
 					ctr.stop();
 				}
+				ctr.getMemo().checkRA();
 				/*ctr.getMemo().checkSFR();
 				ctr.getMemo().CheckIO();*/
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);
@@ -38,21 +43,23 @@ public class Prozessor extends Thread {
 					this.befehlsAbarabeitung(ctr.getMemo().programMemoryIntArray[ctr.getMemo().programCounterInt]);
 				}
 				
-				
+				//check Timer
 				clockout = true;
 				ctr.getTimer().updateTimer((ctr.getMemo().getBitValue(0x05, 4)), clockout);
 				ctr.getTimer().checkIncrement();
 				
-		
+				//Check interrupts
 				ctr.getInterrupt().updateSources(ctr.getMemo().GetF(0x06));
     			ctr.getInterrupt().checkRBISR();
     			ctr.getInterrupt().checkInterrupt();
 
+    			//UpdateGui
 				ctr.getMemo().checkSFR();
 				ctr.getMemo().checkRA();
 				ctr.getMemo().checkTRIS();
 				ctr.getMemo().CheckIO();
 				ctr.getMemo().checkEdit();
+				ctr.PrintStack();
 				ctr.PrintGPR();
 				ctr.getGui().printWReg(ctr.getMemo().GetWInt());
 				ctr.getGui().Befehlsmarkierung(ctr.getMemo().programCounterInt);

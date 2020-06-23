@@ -185,7 +185,8 @@ public class Simulator_Window {
 					
 					 if(coll == 0)
 					 {
-						 ctr.SetBreakPoint(row);
+						 //ctr.SetBreakPoint(row);
+						 ctr.setBreakPoint(row);
 					 }
 					}
 				});
@@ -1460,6 +1461,11 @@ public class Simulator_Window {
 		String test = Integer.toHexString(wreg);
 		lblWReg.setText(test);
 	}
+	
+	  protected DefaultTableModel getTblCodeModel() 
+	  {
+		  return tblCode;
+	  }
 }
 
 

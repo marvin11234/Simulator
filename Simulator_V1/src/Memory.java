@@ -54,6 +54,7 @@ public class Memory extends Thread {
 	 * #########################################################################
 	 */
 	protected int programCounterInt = 0;
+	
 
 	/*
 	 * ############################################################################
@@ -105,6 +106,8 @@ public class Memory extends Thread {
 	 */
 	public void set_SRAM(int erg, int f)
 	{
+		System.out.println("Set_Sram f: " + f);
+		System.out.println("Set_Sram erg: " + erg);
 		
 		int RP0 = this.dataMemoryIntArray[3][5];
 		f = (RP0 << 7) | f;
@@ -113,6 +116,8 @@ public class Memory extends Thread {
 	
 	public void set_SRAM_Direct(int erg, int f)
 	{
+		System.out.println("Set_Sramdirect f: " + f);
+		System.out.println("Set_Sramdirect erg: " + erg);
 	
 		String c = Integer.toBinaryString(erg);
 		for(int l = c.length(); l < 8; l++) 
@@ -137,7 +142,9 @@ public class Memory extends Thread {
 	 * #########################################################################
 	 */
 	public void set_SRAM_Bit(int f, int bit, int Wert) {
-
+		System.out.println("SetSram f: " + f);
+		System.out.println("SetSram bit: " + bit);
+		System.out.println("SetSram Wert: " + Wert);
 		switch (f) {
 		// INDF
 		case 0:
@@ -221,7 +228,10 @@ public class Memory extends Thread {
 	 * 
 	 * #########################################################################
 	 */
-	public void WriteSRAM(int sAdresse, int sStelle, int sWert) {
+	private void WriteSRAM(int sAdresse, int sStelle, int sWert) {
+		System.out.println("WriteSram f: " + sAdresse);
+		System.out.println("WriteSram bit: " + sStelle);
+		System.out.println("WriteSram Wert: " + sWert);
 		dataMemoryIntArray[sAdresse][sStelle] = sWert;
 
 	}
@@ -709,6 +719,7 @@ public class Memory extends Thread {
 	//TRIS B =86hex
 	public void SetTRISB0Bit(int value)
 	{
+		
 		dataMemoryIntArray[134][0] = value;
 	}
 	public void SetTRISB1Bit(int value)
@@ -1048,49 +1059,7 @@ public class Memory extends Thread {
 		
 	}
 	
-	/*public void CheckSFR()
-	{
-		if(((dataMemoryIntArray[3][0] == 0) & (ctr.getGui().cfStatus == false)) | (dataMemoryIntArray[3][0] == 1) & (ctr.getGui().cfStatus == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[3][0] == 0) & (ctr.getGui().cfStatus == true)) | (dataMemoryIntArray[3][0] == 1) & (ctr.getGui().cfStatus == false))
-		{
-			boolean cf = false;
-			if(dataMemoryIntArray[3][0] == 1)
-			{
-
-				ctr.getGui().rdbtnCF.setSelected(true);
-			}
-			else
-			{
-				ctr.getGui().rdbtnCF.setSelected(false);
-			}
-		}
-		
-		if(((dataMemoryIntArray[3][1] == 0) & (ctr.getGui().dcStatus == false)) | (dataMemoryIntArray[3][1] == 1) & (ctr.getGui().dcStatus == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[3][1] == 0) & (ctr.getGui().dcStatus == true)) | (dataMemoryIntArray[3][1] == 1) & (ctr.getGui().dcStatus == false))
-		{
-			ctr.getGui().SetDCGui((dataMemoryIntArray[3][1]));
-		}
-		
-		if(((dataMemoryIntArray[3][2] == 0) & (ctr.getGui().zfStatus == false)) | (dataMemoryIntArray[3][2] == 1) & (ctr.getGui().zfStatus == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[3][2] == 0) & (ctr.getGui().zfStatus == true)) | (dataMemoryIntArray[3][2] == 1) & (ctr.getGui().zfStatus == false))
-		{
-			ctr.getGui().SetZFGui((dataMemoryIntArray[3][2]));
-		}
-		if(((dataMemoryIntArray[3][5] == 0) & (ctr.getGui().Reg1Status == false)) | (dataMemoryIntArray[3][5] == 1) & (ctr.getGui().Reg1Status == true) )
-		{
-		}
-		else if(((dataMemoryIntArray[3][5] == 0) & (ctr.getGui().Reg1Status == true)) | (dataMemoryIntArray[3][5] == 1) & (ctr.getGui().Reg1Status == false))
-		{
-			ctr.getGui().SetRP0Gui((dataMemoryIntArray[3][5]));
-		}
-		
-	}*/
+	
 	
 	public void CheckIO()
 	{		

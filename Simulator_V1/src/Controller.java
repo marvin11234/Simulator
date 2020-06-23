@@ -28,7 +28,10 @@ public class Controller {
 	int zeileInt = 0;
 	int i = 0;
 	int[] befehlDezimalIntArray = new int[1024];
-	
+	//test
+	private int[] programCounterList = new int[1024];
+	private boolean[] breakPointList = new boolean[1024];
+
 	//Array für PC an denen ein BreakPoint liegt
 	int bP[] = new int[20];
 	int helper = 0;
@@ -41,8 +44,6 @@ public class Controller {
 		tmr = new Timer(this);
 		intp = new Interrupt(this);
 	}
-	
-
 
 
 
@@ -66,6 +67,9 @@ public class Controller {
 				br = new BufferedReader(new FileReader(file));
 				
 				String currentLineSt;
+				clearBreakPointList();
+				clearCodeTable();
+				
 				if(gui.tblCode.getRowCount() != 0)
 				{
 					gui.tblCode.setRowCount(0);
@@ -103,9 +107,13 @@ public class Controller {
 					}
 					if(! currentLineSt.substring(0,4).equals("    "))
 					{
+						int CodeLenght = Integer.parseInt(currentLineSt.substring(0,4),16);
 						int pc =Integer.parseInt(pcSt ,16);
 						int code = Integer.parseInt(codeSt ,16);
 						this.getMemo().programMemoryIntArray[pc] = code;
+						//test
+						programCounterList[CodeLenght] = Integer.parseInt(currentLineSt.substring(20,25));
+				
 					}
 					
 			
@@ -137,7 +145,14 @@ public class Controller {
 	}
 
 	
-	
+	public void clearCodeTable() 
+	{
+		int rows = getGui().getTblCodeModel().getRowCount();
+    	for(int i = 0; i<rows; i++) 
+    	{
+        	getGui().getTblCodeModel().removeRow(0);  		
+    	}
+	}
 	
 	
 	
@@ -169,7 +184,6 @@ public class Controller {
 		else if (d == 1)	//ERGEBNIS IN F SPEICHERN ?
 		{
 			getMemo().set_SRAM(erg,f);
-			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -190,7 +204,6 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().set_SRAM(erg, f);
-			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -209,7 +222,6 @@ public class Controller {
 		System.out.println("clrf");
 		int erg = 0;
 		memo.set_SRAM(erg, f);
-		PrintGPR();
 		Zeroflag(erg);
 		getMemo().IncPc();
 	}
@@ -244,7 +256,6 @@ public class Controller {
 			else if (d == 1)
 			{
 				memo.set_SRAM(erg, f);
-				PrintGPR();
 			}
 		getMemo().IncPc();
 	}
@@ -273,7 +284,6 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().set_SRAM(erg, f);
-			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -303,7 +313,6 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().set_SRAM(erg, f);
-			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -328,7 +337,6 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().set_SRAM(temp, f);
-			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -358,7 +366,6 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().set_SRAM(temp, f);
-			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -379,7 +386,6 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().set_SRAM(erg, f);
-			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -429,7 +435,6 @@ public class Controller {
 		System.out.println("movwf");
 		int erg = getMemo().GetWInt();
 		getMemo().set_SRAM(erg,f);
-		PrintGPR();
 		getMemo().IncPc();
 	}
 	
@@ -453,7 +458,6 @@ public class Controller {
 			else if (d == 1)
 			{
 				getMemo().set_SRAM(erg, f);
-				PrintGPR();
 			}
 		getMemo().IncPc();
 	}
@@ -483,7 +487,6 @@ public class Controller {
 			else if (d == 1)
 			{
 				getMemo().set_SRAM(erg, f);
-				PrintGPR();
 			}
 		getMemo().IncPc();
 	}
@@ -520,7 +523,6 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().set_SRAM(erg, f);
-			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -543,7 +545,6 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().set_SRAM(erg, f);
-			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -562,7 +563,6 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().set_SRAM(erg, f);
-			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -584,7 +584,6 @@ public class Controller {
 		else if (d == 1)
 		{
 			getMemo().set_SRAM(erg, f);
-			PrintGPR();
 		}
 		getMemo().IncPc();
 	}
@@ -594,26 +593,17 @@ public class Controller {
 	{
 		System.out.println("bcf");
 		getMemo().set_SRAM_Bit(f, b,0);
-		PrintGPR();
 		getMemo().IncPc();
 	}
 	public void bsf(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("bsf");
 		getMemo().set_SRAM_Bit(f, b,1);
-		PrintGPR();
 		getMemo().IncPc();
 	}
 	public void btfsc(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("btfsc");
-		/*int[] tempF = getMemo().GetFBin(f);
-		if(tempF[b] == 0)
-		{
-			getMemo().IncPc();
-			this.proc.setNop(true);
-		}
-		getMemo().IncPc();*/
 		int in = getMemo().get_Memory(f, b);
 		if(in == 0) 
 		{
@@ -625,13 +615,6 @@ public class Controller {
 	public void btfss(int b, int f)throws Exception //BEEINFLUSST KEINE STATI
 	{
 		System.out.println("btfss");
-		/*int[] tempF = getMemo().GetFBin(f);
-		if(tempF[b] == 1)
-		{
-			getMemo().IncPc();
-			this.proc.setNop(true);
-		}
-		getMemo().IncPc();*/
 		int in = getMemo().get_Memory(f, b);
 		if(in == 1) 
 		{
@@ -645,7 +628,6 @@ public class Controller {
 	{	
 		System.out.println("call" + k );
 		getMemo().SetStack();
-		PrintStack();
 		getMemo().SetPC(k);
 		this.proc.setNop(true);
 
@@ -771,13 +753,14 @@ public class Controller {
 	public void InitGprView()
 	{
 
-		for (int i = 0; (i < 177); i++)
+		for (int i = 0; (i < 256); i++)
 		{
 			int f = i;
 			String hex = Integer.toHexString(i);
 			int[] fRegIntArray = getMemo().GetFBin(f);
 			gui.tblGprMdl.addRow(new Object[] {hex, fRegIntArray[7], fRegIntArray[6], fRegIntArray[5], fRegIntArray[4],fRegIntArray[3], fRegIntArray[2], fRegIntArray[1], fRegIntArray[0]} ); 
 		}
+
 	}
 	
 	/*############################################################################
@@ -795,7 +778,8 @@ public class Controller {
 			gui.tblGprMdl.removeRow(i);
 		}
 
-		for (int i = 0; (i < 177); i++)
+
+		for (int i = 0; (i < 256); i++)
 		{
 			int f = i;
 			String hex = Integer.toHexString(i);
@@ -1021,6 +1005,80 @@ public class Controller {
 		getMemo().SetTRISBIO7Bit(value);
 	}
 	
+	
+	//############################################################################################################################
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//	Test Breakpoints!!!
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//#########################################################################################################################
+	private void clearProgramCounterList() 
+	{
+		for(int i = 0; i< this.programCounterList.length; i++) 
+		{
+			this.programCounterList[i] = 0;
+		}
+	}
+	protected int[] getProgramCounterList() {
+		return programCounterList;
+	}
+	protected void setProgramCounterList(int[] programCounterList) {
+		this.programCounterList = programCounterList;
+	}
+	protected boolean[] getBreakPointList() {
+		return breakPointList;
+	}
+	protected void setBreakPointList(boolean[] breakPointList) {
+		this.breakPointList = breakPointList;
+	}
+	
+	
+	protected void setBreakPoint(int row) 
+	{
+		boolean found = false;
+		for(int i = 0; i < programCounterList.length; i++) 
+		{
+			if(programCounterList[i]-1 == row) 
+			{
+				found = true;
+				if(breakPointList[i] == false) 
+				{
+					breakPointList[i] = true;
+					this.getGui().tblCode.setValueAt("O", row, 0);
+				}else 
+				{
+					breakPointList[i] = false;
+					this.getGui().tblCode.setValueAt(" ", row, 0);
+				}
+			}
+		}
+	}
+	
+	
+	private void clearBreakPointList() 
+	{
+		for(int i = 0; i < breakPointList.length; i++) {
+			breakPointList[i] = false;
+		}
+	}
+	
+	
+	
+	/*
 	public void CheckBreakPoint()
 	{
 		for (int i = 0; i<= bP.length -1 ;i ++)
@@ -1028,10 +1086,12 @@ public class Controller {
 			if(bP[i] - 1 == getMemo().programCounterInt)
 			{
 				//System.out.println("BP TEST AUSGABE " + bP[i] +" "+ getMemo().programCounterInt);
+				 * 
 				stop();
 			}
 		}
 	}
+	
 
 	public void SetBreakPoint(int row)
 	{
@@ -1067,7 +1127,7 @@ public class Controller {
 	}
 	}
 	}
-	
+	*/
 	public void laufZeitBerechnung()
 	{
 		 
@@ -1143,11 +1203,6 @@ public class Controller {
 		return tmr;
 	}
 	
-	protected int getVorzaehler() 
-	{
-
-		return getMemo().getBitValue(0x81, 7);
-	}
 
 	protected Memory getMemo() {
 		return memo;
